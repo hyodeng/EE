@@ -1,0 +1,51 @@
+{
+    "name": "CursorControlls",
+    "maps": [
+        {
+            "name": "Mouse",
+            "id": "c7aaf249-311a-4c32-b423-2c53e4211352",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "4efe7367-704d-43ac-872b-b6803b59b77b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "659374af-ed18-4f6e-8947-ad6d20c7456d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyborardMouse",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "KeyborardMouse",
+            "bindingGroup": "KeyborardMouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
