@@ -5,13 +5,25 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/CharacterCustomize.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/CharacterSelect.unity
     guid: ffb8eeb0ea1a5ad43a66e1acbf2d86a4
   - enabled: 1
     path: Assets/Scenes/CharacterWeapon.unity
     guid: 57aa1f64a604e5c49b197eded93a628e
+  - enabled: 1
+    path: Assets/Scenes/MiniGame/MiniGameMain.unity
+    guid: c5ad0a7d960b5b9449146a609003ed04
+  - enabled: 1
+    path: Assets/Scenes/MiniGame/Puzzle.unity
+    guid: 8181f5a693fd5af41967ce7e90944729
+  - enabled: 1
+    path: Assets/Scenes/MiniGame/Run.unity
+    guid: 036d81aee6c29b74cbfecfbb5338b9d3
+  - enabled: 1
+    path: Assets/Scenes/MiniGame/SampleScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
