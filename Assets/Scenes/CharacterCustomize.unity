@@ -2134,6 +2134,14 @@ PrefabInstance:
       propertyPath: character.equipment.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 646484574404593363, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.113
+      objectReference: {fileID: 0}
+    - target: {fileID: 646484574404593363, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.254
+      objectReference: {fileID: 0}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
       value: Character
