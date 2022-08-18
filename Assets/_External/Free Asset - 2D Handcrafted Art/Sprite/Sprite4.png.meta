@@ -251,7 +251,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprite4_0
+      name: grass_0_1
       rect:
         serializedVersion: 2
         x: 1397
@@ -755,7 +755,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite4_24
+      name: grass5
       rect:
         serializedVersion: 2
         x: 510
@@ -1330,7 +1330,7 @@ TextureImporter:
         width: 668
         height: 124
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1351,7 +1351,7 @@ TextureImporter:
         width: 289
         height: 315
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1366,7 +1366,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: d315db684a80b6347b70f1952f4b1542
     internalID: 0
     vertices: []
     indices: 
@@ -1374,7 +1374,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Sprite4_18: 21300036
+      Sprite4_21: 21300042
       Sprite4_50: 21300100
       Sprite4_10: 21300020
       Sprite4_12: 21300024
@@ -1390,7 +1390,6 @@ TextureImporter:
       Sprite4_4: 21300008
       Sprite4_49: 21300098
       Sprite4_32: 21300064
-      Sprite4_0: 21300000
       Sprite4_34: 21300068
       Sprite4_26: 21300052
       Sprite4_52: 21300104
@@ -1412,7 +1411,6 @@ TextureImporter:
       Sprite4_22: 21300044
       Sprite4_41: 21300082
       Sprite4_42: 21300084
-      Sprite4_24: 21300048
       Sprite4_8: 21300016
       Sprite4_37: 21300074
       Sprite4_25: 21300050
@@ -1420,13 +1418,15 @@ TextureImporter:
       Sprite4_3: 21300006
       Sprite4_43: 21300086
       Sprite4_30: 21300060
+      grass_0_1: 21300000
+      grass5: 21300048
       Sprite4_29: 21300058
       Sprite4_40: 21300080
       Sprite4_51: 21300102
       Sprite4_31: 21300062
       Sprite4_47: 21300094
       Sprite4_14: 21300028
-      Sprite4_21: 21300042
+      Sprite4_18: 21300036
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
