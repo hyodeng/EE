@@ -5,28 +5,46 @@ using UnityEngine;
 public class Customized : MonoBehaviour
 {
     public SpriteRenderer[] parts = null;
+
+    //Json 저장을 위한 중간단계
+    public int[] imageIndex;        //0.face 1.hair 2.beard 3.cloth 4.cloth 5.cloth 6.foot_r 7.foot_l 8.weaponR 9.weaponL
+    public string[] tempImageName;  //예시 : eye.png
+
+
     private void Start()
     {
+        imageIndex = new int[parts.Length];
+        tempImageName = new string[parts.Length];
+
         Init();
     }
     void Init()
     {
     }
+
+
     public void SetParts(int i, string _name)
     {
-        Debug.Log(_name);
+        //Debug.Log(_name);
 
         switch (i)
         {
             case 0:
+                imageIndex[i] = i;
+                tempImageName[i] = _name;
+
                 parts[0].sprite = MakeSprite(System.IO.Directory.GetFiles(Application.streamingAssetsPath + "/Character/Face", _name)[0]);
                 parts[0].color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 break;
             case 1:
+                imageIndex[i] = i;
+                tempImageName[i] = _name;
                 parts[1].sprite = MakeSprite(System.IO.Directory.GetFiles(Application.streamingAssetsPath + "/Character/Hair", _name)[0]);
                 parts[1].color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 break;
             case 2:
+                imageIndex[i] = i;
+                tempImageName[i] = _name;
                 parts[2].sprite = MakeSprite(System.IO.Directory.GetFiles(Application.streamingAssetsPath + "/Character/Beard", _name)[0]);
                 parts[2].color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 break;
@@ -34,19 +52,27 @@ public class Customized : MonoBehaviour
                 for (int j = 0; j < Resources.LoadAll<Sprite>($"Character/Armor/{_name.Replace(".png", "")}").Length; j++)
                 {
                     parts[j + 3].sprite = Resources.LoadAll<Sprite>($"Character/Armor/{_name.Replace(".png", "")}")[j];
+                    imageIndex[j + i] = j + i;
+                    tempImageName[j + i] = _name;
                 }
                 break;
             case 4:
                 for (int j = 0; j < Resources.LoadAll<Sprite>($"Character/Pant/{_name.Replace(".png", "")}").Length; j++)
                 {
                     parts[j + 6].sprite = Resources.LoadAll<Sprite>($"Character/Pant/{_name.Replace(".png", "")}")[j];
+                    imageIndex[j + i + 2] = j + i + 2;
+                    tempImageName[j + i + 2] = _name;
                 }
                 break;
             case 5:
                 parts[8].sprite = Resources.Load<Sprite>($"Character/Weapons/{_name.Replace(".png", "")}");
+                imageIndex[i + 3] = i + 3;
+                tempImageName[i + 3] = _name;
                 break;
             case 6:
                 parts[9].sprite = Resources.Load<Sprite>($"Character/Weapons/{_name.Replace(".png", "")}");
+                imageIndex[i + 3] = i + 3;
+                tempImageName[i + 3] = _name;
                 break;
         }
     }
