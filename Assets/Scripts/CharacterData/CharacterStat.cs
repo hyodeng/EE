@@ -34,16 +34,6 @@ public class CharacterStat : MonoBehaviour
     public Character character;
     SavePlayerData playerData = new SavePlayerData();
 
-    ////Json 저장용 변수
-    //public string jsonname;
-    //public int jsonhp;
-    //public int jsonmp;
-    //public int jsonattack;
-    //public int jsonmagic;
-    //public int jsondefence;
-    //public int jsonspeed;
-
-
     //Max 스탯 -> 확정되면 private으로
     public int statHp = 15;
     public int statMp = 8;
@@ -265,7 +255,7 @@ public class CharacterStat : MonoBehaviour
         playerData.skilldesc = data.skilldesc;
 
         string json = JsonUtility.ToJson(playerData);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Player.json", json, Encoding.UTF8);
+        File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Player.json", json);
         Debug.Log("플레이어 스탯 초기화");
     }
 

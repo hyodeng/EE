@@ -18,10 +18,14 @@ public class PartnerSelectView : MonoBehaviour
     Customized customized;
     
     Character partner;
-    SavePlayerData partnerData = new SavePlayerData();
 
     PartnerBoard partnerboard;
     PartnerSelectBoard selectboard;
+
+    Button savebutton;
+
+    bool IsReadySave = false;
+    uint index;
 
     private void Awake()
     {
@@ -35,12 +39,16 @@ public class PartnerSelectView : MonoBehaviour
 
         partnerboard = GameObject.Find("PartnerBoard").GetComponent<PartnerBoard>();
         selectboard = GameObject.Find("PartnerSelectBoard").GetComponent<PartnerSelectBoard>();
+
+        savebutton = GameObject.Find("SaveButton").GetComponent<Button>();
+
     }
 
     private void Start()
-    {
+    {    
         customized = FindObjectOfType<Customized>();
 
+        //Character.Json에서 데이터 꺼내옴
         string character = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
         partner = JsonUtility.FromJson<Character>(character);
 
@@ -50,6 +58,19 @@ public class PartnerSelectView : MonoBehaviour
         btnThief.onClick.AddListener(() => DataSetUp(CharacterType.Thief));
         btnPopstar.onClick.AddListener(() => DataSetUp(CharacterType.Popstar));
         btnChef.onClick.AddListener(() => DataSetUp(CharacterType.Chef));
+        savebutton.onClick.AddListener(SelectCompletePartner);
+    }
+
+
+
+    private void SelectCompletePartner()
+    {
+
+        //스태틱변수 : PartnerBoard.partnerCount;
+        //DataManager.Instance.PartnerBoard. ?? partnerCount 로는 접근이 안되나?
+
+        IsReadySave = true;
+        SavePartnerDataToJson();
 
     }
 
@@ -64,35 +85,37 @@ public class PartnerSelectView : MonoBehaviour
             case CharacterType.Warrior:
                 //파트너의 파츠별 이미지 
                 SetPartnerParts(type);
-                //파트너셀렉트보드의 설명창 내용 변경
-                LoadCharacterJsonData(type);
-                //선택 파트너정보를 json저장으로 초기화 
+                //파트너셀렉트보드의 내용을 CharacterJson에서 가져와 변경
+                UpdatePartnerSelectBoard(type);
+                //선택한 파트너정보를 json저장으로 초기화 
                 InitializePartenrData(type);
-
+                //save버튼을 누르면 json으로 저장
+                SavePartnerDataToJson();
                 break;
             case CharacterType.Mage:
                 SetPartnerParts(type);
-                LoadCharacterJsonData(type);
+                UpdatePartnerSelectBoard(type);
                 InitializePartenrData(type);
+                SavePartnerDataToJson();
                 break;
             case CharacterType.Cleric:
                 SetPartnerParts(type);
-                LoadCharacterJsonData(type);
+                UpdatePartnerSelectBoard(type);
                 InitializePartenrData(type);
                 break;
             case CharacterType.Thief:
                 SetPartnerParts(type);
-                LoadCharacterJsonData(type);
+                UpdatePartnerSelectBoard(type);
                 InitializePartenrData(type);
                 break;
             case CharacterType.Popstar:
                 SetPartnerParts(type);
-                LoadCharacterJsonData(type);
+                UpdatePartnerSelectBoard(type);
                 InitializePartenrData(type);
                 break;
             case CharacterType.Chef:
                 SetPartnerParts(type);
-                LoadCharacterJsonData(type);
+                UpdatePartnerSelectBoard(type);
                 InitializePartenrData(type);
                 break;
             default:
@@ -101,8 +124,18 @@ public class PartnerSelectView : MonoBehaviour
         }
     }
 
+
+    //동료 인원 최대 : 3명?? 다시 확인 필요, TEST 필요
+    SavePlayerData partnerData = new SavePlayerData();
+    PlayerList[] partnerNum = new PlayerList[3];
+
     private void InitializePartenrData(CharacterType type)
     {
+        //partnerCount는 스태틱 변수
+        index = PartnerBoard.partnerCount;
+
+        //partnerNum[0].playerList[index]._name = partner.character[(int)type]._name;
+
         partnerData._name = partner.character[(int)type]._name;
         partnerData.desc = partner.character[(int)type].desc;
         partnerData.maxhp = partner.character[(int)type].maxhp;
@@ -119,16 +152,34 @@ public class PartnerSelectView : MonoBehaviour
         partnerData.speedup = partner.character[(int)type].speedup;
         partnerData.skillname = partner.character[(int)type].skillname;
         partnerData.skilldesc = partner.character[(int)type].skilldesc;
+
+        partnerNum[0].playerList[index] = partnerData;
+        //클래스라서 안되나??
+
+        Debug.Log("파트너 스탯 입력");
+
         //partnerData.partnerNum = 
         //partnerData.positionX;
         //partnerData.positionY;
 
-        //데이터 저장
-        string data = JsonUtility.ToJson(partnerData);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Partner.json", data );
-        Debug.Log("파트너 스탯 초기화");
     }
 
+    //Sava버튼을 누르면 저장
+    void SavePartnerDataToJson()
+    {
+        if (IsReadySave)
+        {
+            string data = JsonUtility.ToJson(partnerNum[0].playerList[PartnerBoard.partnerCount]);
+            File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Partner.json", data);
+            Debug.Log("파트너 스탯 초기화");
+        }
+        //동료 인원수 증가
+        PartnerBoard.partnerCount++;
+    }
+
+
+
+    //동료의 파츠별 이미지 보여줌
     private void SetPartnerParts(CharacterType type)
     {
         for (int i = 0; i < customized.parts.Length; i++)
@@ -144,7 +195,8 @@ public class PartnerSelectView : MonoBehaviour
         }
     }
 
-    void LoadCharacterJsonData(CharacterType type)
+    
+    void UpdatePartnerSelectBoard(CharacterType type)
     {
         if (PartnerBoard.partnerCount == 0)
         {

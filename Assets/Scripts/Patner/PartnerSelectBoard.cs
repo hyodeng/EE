@@ -48,10 +48,9 @@ public class PartnerSelectBoard : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         
-
         //델리게이트 등록
         partnerBoard.OnPartnerSelectBoardOpen += Open;
-        partnerBoard.OnPartnerSelectBoardClose += Close;    //아직 사용처가 없음
+        partnerBoard.OnPartnerSelectBoardClose += Close;   
         partnerBoard.OnOffSwitch += OnOffSwitch;
         
     }

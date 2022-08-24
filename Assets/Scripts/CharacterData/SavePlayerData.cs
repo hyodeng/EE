@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[System.Serializable]
+[Serializable]
 public class SavePlayerData
 {
 
@@ -24,4 +25,10 @@ public class SavePlayerData
     public float positionY;
 
 
+}
+
+[Serializable]
+public class PlayerList
+{
+    public SavePlayerData[] playerList;
 }

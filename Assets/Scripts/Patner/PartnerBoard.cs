@@ -16,7 +16,7 @@ public class PartnerBoard : MonoBehaviour
     Button yesbutton;
     Button nobutton;
     Button selectbutton;
-    Button savebutton;
+
 
     //동료 인원수 : static 이나 추후 변경 필요
     public static uint partnerCount = 0;
@@ -36,7 +36,7 @@ public class PartnerBoard : MonoBehaviour
         yesbutton = transform.GetComponentsInChildren<Button>()[0];     //팝업창 : 동료 추가 yes버튼
         nobutton = transform.GetComponentsInChildren<Button>()[1];      //팝업창 : 동료 추가 no버튼
         selectbutton = transform.GetComponentsInChildren<Button>()[2];  //동료리스트 버튼 
-        savebutton = GameObject.Find("SaveButton").GetComponent<Button>();
+
 
         //왜 안되지?
         //yesbutton = questionPop.transform.GetChild(0).GetComponent<Button>();
@@ -51,19 +51,15 @@ public class PartnerBoard : MonoBehaviour
         yesbutton.onClick.AddListener(SelectPartner);
         nobutton.onClick.AddListener(NoSelectPartner);
         selectbutton.onClick.AddListener(OnOffSelectBoard);
+
         //addListener 두개하면 2개 메서드가 등록되나요?
-        //partnerSelectView의 파트너 데이터가 저장됨
-        //savebutton.onClick.AddListener();
+
 
         //StartCoroutine(PopPartnerBoard());
         //partnerSelect.text = "선택 가능한 인원수가 넘었습니다";
     }
 
-    public void OnOffSelectBoard()
-    {
-        OnOffSwitch?.Invoke();
 
-    }
 
     void Initialize()
     {
@@ -73,6 +69,15 @@ public class PartnerBoard : MonoBehaviour
 
         StartCoroutine(PopUpQuestion());
     }
+
+
+
+    public void OnOffSelectBoard()
+    {
+        OnOffSwitch?.Invoke();
+
+    }
+
 
     IEnumerator PopUpQuestion()
     {

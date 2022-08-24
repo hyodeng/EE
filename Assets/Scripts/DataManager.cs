@@ -9,12 +9,13 @@ public class DataManager : MonoBehaviour
     SavePlayerData playerData = new SavePlayerData();
 
 
-    //플레이어 스탯 정보
-    CharacterStat stats;
-
     //캐릭터 커스터마이즈(착장) 정보
     Customized customized;
-    //character data;
+    public Customized Customized => customized;
+
+    //동료 정보 컨트롤
+    PartnerBoard partnerboard;
+    public PartnerBoard PartnerBoard => partnerboard;
 
 
     //싱글톤 ---------------------------------------
@@ -43,8 +44,6 @@ public class DataManager : MonoBehaviour
     private void Start()
     {
         Initailize();
-
-        stats = FindObjectOfType<CharacterStat>();
    
     }
 
