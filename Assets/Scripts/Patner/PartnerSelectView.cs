@@ -22,6 +22,8 @@ public class PartnerSelectView : MonoBehaviour
     PartnerBoard partnerboard;
     PartnerSelectBoard selectboard;
 
+    SavePlayerData partnerData = new SavePlayerData();
+
     Button savebutton;
 
     bool IsReadySave = false;
@@ -125,16 +127,9 @@ public class PartnerSelectView : MonoBehaviour
     }
 
 
-    //동료 인원 최대 : 3명?? 다시 확인 필요, TEST 필요
-    SavePlayerData partnerData = new SavePlayerData();
-    PlayerList[] partnerNum = new PlayerList[3];
 
     private void InitializePartenrData(CharacterType type)
     {
-        //partnerCount는 스태틱 변수
-        index = PartnerBoard.partnerCount;
-
-        //partnerNum[0].playerList[index]._name = partner.character[(int)type]._name;
 
         partnerData._name = partner.character[(int)type]._name;
         partnerData.desc = partner.character[(int)type].desc;
@@ -153,7 +148,6 @@ public class PartnerSelectView : MonoBehaviour
         partnerData.skillname = partner.character[(int)type].skillname;
         partnerData.skilldesc = partner.character[(int)type].skilldesc;
 
-        partnerNum[0].playerList[index] = partnerData;
         //클래스라서 안되나??
 
         Debug.Log("파트너 스탯 입력");
@@ -169,8 +163,10 @@ public class PartnerSelectView : MonoBehaviour
     {
         if (IsReadySave)
         {
-            string data = JsonUtility.ToJson(partnerNum[0].playerList[PartnerBoard.partnerCount]);
-            File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Partner.json", data);
+
+        //수정 필요 
+            string data = JsonUtility.ToJson(partnerData);
+            File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/Partner_{PartnerBoard.partnerCount}.json", data);
             Debug.Log("파트너 스탯 초기화");
         }
         //동료 인원수 증가
