@@ -274,7 +274,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB3D9\uB8CC \uC0DD\uC131"
+  m_Text: "\uBA54\uC778 \uD654\uBA74\uC73C\uB85C"
 --- !u!222 &606264127
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -612,7 +612,7 @@ MonoBehaviour:
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 2.61
+    m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
@@ -631,7 +631,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1992616488}
-        m_TargetAssemblyTypeName: ChangeScences4, Assembly-CSharp
+        m_TargetAssemblyTypeName: 
         m_MethodName: ChangeScene
         m_Mode: 1
         m_Arguments:
@@ -689,7 +689,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1992616483}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7813222b505e74d46ad694a03ecddad7, type: 3}
+  m_Script: {fileID: 11500000, guid: 48974ae6344586640b504f57926b7cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &9009733706384822024

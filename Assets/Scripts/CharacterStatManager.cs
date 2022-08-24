@@ -11,7 +11,7 @@ public class CharacterStatManager : MonoBehaviour
     public static CharacterStatManager instance;
 
     Button nextScene;              //다음씬 선택 버튼
-    int sceneIndex = 1;            //test
+    int sceneIndex = 0;            //test
 
     public Button nextScene_2;
     int index = 0;

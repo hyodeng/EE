@@ -32,9 +32,9 @@ public class CharacterData : MonoBehaviour
     }
     IEnumerator Move()
     {
-        while(transform.position != Vector3.zero)
+        while (transform.position != Vector3.zero)
         {
-            transform.position  = Vector3.MoveTowards(transform.position, Vector3.zero, Time.deltaTime * moveSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, Vector3.zero, Time.deltaTime * moveSpeed);
             yield return null;
         }
         yield return StartCoroutine(Attack());
@@ -83,7 +83,7 @@ public class CharacterData : MonoBehaviour
     }
     public void OnMouseOver()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             battle.OperateCharacter(1);
             battle.TargetPoint.SetActive(false);

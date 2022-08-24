@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelect.unity
     guid: ffb8eeb0ea1a5ad43a66e1acbf2d86a4
   - enabled: 1
-    path: Assets/Scenes/CharacterWeapon.unity
+    path: Assets/Scenes/CharacterSelectPartner.unity
     guid: 57aa1f64a604e5c49b197eded93a628e
   - enabled: 1
     path: Assets/Scenes/MiniGame/MiniGameMain.unity
@@ -26,7 +26,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MiniGame/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/CharacterCustomize.unity
-    guid: 06ba231f1cb4e2848a083e7f2b4d0eef
   m_configObjects: {}
