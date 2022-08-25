@@ -7,10 +7,24 @@ public class BackGround : MonoBehaviour
     public Transform[] bgSlots = null;
     public float slcollingSpeed = 2.5f;
 
+    public Transform[] bgbubbles = null;
+    public float BubbleSpeed = 5.0f;
+    private SpriteRenderer[] bubbleRenderer = null;
+
+    
+    public float FishSpeed = 10.0f;
+
     const float BG_Width = 19.0f;
 
 
-
+    private void Awake()
+    {
+        bubbleRenderer = new SpriteRenderer[bgbubbles.Length];
+        for (int i = 0; i < bgbubbles.Length; i++)
+        {
+            bubbleRenderer[i] = bgbubbles[i].GetComponent<SpriteRenderer>();
+        }
+    }
 
 
     private void Update()
