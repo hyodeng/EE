@@ -18,7 +18,19 @@ public class Battle : MonoBehaviour
     public Transform Operator;
     public bool Focusing;
 
+    public SkillDataManager skillData;
+    public SkillDataManager SkillData => skillData;
+
     public int index = 0;
+    public int Index
+    {
+        get => index;
+        set
+        {
+            index = value;
+            OperateCharacter(Random.Range(1, 3));
+        }
+    }
 
     public GameObject TargetPoint;
 
@@ -45,6 +57,8 @@ public class Battle : MonoBehaviour
     }
     private void Initialize()
     {
+        skillData = GetComponent<SkillDataManager>();
+
         TargetPoint.SetActive(false);
         player = Transform.FindObjectsOfType<Player>();
         System.Array.Sort<Player>(player, (x, y) => x.transform.GetSiblingIndex().CompareTo(y.transform.GetSiblingIndex()));
@@ -54,7 +68,7 @@ public class Battle : MonoBehaviour
         Operator.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OnTarget());
         Operator.GetChild(1).GetComponent<Button>().onClick.AddListener(() => OperateCharacter(2));
         Operator.GetChild(2).GetComponent<Button>().onClick.AddListener(() => OperateCharacter(3));
-
+        
         SetTurn();
     }
     public void SetTurn()
@@ -62,8 +76,10 @@ public class Battle : MonoBehaviour
         characters = FindObjectsOfType<CharacterData>();
         charactersList = new List<CharacterData>(characters);
 
+
         for (int i = 0; i < characters.Length; i++)
         {
+
             for (int j = i + 1; j < characters.Length; j++)
             {
                 if (characters[i].speed < characters[j].speed)
@@ -87,6 +103,23 @@ public class Battle : MonoBehaviour
         characters[index].State = State;
         Operator.gameObject.SetActive(false);
     }
+    public void ProgressingTurn()
+    {
+
+    }
+    //IEnumerator Progress()
+    //{
+    //    while (true)
+    //    {
+
+    //        yield return null; 
+    //        if (true)
+    //        {
+
+    //        }
+    //        //OperateCharacter(Random.Range(1, 3));
+    //    }
+    //}
     public void CameraMove()
     {
 
@@ -96,8 +129,10 @@ public class Battle : MonoBehaviour
         TargetPoint.SetActive(true);
         Targetting(0);
     }
-    public void Targetting(int target)
+    public void Targetting(int target, GameObject obj = null)
     {
         TargetPoint.transform.position = new Vector3(6, -98.5f + target * 2f , 0);
+        obj = characters[target].GetComponent<GameObject>().gameObject;
+
     }
 }

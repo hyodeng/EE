@@ -1,33 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-[Serializable]
+[System.Serializable]
 public class SavePlayerData
 {
-
-    public string _name, desc;
-    public int maxhp, hp, maxmp, mp, attack, attackup, magic, magicup, defence, defenceup, speed, speedup;
+    public string _name;
+    public int hp;
+    public int mp;
+    public int attack;
+    public int magic;
+    public int defence;
+    public float speed;
 
     //플레이어 착장 이미지 (0.face ~ 9.weaponL)
     public string[] parts;
 
-    //스킬
-    public string skillname;
-    public string skilldesc;
-
-    //동료NPC 인원수
-    public int partnerNum;
 
     //플레이어 위치
-    public float positionX;
-    public float positionY;
+    public float playerPositionX;
+    public float playerPositionY;
 
-}
-
-[Serializable]
-public class PlayerList
-{
 
 }

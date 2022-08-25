@@ -7,16 +7,12 @@ public class DataManager : MonoBehaviour
 {
     //Json 클래스에 저장하기 위한 변수 생성 
     SavePlayerData playerData = new SavePlayerData();
-   
+
+    //캐릭터 스탯 정보
+    CharacterStat stats;
 
     //캐릭터 커스터마이즈(착장) 정보
     Customized customized;
-    public Customized Customized => customized;
-
-    //동료 정보 컨트롤
-    PartnerBoard partnerboard;
-    public PartnerBoard PartnerBoard => partnerboard;
-
 
     //싱글톤 ---------------------------------------
     static DataManager instance = null;
@@ -44,7 +40,8 @@ public class DataManager : MonoBehaviour
     private void Start()
     {
         Initailize();
-   
+
+        stats = FindObjectOfType<CharacterStat>();
     }
 
     void Initailize()
@@ -55,8 +52,17 @@ public class DataManager : MonoBehaviour
     //플레이어 데이터 Json 저장
     public void SavePlayerData()
     {
-        //스탯 정보 업데이트
-        //playerData._name = 
+        if (stats != null)
+        {
+            playerData._name = stats.jsonname;
+            playerData.hp = stats.jsonhp;
+            playerData.mp = stats.jsonmp;
+            playerData.attack = stats.jsonattack;
+            playerData.magic = stats.jsonmagic;
+            playerData.defence = stats.jsondefence;
+            playerData.speed = stats.jsonspeed;
+        }
+
 
         // 10 == customized.parts.Length; 인데 안됨.
         playerData.parts = new string[10];
@@ -69,21 +75,21 @@ public class DataManager : MonoBehaviour
         {
             playerData.parts[i] = customized.tempImageName[i];
         }
-        
+
 
         //json으로 데이터 저장
-        string player = JsonUtility.ToJson(playerData);
+        string json = JsonUtility.ToJson(playerData);
 
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Player.json", player);
-        Debug.Log("플레이어 파츠 저장, 플레이어 스탯 업데이트?");
+        File.WriteAllText(Application.persistentDataPath + "/PlayerData.json", json);
+
+        PrintData();
 
     }
-
 
     //플레이어 데이터 로드
     public void LoadPalyerData()
     {
-        string data = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Player.json");
+        string data = File.ReadAllText(Application.persistentDataPath + "/PlayerData.json");
         playerData = JsonUtility.FromJson<SavePlayerData>(data);
 
         customized = FindObjectOfType<Customized>();
@@ -97,13 +103,28 @@ public class DataManager : MonoBehaviour
             }
 
         }
+
+
     }
 
-    //테스트 파트너 데이터 저장
-    public void SavePartnerData(CharacterType type)
+    //디버그용 출력
+    void PrintData()
     {
+        Debug.Log(Application.persistentDataPath);  //json 데이터 저장 경로 
+     
+        //Debug.Log(playerData._name);
+        //Debug.Log(playerData.hp);
+        //Debug.Log(playerData.mp);
+        //Debug.Log(playerData.attack);
+        //Debug.Log(playerData.defence);
+        //Debug.Log(playerData.speed);
 
+        //for (int i = 0; i < playerData.parts.Length; i++)
+        //{
+        //    Debug.Log(playerData.parts[i]);
+        //}
     }
+
 
 
 }

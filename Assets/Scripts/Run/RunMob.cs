@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class RunMob : MonoBehaviour
 {
-    public float speed = 200.0f;
-    Rigidbody2D rigid = null;
+    public Transform[] bgSlots = null;
+    public float slcollingSpeed = 2.5f;
+
+    const float BG_Width = 19.0f;
 
 
 
-    private void Awake()
+
+
+    private void Update()
     {
-        rigid = GetComponent<Rigidbody2D>();
+        float minusX = transform.position.x - BG_Width; // 백그라운드의 x위치에서 왼쪽으로 BG_Width (그림 한장의 폭) 만큼 이동한 위치
+        foreach (Transform bgSlot in bgSlots)
+        {
+
+            bgSlot.Translate(-transform.right * slcollingSpeed * Time.deltaTime);
+           
+        }
     }
-    void Start()
-    {
-        rigid.velocity = (-transform.right * speed * Time.deltaTime);
     }
-}

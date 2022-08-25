@@ -21,8 +21,6 @@ public class Customized : MonoBehaviour
     void Init()
     {
     }
-
-
     public void SetParts(int i, string _name)
     {
         //Debug.Log(_name);
