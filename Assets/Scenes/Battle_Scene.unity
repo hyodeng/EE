@@ -264,9 +264,11 @@ MonoBehaviour:
   charactersList: []
   parts: []
   cam: {fileID: 519420031}
+  target: {fileID: 0}
   Avatars: []
   Operator: {fileID: 1457188552}
   Focusing: 0
+  skillData: {fileID: 0}
   index: 0
   TargetPoint: {fileID: 2103195784}
 --- !u!4 &103828561
@@ -558,6 +560,10 @@ PrefabInstance:
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: defence
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
       value: Monster3
@@ -931,6 +937,10 @@ PrefabInstance:
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: speed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: attack
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: battle

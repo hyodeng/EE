@@ -5,19 +5,13 @@ using UnityEngine.InputSystem;
 
 public class CharacterData : MonoBehaviour
 {
+    public string weaponType = "Normal";
     public Vector3 oriPos;
     public float moveSpeed = 5f;
     public Animator anim;
     public Battle battle;
-    public int state = 0; //0 : 대기 , 1 : 공격, 2 : 스킬, 3 : 아이템, 4 : 사망
-    CharacterType type = CharacterType.Warrior;
-    public GameObject attackTarget;
-    public CharacterData target;
+    public int state = 0;
     public int hp, mp, attack, magic, defence, speed;
-    List<CharacterData> enemy = new List<CharacterData>();
-    List<CharacterData> playerParty = new List<CharacterData>();
-
-    Collider collider;
 
     public bool BehaviorEnd;
     public bool isTargetingSkill;
@@ -37,44 +31,35 @@ public class CharacterData : MonoBehaviour
                     Idle();
                     break;
                 case 1:
-                    StartCoroutine(Move());
-                    anim.Play("1_Run");
+                    StartCoroutine(TargettingAttack());
                     break;
                 case 2:
                     if (isTargetingSkill)
                     {
-                        StartCoroutine(Move());
-                        anim.Play("1_Run");
+                        StartCoroutine(TargettingAttack());
                     }
                     else
                     {
-                        StartCoroutine(Skill());
+                        StartCoroutine(AreaAttack());
                     }
                     break;
             }
         }
     }
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
     IEnumerator Move()
     {
-        while(transform.position != Vector3.zero)
+        anim.Play("1_Run");
+        oriPos = transform.position;
+        while((transform.position - Vector3.zero).sqrMagnitude > 0.01f)
         {
             transform.position  = Vector3.MoveTowards(transform.position, Vector3.zero, Time.deltaTime * moveSpeed);
             yield return null;
         }
-        yield return StartCoroutine(Attack());
-    }
-    private void Awake()
-    {
-        anim = GetComponent<Animator>();
-        oriPos = transform.position;
-        for (int i = 0; i < 4; i++)
-        {
-            playerParty.Add(battle.characters[i]);
-        } 
-        for (int i = 4; i < 8; i++)
-        {
-            enemy.Add(battle.characters[i]);
-        }
+        transform.position = Vector3.zero;
     }
     public void StateChange(int i)
     {
@@ -84,35 +69,10 @@ public class CharacterData : MonoBehaviour
     {
         battle.Operator.gameObject.SetActive(false);
     }
-    public IEnumerator Attack()
+    IEnumerator TargettingAttack()
     {
-        if (!isTargetingSkill)
-        {
-            yield return StartCoroutine(NormalAttack());
-        }
-        else if(isTargetingSkill && !isPlayer)
-        {
-                yield return null;
-        }
-        else if (isTargetingSkill && isPlayer)
-        {
-            while (true)
-            {
-                yield return null;
-            }
-        }
-    }
-    IEnumerator NormalAttack()
-    {
-        anim.Play("2_Attack_Normal");
-        if (battle.Index == 0)
-        {
-            battle.Targetting(0, attackTarget); 
-        }
-        else
-        {
-            TakeDamage(battle.characters[Random.Range(4, 8)]);
-        }
+        yield return StartCoroutine(Move());
+        anim.Play($"2_Attack_{weaponType}");
         yield return new WaitForSeconds(1f);
         while (!BehaviorEnd)
         {
@@ -131,6 +91,19 @@ public class CharacterData : MonoBehaviour
         battle.Operator.gameObject.SetActive(true);
         battle.Index++;
     }
+    IEnumerator AreaAttack()
+    {
+        anim.Play($"5_Skill_{weaponType}");
+        yield return new WaitForSeconds(1f);
+        while (!BehaviorEnd)
+        {
+            yield return null;
+        }
+        BehaviorEnd = false;
+        State = 0;
+        battle.Operator.gameObject.SetActive(true);
+        battle.Index++;
+    }
     public void AttackEnd()
     {
         BehaviorEnd = true;
@@ -143,31 +116,29 @@ public class CharacterData : MonoBehaviour
         {
             yield return null;
         }
+        /*
         foreach (var target in enemy)
         {
             TakeDamage(target);
         }
+        */
         BehaviorEnd = false;
     }
     public void OnMouseEnter()
     {
-       battle.Targetting(System.Convert.ToInt32(gameObject.name[gameObject.name.Length - 1]));
+       battle.Targetting(System.Convert.ToInt32(gameObject.name[^1]));
     }
     public void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(0))
         {
             battle.OperateCharacter(1);
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            collider.gameObject.GetComponent<CharacterData>();
+            battle.target = this;
             battle.TargetPoint.SetActive(false);
         }
     }
-    void TakeDamage(CharacterData target)
+    public void TakeDamage()
     {
-        if (target != null)
-        {
-            target.hp -= attack - target.defence;
-        }
+        battle.target.hp -= attack - battle.target.defence;
     }
 }

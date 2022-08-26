@@ -34,7 +34,6 @@ public class CharacterStatManager : MonoBehaviour
     {
         nextScene = GameObject.Find("NextButton").GetComponent<Button>();
         nextScene.onClick.AddListener(OnStageStart); //addListener는 이벤트 발생 시마다 실행됨
-
     }
 
 

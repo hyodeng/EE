@@ -14,6 +14,8 @@ public class Battle : MonoBehaviour
 
     public Camera cam;
 
+    public CharacterData target;
+
     public GameObject[] Avatars;
     public Transform Operator;
     public bool Focusing;
@@ -28,7 +30,14 @@ public class Battle : MonoBehaviour
         set
         {
             index = value;
-            OperateCharacter(Random.Range(1, 3));
+            if (value == 8)
+            {
+                index = 0;
+            }
+            else
+            {
+                OperateCharacter(Random.Range(1, 3));
+            }
         }
     }
 
@@ -49,10 +58,6 @@ public class Battle : MonoBehaviour
         {
             cam.orthographicSize = 5f;
             cam.transform.position = Vector3.zero - new Vector3(0, 0, 10);
-        }
-        if(index == 8)
-        {
-            index = 0;
         }
     }
     private void Initialize()
@@ -132,7 +137,5 @@ public class Battle : MonoBehaviour
     public void Targetting(int target, GameObject obj = null)
     {
         TargetPoint.transform.position = new Vector3(6, -98.5f + target * 2f , 0);
-        obj = characters[target].GetComponent<GameObject>().gameObject;
-
     }
 }
