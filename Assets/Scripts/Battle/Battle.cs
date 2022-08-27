@@ -47,6 +47,16 @@ public class Battle : MonoBehaviour
 
     public GameObject TargetPoint;
 
+    private void Awake()
+    {
+        for(int i = 0; i<4; i++)
+        {
+            if (GameManager.Inst.userPartyCheck[i])
+            {
+                GameObject.Find("UserParty").transform.Find($"Character{i}").gameObject.SetActive(true);
+            }
+        }
+    }
     private void Start()
     {
         Initialize();

@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 103828561}
   - component: {fileID: 103828560}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: BattleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -506,7 +506,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -950,7 +950,7 @@ PrefabInstance:
       objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
-      value: Player0
+      value: Character0
       objectReference: {fileID: 0}
     - target: {fileID: 646484574680006745, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_RootOrder
@@ -1198,7 +1198,7 @@ PrefabInstance:
       objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
-      value: Player1
+      value: Character1
       objectReference: {fileID: 0}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_IsActive
@@ -1319,7 +1319,7 @@ PrefabInstance:
       objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
-      value: Player2
+      value: Character2
       objectReference: {fileID: 0}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_IsActive
@@ -1440,7 +1440,7 @@ PrefabInstance:
       objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
-      value: Player3
+      value: Character3
       objectReference: {fileID: 0}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_IsActive

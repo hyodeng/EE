@@ -81,10 +81,6 @@ public class PartnerSelectButton : MonoBehaviour
             {
                 customized.SetParts(i, partnerData.character[(int)type].parts[i].ToString());
             }
-            else
-            {
-                Debug.Log($"{type}ÀÇ ºó ÆÄÃ÷ ¹øÈ£: {i}");
-            }
         }
     }
     void LoadJsonPartnerData()

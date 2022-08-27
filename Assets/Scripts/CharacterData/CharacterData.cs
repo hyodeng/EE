@@ -101,7 +101,7 @@ public class CharacterData : MonoBehaviour
                 {
                     list.Add(battle.characters[i]);
                 }
-                else if (transform.parent.name.IndexOf("Monsters") > -1 && battle.characters[i].name.IndexOf("Player") > -1)
+                else if (transform.parent.name.IndexOf("Monsters") > -1 && battle.characters[i].name.IndexOf("Character") > -1)
                 {
                     list.Add(battle.characters[i]);
                 }
@@ -166,7 +166,7 @@ public class CharacterData : MonoBehaviour
         battle.targetCam = true;
         battle.target.hp -= attack - battle.target.defence;
         GameObject Damage = Instantiate(DamagePrefab);
-        Damage.transform.position = battle.target.transform.position + new Vector3(0, 0.5f);
+        Damage.transform.position = battle.target.transform.position + new Vector3(0, 0.5f, -50);
         Damage.GetComponent<TextMeshPro>().text = (attack - battle.target.defence).ToString();
     }
 }

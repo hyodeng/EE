@@ -12,6 +12,13 @@ public class CharacterStatManager : MonoBehaviour
     private void Start()
     {
         nextScene = GameObject.Find("NextButton").GetComponent<Button>();
-        nextScene.onClick.AddListener(() => SceneManager.LoadScene("CharacterSelect")); //addListener는 이벤트 발생 시마다 실행됨
+        Customized custom = GameObject.Find("Character0").GetComponent<Customized>();
+        nextScene.onClick.AddListener(() => {
+            for(int i = 0; i<10; i++)
+            {
+                GameManager.Inst.temp[i, 0] = custom.parts[i].sprite;
+            }
+            SceneManager.LoadScene("CharacterSelect");
+            }); //addListener는 이벤트 발생 시마다 실행됨
     }
 }

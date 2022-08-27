@@ -62,9 +62,10 @@ public class CharacterStat : MonoBehaviour
     public Slider speedSlider;
 
     GameObject characterBoard;
+    GameObject statBarText;
+
     TextMeshProUGUI playerName;
     TextMeshProUGUI playerExplanation;
-    GameObject statBarText;
     TextMeshProUGUI hptext;
     TextMeshProUGUI mptext;
     TextMeshProUGUI attackText;
@@ -82,26 +83,25 @@ public class CharacterStat : MonoBehaviour
         //Resource 폴더/Json 폴더/Character.json 파일에서 게임초기 선택할 캐릭터 정보 읽어옴
         character = JsonUtility.FromJson<Character>(textAsset.text);
 
-        playerName = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
-        playerExplanation = GameObject.Find("PlayerExplanation").GetComponent<TextMeshProUGUI>();
-        hptext = GameObject.Find("HPtext").GetComponent<TextMeshProUGUI>();
-        mptext = GameObject.Find("MPtext").GetComponent<TextMeshProUGUI>();
-        attackText = GameObject.Find("Attacktext").GetComponent<TextMeshProUGUI>();
-        magicText = GameObject.Find("Magictext").GetComponent<TextMeshProUGUI>();
-        defText = GameObject.Find("Deftext").GetComponent<TextMeshProUGUI>();
-        speedText = GameObject.Find("Speedtext").GetComponent<TextMeshProUGUI>();
+        characterBoard = GameObject.Find("Canvas").transform.Find("CharacterBoard").gameObject;
+        statBarText = GameObject.Find("Canvas").transform.Find("StatBarText").gameObject;
+
+        playerName = characterBoard.transform.Find("PlayerName").GetComponent<TextMeshProUGUI>();
+        playerExplanation = characterBoard.transform.Find("PlayerExplanation").GetComponent<TextMeshProUGUI>();
+        hptext = statBarText.transform.Find("HPtext").GetComponent<TextMeshProUGUI>();
+        mptext = statBarText.transform.Find("MPtext").GetComponent<TextMeshProUGUI>();
+        attackText = statBarText.transform.Find("Attacktext").GetComponent<TextMeshProUGUI>();
+        magicText = statBarText.transform.Find("Magictext").GetComponent<TextMeshProUGUI>();
+        defText = statBarText.transform.Find("Deftext").GetComponent<TextMeshProUGUI>();
+        speedText = statBarText.transform.Find("Speedtext").GetComponent<TextMeshProUGUI>();
 
         customized = FindObjectOfType<Customized>();
-    }
 
+        characterBoard.SetActive(false);
+        statBarText.SetActive(false);
+    }
     private void Start()
     {
-
-        characterBoard = GameObject.Find("CharacterBoard");
-        characterBoard.SetActive(false);
-        statBarText = GameObject.Find("StatBarText");
-        statBarText.SetActive(false);
-
         button_warrior.onClick.AddListener(() => DataSetup(CharacterType.Warrior));
         button_mage.onClick.AddListener(() => DataSetup(CharacterType.Mage));
         button_clreic.onClick.AddListener(() => DataSetup(CharacterType.Cleric));
@@ -111,7 +111,6 @@ public class CharacterStat : MonoBehaviour
         nextButton.onClick.AddListener(NextScene);
 
         backAura = GameObject.Find("BackAura").GetComponent<ParticleSystem>();
-
     }
 
     public void DataSetup(CharacterType type)

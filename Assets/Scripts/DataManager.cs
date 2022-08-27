@@ -73,7 +73,7 @@ public class DataManager : MonoBehaviour
         //customized.parts.Length
         for (int i = 0; i < customized.parts.Length; i++)
         {
-            playerData.parts[i] = customized.tempImageName[i];
+            playerData.parts[i] = customized.parts[i].name;
         }
 
 
