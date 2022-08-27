@@ -16,9 +16,11 @@ public class Battle : MonoBehaviour
 
     public CharacterData target;
 
+    public GameObject UserParty, Monsters;
     public GameObject[] Avatars;
     public Transform Operator;
     public bool Focusing;
+    public bool targetCam;
 
     public SkillDataManager skillData;
     public SkillDataManager SkillData => skillData;
@@ -30,8 +32,10 @@ public class Battle : MonoBehaviour
         set
         {
             index = value;
-            if (value == 8)
+            if (value == characters.Length)
             {
+                targetCam = false;
+                Focusing = false;
                 index = 0;
             }
             else
@@ -49,15 +53,20 @@ public class Battle : MonoBehaviour
     }
     private void Update()
     {
-        if (Focusing)
+        if (Focusing && !targetCam)
         {
-            cam.orthographicSize = 2f;
+            cam.orthographicSize = 3.5f;
             cam.transform.position = Avatars[index].transform.position - new Vector3(0, 0, 10);
         }
-        else
+        else if(!Focusing && !targetCam)
         {
             cam.orthographicSize = 5f;
             cam.transform.position = Vector3.zero - new Vector3(0, 0, 10);
+        }
+        else if(targetCam)
+        {
+            cam.orthographicSize = 3.5f;
+            cam.transform.position = target.transform.position - new Vector3(0, 0, 10);
         }
     }
     private void Initialize()
@@ -108,34 +117,14 @@ public class Battle : MonoBehaviour
         characters[index].State = State;
         Operator.gameObject.SetActive(false);
     }
-    public void ProgressingTurn()
-    {
-
-    }
-    //IEnumerator Progress()
-    //{
-    //    while (true)
-    //    {
-
-    //        yield return null; 
-    //        if (true)
-    //        {
-
-    //        }
-    //        //OperateCharacter(Random.Range(1, 3));
-    //    }
-    //}
-    public void CameraMove()
-    {
-
-    }
     public void OnTarget()
     {
+        Operator.gameObject.SetActive(false);
         TargetPoint.SetActive(true);
-        Targetting(0);
+        Targetting(new(0, 999));
     }
-    public void Targetting(int target, GameObject obj = null)
+    public void Targetting(Vector2 pos)
     {
-        TargetPoint.transform.position = new Vector3(6, -98.5f + target * 2f , 0);
+        TargetPoint.transform.position = new Vector3(6, pos.y , 0);
     }
 }

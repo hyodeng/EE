@@ -2814,6 +2814,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4259719174833224898}
     - target: {fileID: 3361804016292734993, guid: 2b31671e45ab651409449c0d015eda77, type: 3}
+      propertyPath: nextButton
+      value: 
+      objectReference: {fileID: 3644236687399370830}
+    - target: {fileID: 3361804016292734993, guid: 2b31671e45ab651409449c0d015eda77, type: 3}
       propertyPath: button_chef
       value: 
       objectReference: {fileID: 665999442}
@@ -3388,6 +3392,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7c7ae03a8cb34e41a4d8e39565157e2, type: 3}
+--- !u!114 &3644236687399370830 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3644236688723353761, guid: a7c7ae03a8cb34e41a4d8e39565157e2, type: 3}
+  m_PrefabInstance: {fileID: 3644236687399370829}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4080534661013807634
 PrefabInstance:
   m_ObjectHideFlags: 0

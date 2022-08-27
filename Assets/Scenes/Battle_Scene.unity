@@ -224,11 +224,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &87802921 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
-  m_PrefabInstance: {fileID: 841255080}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &103828559
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,9 +260,12 @@ MonoBehaviour:
   parts: []
   cam: {fileID: 519420031}
   target: {fileID: 0}
+  UserParty: {fileID: 527805027}
+  Monsters: {fileID: 1964778312}
   Avatars: []
   Operator: {fileID: 1457188552}
   Focusing: 0
+  targetCam: 0
   skillData: {fileID: 0}
   index: 0
   TargetPoint: {fileID: 2103195784}
@@ -286,6 +284,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &374280991 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+  m_PrefabInstance: {fileID: 841255080}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &395101674
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,6 +424,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 395101674}
   m_CullTransparentMesh: 1
+--- !u!1 &416836489 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+  m_PrefabInstance: {fileID: 1369924748}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,11 +548,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &542389008 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
-  m_PrefabInstance: {fileID: 552614509}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &552614509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -564,6 +567,14 @@ PrefabInstance:
       propertyPath: defence
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: DamagePrefab
+      value: 
+      objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
       value: Monster3
@@ -632,32 +643,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 646484574680006745, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
   m_PrefabInstance: {fileID: 552614509}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &552614515
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!1 &608812173 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+  m_PrefabInstance: {fileID: 1196480472}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 542389008}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &611052807
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,8 +869,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 103828560}
         m_TargetAssemblyTypeName: Battle, Assembly-CSharp
-        m_MethodName: OperateCharacter
-        m_Mode: 3
+        m_MethodName: OnTarget
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -946,6 +936,18 @@ PrefabInstance:
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: DamagePrefab
+      value: 
+      objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
       value: Player0
@@ -1033,6 +1035,14 @@ PrefabInstance:
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: DamagePrefab
+      value: 
+      objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
       value: Monster1
@@ -1101,13 +1111,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 646484574680006745, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
   m_PrefabInstance: {fileID: 841255080}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &841255086
+--- !u!61 &841255085
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 87802921}
+  m_GameObject: {fileID: 374280991}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -1127,10 +1137,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &1056558308 stripped
+--- !u!1 &880713888 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
-  m_PrefabInstance: {fileID: 1196480472}
+  m_PrefabInstance: {fileID: 721487631}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &880713892
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880713888}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!1 &1075136237 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+  m_PrefabInstance: {fileID: 1787684812}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1196480472
 PrefabInstance:
@@ -1147,9 +1188,21 @@ PrefabInstance:
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: DamagePrefab
+      value: 
+      objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
       value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 646484574680006745, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_RootOrder
@@ -1215,13 +1268,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 646484574680006745, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
   m_PrefabInstance: {fileID: 1196480472}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &1196480478
+--- !u!61 &1196480477
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056558308}
+  m_GameObject: {fileID: 608812173}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -1241,47 +1294,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &1283550588 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
-  m_PrefabInstance: {fileID: 721487631}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &1283550593
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283550588}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!1 &1313615307 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
-  m_PrefabInstance: {fileID: 1964189144}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1326745900 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
-  m_PrefabInstance: {fileID: 1787684812}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1369924748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1297,9 +1309,21 @@ PrefabInstance:
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: DamagePrefab
+      value: 
+      objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
       value: Player2
+      objectReference: {fileID: 0}
+    - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 646484574680006745, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_RootOrder
@@ -1365,6 +1389,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 646484574680006745, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
   m_PrefabInstance: {fileID: 1369924748}
   m_PrefabAsset: {fileID: 0}
+--- !u!61 &1369924753
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416836489}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &1410419269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1380,9 +1430,21 @@ PrefabInstance:
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: DamagePrefab
+      value: 
+      objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
       value: Player3
+      objectReference: {fileID: 0}
+    - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 646484574680006745, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_RootOrder
@@ -1569,6 +1631,11 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1506835545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+  m_PrefabInstance: {fileID: 1964189144}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1512266211
 GameObject:
   m_ObjectHideFlags: 0
@@ -1704,37 +1771,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1512266211}
   m_CullTransparentMesh: 1
---- !u!1 &1591221597 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
-  m_PrefabInstance: {fileID: 1369924748}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &1591221602
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1591221597}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &1593501324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,6 +1838,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1597004205 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+  m_PrefabInstance: {fileID: 552614509}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &1597004209
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597004205}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1624012166
 GameObject:
   m_ObjectHideFlags: 0
@@ -2085,6 +2152,14 @@ PrefabInstance:
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: DamagePrefab
+      value: 
+      objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
       value: Monster2
@@ -2153,13 +2228,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 646484574680006745, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
   m_PrefabInstance: {fileID: 1787684812}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &1787684818
+--- !u!61 &1787684817
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1326745900}
+  m_GameObject: {fileID: 1075136237}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -2179,18 +2254,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &1788227830 stripped
+--- !u!1 &1871680371 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
   m_PrefabInstance: {fileID: 1410419269}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &1788227835
+--- !u!61 &1871680375
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1788227830}
+  m_GameObject: {fileID: 1871680371}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -2225,6 +2300,14 @@ PrefabInstance:
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: DamagePrefab
+      value: 
+      objectReference: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
     - target: {fileID: 646484574680006744, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: m_Name
       value: Monster0
@@ -2293,13 +2376,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 646484574680006745, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
   m_PrefabInstance: {fileID: 1964189144}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &1964189150
+--- !u!61 &1964189149
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313615307}
+  m_GameObject: {fileID: 1506835545}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}

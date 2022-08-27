@@ -8,7 +8,7 @@ using TMPro;
 [Serializable]
 public class character
 {
-    public string _name, desc;
+    public string _name, desc, skillname, skilldesc;
     public int maxhp, hp, maxmp, mp, attack, attackup, magic, magicup, defence, defenceup, speed, speedup;
     public string[] parts;
     public string[] equipment;
@@ -52,6 +52,7 @@ public class CharacterStat : MonoBehaviour
     public Button button_thief;
     public Button button_popstar;
     public Button button_chef;
+    public Button nextButton;
 
     public Slider hpSlider;
     public Slider mpSlider;
@@ -75,7 +76,6 @@ public class CharacterStat : MonoBehaviour
 
     //무기 장착 
     Customized customized;
-
 
     private void Awake()
     {
@@ -108,11 +108,11 @@ public class CharacterStat : MonoBehaviour
         button_thief.onClick.AddListener(() => DataSetup(CharacterType.Thief));
         button_popstar.onClick.AddListener(() => DataSetup(CharacterType.Popstar));
         button_chef.onClick.AddListener(() => DataSetup(CharacterType.Chef));
+        nextButton.onClick.AddListener(NextScene);
 
         backAura = GameObject.Find("BackAura").GetComponent<ParticleSystem>();
 
     }
-
 
     public void DataSetup(CharacterType type)
     {
@@ -248,11 +248,6 @@ public class CharacterStat : MonoBehaviour
         playerExplanation.transform.parent.gameObject.SetActive(true);
 
     }
-
-
-
-
-
     //5 : 오른쪽무기
     void SetWeapon()
     {
@@ -260,5 +255,8 @@ public class CharacterStat : MonoBehaviour
         //parts[8].sprite = Resources.Load<Sprite>($"Character/Weapons/Sword_5");
 
     }
-
+    void NextScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("CharacterSelectPartner");
+    }
 }

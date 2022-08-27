@@ -72,7 +72,7 @@
 			"speedup": 1,
 			"parts": [ "Eye1.png", "Hair_1.png", "", "Armor_9.png", "Armor_9.png", "Armor_9.png", "Foot_5.png", "Foot_5.png", "", "" ],
 			"skillname": "큐어",
-			"skilldesc": "기도의 힘으로 HP를 회복한다",
+			"skilldesc": "기도의 힘으로 아군 전체의 HP를 회복한다",
 			"armor": [],
 			"weapon": [],
 			"desc": "신비의 마법으로 상처를 치유한다\n동료들의 위기에서 대활약"

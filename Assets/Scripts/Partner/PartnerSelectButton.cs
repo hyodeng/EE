@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class PartnerSelectButton : MonoBehaviour
 {
@@ -13,10 +14,13 @@ public class PartnerSelectButton : MonoBehaviour
     Button btnThief;
     Button btnPopstar;
     Button btnChef;
+    public Button nextButton;
 
     Customized customized;
     
     Character partnerData;
+
+    public PartnerSpawner spawner;
 
     private void Awake()
     {
@@ -26,9 +30,8 @@ public class PartnerSelectButton : MonoBehaviour
         btnThief = GameObject.Find("Btn_Thief").GetComponent<Button>();
         btnPopstar = GameObject.Find("Btn_Popstar").GetComponent<Button>();
         btnChef = GameObject.Find("Btn_Chef").GetComponent<Button>();
-
+        nextButton.onClick.AddListener(NextScene);
     }
-
     private void Start()
     {
         customized = FindObjectOfType<Customized>();
@@ -44,7 +47,6 @@ public class PartnerSelectButton : MonoBehaviour
         btnChef.onClick.AddListener(() => DataSetUp(CharacterType.Chef));
 
     }
-
     private void DataSetUp(CharacterType type)
     {
 
@@ -85,11 +87,15 @@ public class PartnerSelectButton : MonoBehaviour
             }
         }
     }
-
     void LoadJsonPartnerData()
     {
 
     }
-
-
+    void NextScene()
+    {
+        if(spawner.OnSpawn)
+        {
+            SceneManager.LoadScene("Stage_Scene");
+        }
+    }
 }
