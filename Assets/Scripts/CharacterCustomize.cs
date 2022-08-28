@@ -6,13 +6,13 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CharacterStatManager : MonoBehaviour
+public class CharacterCustomize : MonoBehaviour
 {
     Button nextScene;              //다음씬 선택 버튼
     private void Start()
     {
         nextScene = GameObject.Find("NextButton").GetComponent<Button>();
-        Customized custom = GameObject.Find("Character0").GetComponent<Customized>();
+        Customized custom = FindObjectOfType<Customized>();
         nextScene.onClick.AddListener(() => {
             for(int i = 0; i<10; i++)
             {

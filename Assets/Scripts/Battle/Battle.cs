@@ -21,9 +21,7 @@ public class Battle : MonoBehaviour
     public Transform Operator;
     public bool Focusing;
     public bool targetCam;
-
-    public SkillDataManager skillData;
-    public SkillDataManager SkillData => skillData;
+    public bool normalAttack;
 
     public int index = 0;
     public int Index
@@ -40,7 +38,15 @@ public class Battle : MonoBehaviour
             }
             else
             {
-                OperateCharacter(Random.Range(1, 3));
+                Debug.Log(characters[value].transform.parent.name);
+                if (characters[value].transform.parent.name.IndexOf("User")>-1)
+                {
+                    OperateCharacter(Random.Range(1, 3));
+                }
+                else
+                {
+                    OperateCharacter(1);
+                }
             }
         }
     }
@@ -49,7 +55,7 @@ public class Battle : MonoBehaviour
 
     private void Awake()
     {
-        for(int i = 0; i<4; i++)
+        for (int i = 0; i<4; i++)
         {
             if (GameManager.Inst.userPartyCheck[i])
             {
@@ -66,23 +72,21 @@ public class Battle : MonoBehaviour
         if (Focusing && !targetCam)
         {
             cam.orthographicSize = 3.5f;
-            cam.transform.position = Avatars[index].transform.position - new Vector3(0, 0, 10);
+            cam.transform.position = Avatars[index].transform.position - new Vector3(0, 0, 100);
         }
         else if(!Focusing && !targetCam)
         {
             cam.orthographicSize = 5f;
-            cam.transform.position = Vector3.zero - new Vector3(0, 0, 10);
+            cam.transform.position = Vector3.zero - new Vector3(0, 0, 100);
         }
         else if(targetCam)
         {
             cam.orthographicSize = 3.5f;
-            cam.transform.position = target.transform.position - new Vector3(0, 0, 10);
+            cam.transform.position = target.transform.position - new Vector3(0, 0, 100);
         }
     }
     private void Initialize()
     {
-        skillData = GetComponent<SkillDataManager>();
-
         TargetPoint.SetActive(false);
         player = Transform.FindObjectsOfType<Player>();
         System.Array.Sort<Player>(player, (x, y) => x.transform.GetSiblingIndex().CompareTo(y.transform.GetSiblingIndex()));
@@ -127,6 +131,11 @@ public class Battle : MonoBehaviour
         characters[index].State = State;
         Operator.gameObject.SetActive(false);
     }
+    public void NormalAttack()
+    {
+        normalAttack = true;
+        OnTarget();
+    }
     public void OnTarget()
     {
         Operator.gameObject.SetActive(false);
@@ -135,6 +144,6 @@ public class Battle : MonoBehaviour
     }
     public void Targetting(Vector2 pos)
     {
-        TargetPoint.transform.position = new Vector3(6, pos.y , 0);
+        TargetPoint.transform.position = new Vector3(pos.x, pos.y , 0);
     }
 }

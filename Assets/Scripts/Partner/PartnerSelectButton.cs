@@ -20,7 +20,7 @@ public class PartnerSelectButton : MonoBehaviour
     
     Character partnerData;
 
-    public PartnerSpawner spawner;
+    public PartnerSelect spawner;
 
     private void Awake()
     {
@@ -34,7 +34,7 @@ public class PartnerSelectButton : MonoBehaviour
     }
     private void Start()
     {
-        customized = FindObjectOfType<Customized>();
+        customized = GameObject.Find("Character1").GetComponent<Customized>();
 
         string data = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
         partnerData = JsonUtility.FromJson<Character>(data);
@@ -49,28 +49,8 @@ public class PartnerSelectButton : MonoBehaviour
     }
     private void DataSetUp(CharacterType type)
     {
-
-        switch (type)
-        {
-            case CharacterType.Warrior:
-                //파트너의 이미지
-                SetPartnerParts(type);
-
-                break;
-            case CharacterType.Mage:
-                break;
-            case CharacterType.Cleric:
-                break;
-            case CharacterType.Thief:
-                break;
-            case CharacterType.Popstar:
-                break;
-            case CharacterType.Chef:
-                break;
-            default:
-                Debug.Log("파트너 직업 선택 오류");
-                break;
-        }
+        customized.GetComponent<CharacterData>().characterClass = type;
+        SetPartnerParts(type);
     }
 
     private void SetPartnerParts(CharacterType type)
@@ -89,9 +69,6 @@ public class PartnerSelectButton : MonoBehaviour
     }
     void NextScene()
     {
-        if(spawner.OnSpawn)
-        {
-            SceneManager.LoadScene("Stage_Scene");
-        }
+        SceneManager.LoadScene("Stage_Scene");
     }
 }

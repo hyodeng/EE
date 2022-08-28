@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a9abd02d7bd954da3806b3c6e3ff4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamagePrefab: {fileID: 0}
+  DamagePrefab: {fileID: 6693862422832939388, guid: 0794a5a6a9a53e8458b635c40f129499, type: 3}
   weaponType: Normal
   oriPos: {x: 0, y: 0, z: 0}
   moveSpeed: 5
@@ -535,8 +535,9 @@ MonoBehaviour:
   defence: 0
   speed: 0
   BehaviorEnd: 0
-  isTargetingSkill: 0
+  Trigger: 0
   isPlayer: 0
+  characterClass: 0
 --- !u!114 &1628160540
 MonoBehaviour:
   m_ObjectHideFlags: 0

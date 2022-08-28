@@ -870,6 +870,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  userPartyCheck: 00000000
 --- !u!1 &334221967
 GameObject:
   m_ObjectHideFlags: 0
@@ -3246,7 +3247,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 184830254315601387, guid: 0e01640a2c08c05409c9b5ef49d1d44e, type: 3}
       propertyPath: m_Name
-      value: CharacterStatMgm
+      value: CharacterCustomize
       objectReference: {fileID: 0}
     - target: {fileID: 184830254315601388, guid: 0e01640a2c08c05409c9b5ef49d1d44e, type: 3}
       propertyPath: m_RootOrder

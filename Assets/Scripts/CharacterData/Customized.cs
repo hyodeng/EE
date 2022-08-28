@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Customized : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Customized : MonoBehaviour
     }
     void Init()
     {
-        if (name.IndexOf("Character")>-1)
+        if (name.IndexOf("Character") > -1)
         {
             GameManager.Inst.userPartyCheck[System.Convert.ToInt32(gameObject.name.Replace("Character", ""))] = true;
             AsyncParts(System.Convert.ToInt32(gameObject.name.Replace("Character", "")));

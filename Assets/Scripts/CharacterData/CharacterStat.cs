@@ -8,13 +8,10 @@ using TMPro;
 [Serializable]
 public class character
 {
-    public string _name, desc, skillname, skilldesc;
+    public string _name, desc;
     public int maxhp, hp, maxmp, mp, attack, attackup, magic, magicup, defence, defenceup, speed, speedup;
-    public string[] parts;
-    public string[] equipment;
+    public string[] parts, equipment;
 }
-
-
 [Serializable]
 public class Character
 {
@@ -118,6 +115,7 @@ public class CharacterStat : MonoBehaviour
         character data;
 
         statBarText.SetActive(true);
+        FindObjectOfType<CharacterData>().characterClass = type;
         switch (type)
         {
             case CharacterType.Warrior:
