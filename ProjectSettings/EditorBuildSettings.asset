@@ -26,4 +26,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MiniGame/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_1.unity
+    guid: 8540e4ef67e583b47a84ed2375717403
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_2.unity
+    guid: 5d36b2e18fb10d74b884579ffee8cf25
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_3.unity
+    guid: eebc07eb82458884f9a83e7229265c57
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_Scene.unity
+    guid: 05728c5061da24242a2e3144f2343a3c
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Start_Scene.unity
+    guid: ecb731bbe467ef74a94b6d221f332d04
   m_configObjects: {}

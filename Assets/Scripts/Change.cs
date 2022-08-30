@@ -6,52 +6,25 @@ using UnityEngine.UI;
 
 public class Change : MonoBehaviour
 {
-    //bool open = false;
-    public GameObject stage_One = null;
-    public GameObject stage_Two = null;
-    public GameObject stage_Boss = null;
-
-    public GameObject stage_Select = null;
-    public GameObject Enemy = null;
-
-    
-
-    
-
-
-    private void Start()
-    {
-        stage_One.SetActive(false);
-        stage_Two.SetActive(false);
-        stage_Boss.SetActive(false);
-        stage_Select.SetActive(true);    
-    }
-
+  
     public void Stage_One()
     {
-        //SceneManager.LoadScene("Grass_Scene");
-        stage_Select.SetActive(false);
-        stage_One.SetActive(true); // 1 스테이지로 이        
+        SceneManager.LoadScene("Stage_1");           
     }
     public void Stage_Two()
     {
-       stage_Select.SetActive(false);
-       stage_Two.SetActive(true);
-       // Debug.Log("인식됨");
-       
+        SceneManager.LoadScene("Stage_2");
     }
     public void Stage_Boss()
     {
-       stage_Select.SetActive(false);
-       stage_Boss.SetActive(true);
-       // //Instantiate(stage_Boss);
+        SceneManager.LoadScene("Stage_3");
     }
-    public void StageSelect()
+    public void To_Select()
     {
-        //Instantiate(stage_Select);
+        SceneManager.LoadScene("Stage_Scene");
     }
 
-    public void SelectToStart()
+    public void To_Start()
     {
         SceneManager.LoadScene("Start_Scene");
     }
