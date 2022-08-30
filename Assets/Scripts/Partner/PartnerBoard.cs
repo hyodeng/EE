@@ -32,7 +32,7 @@ public class PartnerBoard : MonoBehaviour
         countTxt = transform.GetChild(1).GetComponent<TextMeshPro>();
 
         //동료 선택 여부 물어보는 창
-        questionPop = transform.Find("QustionPop").gameObject;
+        questionPop = transform.Find("QuestionPop").gameObject;
         yesbutton = transform.GetComponentsInChildren<Button>()[0];     //팝업창 : 동료 추가 yes버튼
         nobutton = transform.GetComponentsInChildren<Button>()[1];      //팝업창 : 동료 추가 no버튼
         selectbutton = transform.GetComponentsInChildren<Button>()[2];  //동료리스트 버튼 
@@ -91,7 +91,7 @@ public class PartnerBoard : MonoBehaviour
     {
         questionPop.SetActive(false);
         //선택된 동료모음창 오픈
-        OnPartnerSelectBoardOpen?.Invoke(); 
+        OnPartnerSelectBoardOpen?.Invoke();
     }
 
     private void NoSelectPartner()

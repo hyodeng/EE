@@ -40,7 +40,7 @@ public class PartnerSelectBoard : MonoBehaviour
         partnerNum1 = partner1.GetComponentsInChildren<TextMeshProUGUI>()[0];
         partnerName1 = partner1.GetComponentsInChildren<TextMeshProUGUI>()[1];
         PartnerExplanation1 = partner1.GetComponentsInChildren<TextMeshProUGUI>()[2];
-        
+
 
         //동료2의 숫자, 직업, 설명
         partnerNum2 = partner2.GetComponentsInChildren<TextMeshProUGUI>()[0];
@@ -58,12 +58,12 @@ public class PartnerSelectBoard : MonoBehaviour
     private void Start()
     {
         this.gameObject.SetActive(false);
-        
+
         //델리게이트 등록
         partnerBoard.OnPartnerSelectBoardOpen += Open;
-        partnerBoard.OnPartnerSelectBoardClose += Close;   
+        partnerBoard.OnPartnerSelectBoardClose += Close;
         partnerBoard.OnOffSwitch += OnOffSwitch;
-        
+
     }
 
 
@@ -85,25 +85,26 @@ public class PartnerSelectBoard : MonoBehaviour
         if (this.gameObject.activeSelf == false)
             this.gameObject.SetActive(true);
 
-        if(PartnerBoard.partnerCount == 0)
+        if (PartnerBoard.partnerCount == 0)
         {
             partner1.SetActive(false);
             partner2.SetActive(false);
             partner3.SetActive(false);
 
         }
-        else if(PartnerBoard.partnerCount == 1)
+        else if (PartnerBoard.partnerCount == 1)
         {
             partner1.SetActive(true);
             partner2.SetActive(false);
-            partner3.SetActive(false) ;
+            partner3.SetActive(false);
         }
-        else if(PartnerBoard.partnerCount == 2)
+        else if (PartnerBoard.partnerCount == 2)
         {
             partner1.SetActive(true);
             partner2.SetActive(true);
             partner3.SetActive(false);
-        }else if(PartnerBoard.partnerCount == 3)
+        }
+        else if (PartnerBoard.partnerCount == 3)
         {
 
             partner1.SetActive(true);

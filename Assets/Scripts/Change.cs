@@ -13,12 +13,6 @@ public class Change : MonoBehaviour
 
     public GameObject stage_Select = null;
     public GameObject Enemy = null;
-
-    
-
-    
-
-
     private void Start()
     {
         stage_One.SetActive(false);
@@ -29,9 +23,9 @@ public class Change : MonoBehaviour
 
     public void Stage_One()
     {
-        //SceneManager.LoadScene("Grass_Scene");
-        stage_Select.SetActive(false);
-        stage_One.SetActive(true); // 1 스테이지로 이        
+        SceneManager.LoadScene("Battle_Scene");
+        //stage_Select.SetActive(false);
+        //stage_One.SetActive(true); // 1 스테이지로 이        
     }
     public void Stage_Two()
     {
