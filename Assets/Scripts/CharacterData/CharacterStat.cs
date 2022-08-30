@@ -3,15 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System.Text;
 using TMPro;
+
 
 [Serializable]
 public class character
 {
     public string _name, desc;
     public int maxhp, hp, maxmp, mp, attack, attackup, magic, magicup, defence, defenceup, speed, speedup;
-    public string[] parts, equipment;
+    public string[] parts;
+    public string skillname;
+    public string skilldesc;
+    public string[] equipment;
 }
+
+
 [Serializable]
 public class Character
 {
@@ -24,16 +32,7 @@ public class CharacterStat : MonoBehaviour
     //Json 읽어오기 위한 변수
     public TextAsset textAsset;
     public Character character;
-
-    //Json 저장용 변수
-    public string jsonname;
-    public int jsonhp;
-    public int jsonmp;
-    public int jsonattack;
-    public int jsonmagic;
-    public int jsondefence;
-    public int jsonspeed;
-
+    SavePlayerData playerData = new SavePlayerData();
 
     //Max 스탯 -> 확정되면 private으로
     public int statHp = 15;
@@ -49,7 +48,6 @@ public class CharacterStat : MonoBehaviour
     public Button button_thief;
     public Button button_popstar;
     public Button button_chef;
-    public Button nextButton;
 
     public Slider hpSlider;
     public Slider mpSlider;
@@ -59,10 +57,9 @@ public class CharacterStat : MonoBehaviour
     public Slider speedSlider;
 
     GameObject characterBoard;
-    GameObject statBarText;
-
     TextMeshProUGUI playerName;
     TextMeshProUGUI playerExplanation;
+    GameObject statBarText;
     TextMeshProUGUI hptext;
     TextMeshProUGUI mptext;
     TextMeshProUGUI attackText;
@@ -74,48 +71,55 @@ public class CharacterStat : MonoBehaviour
 
     //무기 장착 
     Customized customized;
+    GameObject skillBoard;
 
     private void Awake()
     {
         //Resource 폴더/Json 폴더/Character.json 파일에서 게임초기 선택할 캐릭터 정보 읽어옴
         character = JsonUtility.FromJson<Character>(textAsset.text);
 
-        characterBoard = GameObject.Find("Canvas").transform.Find("CharacterBoard").gameObject;
-        statBarText = GameObject.Find("Canvas").transform.Find("StatBarText").gameObject;
-
-        playerName = characterBoard.transform.Find("PlayerName").GetComponent<TextMeshProUGUI>();
-        playerExplanation = characterBoard.transform.Find("PlayerExplanation").GetComponent<TextMeshProUGUI>();
-        hptext = statBarText.transform.Find("HPtext").GetComponent<TextMeshProUGUI>();
-        mptext = statBarText.transform.Find("MPtext").GetComponent<TextMeshProUGUI>();
-        attackText = statBarText.transform.Find("Attacktext").GetComponent<TextMeshProUGUI>();
-        magicText = statBarText.transform.Find("Magictext").GetComponent<TextMeshProUGUI>();
-        defText = statBarText.transform.Find("Deftext").GetComponent<TextMeshProUGUI>();
-        speedText = statBarText.transform.Find("Speedtext").GetComponent<TextMeshProUGUI>();
+        playerName = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
+        playerExplanation = GameObject.Find("PlayerExplanation").GetComponent<TextMeshProUGUI>();
+        hptext = GameObject.Find("HPtext").GetComponent<TextMeshProUGUI>();
+        mptext = GameObject.Find("MPtext").GetComponent<TextMeshProUGUI>();
+        attackText = GameObject.Find("Attacktext").GetComponent<TextMeshProUGUI>();
+        magicText = GameObject.Find("Magictext").GetComponent<TextMeshProUGUI>();
+        defText = GameObject.Find("Deftext").GetComponent<TextMeshProUGUI>();
+        speedText = GameObject.Find("Speedtext").GetComponent<TextMeshProUGUI>();
 
         customized = FindObjectOfType<Customized>();
 
-        characterBoard.SetActive(false);
-        statBarText.SetActive(false);
+        characterBoard = GameObject.Find("CharacterBoard");
+        skillBoard = GameObject.Find("SkillBoard");
+        statBarText = GameObject.Find("StatBarText");
     }
+
     private void Start()
     {
+        characterBoard.SetActive(false);
+        statBarText.SetActive(false);
+        skillBoard.SetActive(false);
+
         button_warrior.onClick.AddListener(() => DataSetup(CharacterType.Warrior));
         button_mage.onClick.AddListener(() => DataSetup(CharacterType.Mage));
         button_clreic.onClick.AddListener(() => DataSetup(CharacterType.Cleric));
         button_thief.onClick.AddListener(() => DataSetup(CharacterType.Thief));
         button_popstar.onClick.AddListener(() => DataSetup(CharacterType.Popstar));
         button_chef.onClick.AddListener(() => DataSetup(CharacterType.Chef));
-        nextButton.onClick.AddListener(NextScene);
 
         backAura = GameObject.Find("BackAura").GetComponent<ParticleSystem>();
+
     }
+
 
     public void DataSetup(CharacterType type)
     {
         character data;
 
+        characterBoard.SetActive(true);
         statBarText.SetActive(true);
-        FindObjectOfType<CharacterData>().characterClass = type;
+        skillBoard.SetActive(true);
+
         switch (type)
         {
             case CharacterType.Warrior:
@@ -125,9 +129,12 @@ public class CharacterStat : MonoBehaviour
                 SetCharacterExplanation(data);
                 SetCharacterToJson(data);
 
-                //직업별 오른쪽손 무기 장착
+                //직업별 오른쪽손 무기 장착 , 수정 필요, 아래쪽에 SetWeapon 메소드로
                 customized.SetParts(5, "Sword_5.png");
                 customized.SetParts(6, "");
+
+                SetSkillBoard(data);
+
 
                 //캐릭터 배경 파티클
                 if (!backAura.isPlaying) { backAura.Play(); }
@@ -144,6 +151,8 @@ public class CharacterStat : MonoBehaviour
                 customized.SetParts(5, "Ward_1.png");
                 customized.SetParts(6, "");
 
+                SetSkillBoard(data);
+
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
 
@@ -157,6 +166,8 @@ public class CharacterStat : MonoBehaviour
                 //직업별 오른쪽손 무기 장착
                 customized.SetParts(5, "Cleric_1.png");
                 customized.SetParts(6, "");
+
+                SetSkillBoard(data);
 
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
@@ -172,6 +183,8 @@ public class CharacterStat : MonoBehaviour
                 customized.SetParts(5, "Sword_1.png");
                 customized.SetParts(6, "Shield_1.png");
 
+                SetSkillBoard(data);
+
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
 
@@ -185,6 +198,8 @@ public class CharacterStat : MonoBehaviour
                 //직업별 오른쪽손 무기 장착
                 customized.SetParts(5, "Pop_Star_Item.png");
                 customized.SetParts(6, "");
+
+                SetSkillBoard(data);
 
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
@@ -200,21 +215,48 @@ public class CharacterStat : MonoBehaviour
                 customized.SetParts(5, "Chef_Item.png");
                 customized.SetParts(6, "");
 
+                SetSkillBoard(data);
+
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
         }
     }
 
-    private void SetCharacterToJson(character data)
+    private void SetSkillBoard(character data)
     {
-        //선택된 캐릭터 정보를 Json 저장하기 위한 중간 과정
-        jsonname = data._name;
-        jsonhp = data.hp;
-        jsonmp = data.mp;
-        jsonattack = data.attack;
-        jsonmagic = data.magic;
-        jsondefence = data.defence;
-        jsonspeed = data.speed;
+        //직업별 스킬 보여줌  , 수정사항 : 무기별 이름, 이미지,  내용 바꾸어야 함.
+
+        skillBoard.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Test";
+        skillBoard.GetComponentsInChildren<TextMeshProUGUI>()[1].text = data.skillname;
+        skillBoard.GetComponentsInChildren<TextMeshProUGUI>()[2].text = data.skilldesc;
+        //weaponName = "Sword";
+        //skillName += data.skillname;
+        //skillExp = data.skilldesc;
+    }
+
+
+    public void SetCharacterToJson(character data)
+    {
+        playerData._name = data._name;
+        playerData.desc = data.desc;
+        playerData.maxhp = data.maxhp;
+        playerData.hp = data.hp;
+        playerData.maxmp = data.maxmp;
+        playerData.mp = data.mp;
+        playerData.attack = data.attack;
+        playerData.attackup = data.attackup;
+        playerData.magic = data.magic;
+        playerData.magicup = data.magicup;
+        playerData.defence = data.defence;
+        playerData.defenceup = data.defenceup;
+        playerData.speed = data.speed;
+        playerData.speedup = data.speedup;
+        playerData.skillname = data.skillname;
+        playerData.skilldesc = data.skilldesc;
+
+        string json = JsonUtility.ToJson(playerData);
+        File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Player.json", json);
+        Debug.Log("플레이어 스탯 초기화");
     }
 
     private void SetCharacterStat(character data)
@@ -245,6 +287,8 @@ public class CharacterStat : MonoBehaviour
         playerExplanation.transform.parent.gameObject.SetActive(true);
 
     }
+
+
     //5 : 오른쪽무기
     void SetWeapon()
     {
@@ -252,8 +296,5 @@ public class CharacterStat : MonoBehaviour
         //parts[8].sprite = Resources.Load<Sprite>($"Character/Weapons/Sword_5");
 
     }
-    void NextScene()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("CharacterSelectPartner");
-    }
+
 }
