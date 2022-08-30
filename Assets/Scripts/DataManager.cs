@@ -17,6 +17,10 @@ public class DataManager : MonoBehaviour
     PartnerBoard partnerboard;
     public PartnerBoard PartnerBoard => partnerboard;
 
+    //삭제할까?
+    PopupController popupController;
+    public PopupController PopupController => popupController;
+
 
     //싱글톤 ---------------------------------------
     static DataManager instance = null;
@@ -43,14 +47,10 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        Initailize();
    
     }
 
-    void Initailize()
-    {
 
-    }
 
     //플레이어 데이터 Json 저장
     public void SavePlayerData()
