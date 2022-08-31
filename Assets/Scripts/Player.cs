@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
+        
         actions.Player.Enable();
         actions.Player.Move.performed += OnMoveInput;
         actions.Player.Move.canceled += OnMoveInput;
