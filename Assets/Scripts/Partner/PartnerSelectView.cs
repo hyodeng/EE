@@ -17,9 +17,9 @@ public class PartnerSelectView : MonoBehaviour
 
     Customized customized;
     
-    Character partner;
+    Character partner;     //json으로 저장되어 있는 캐릭터 정보
 
-    public SavePlayerData partnerData = new SavePlayerData();
+    public SavePlayerData partnerData = new SavePlayerData();   //캐릭터정보를 저장하기 위한 변수 정보
 
     PartnerBoard partnerboard;
 
@@ -212,6 +212,7 @@ public class PartnerSelectView : MonoBehaviour
         partnerData.speedup = partner.character[(int)type].speedup;
         partnerData.skillname = partner.character[(int)type].skillname;
         partnerData.skilldesc = partner.character[(int)type].skilldesc;
+        partnerData.partnercount = partner.character[(int)type].partnercount;
 
         //partnerData.positionX;
         //partnerData.positionY;
@@ -221,14 +222,14 @@ public class PartnerSelectView : MonoBehaviour
     void SavePartnerData()
     {
         string data = JsonUtility.ToJson(partnerData);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/Partner_{PartnerBoard.partnerCount}.json", data);
-        Debug.Log($"동료_{PartnerBoard.partnerCount} 스탯 저장");
+        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/Partner_{partnerData.partnercount}.json", data);
+        Debug.Log($"동료_{partnerData.partnercount} 스탯 저장");
     }
 
 
     void RefreshDataPartnerSelectBoard(CharacterType type)
     {
-        if (PartnerBoard.partnerCount == 0)
+        if (partnerData.partnercount == 0)
         {
             onPartnerSelectBoard?.Invoke();
 
@@ -236,22 +237,27 @@ public class PartnerSelectView : MonoBehaviour
             skillName1.text = partner.character[(int)type].skillname;
             PartnerExplanation1.text = partner.character[(int)type].skilldesc;
         }
-        else if (PartnerBoard.partnerCount == 1)
+        else if (partnerData.partnercount == 1)
         {
             onPartnerSelectBoard?.Invoke();
             partnerName2.text = partner.character[(int)type]._name;
             skillName2.text = partner.character[(int)type].skillname;
             PartnerExplanation2.text = partner.character[(int)type].skilldesc;
         }
-        else if (PartnerBoard.partnerCount == 2)
+        else if (partnerData.partnercount == 2)
         {
             onPartnerSelectBoard?.Invoke();
             partnerName3.text = partner.character[(int)type]._name;
             skillName3.text = partner.character[(int)type].skillname;
             PartnerExplanation3.text = partner.character[(int)type].skilldesc;
         }
-        else
+        else if(partnerData.partnercount == 3)
         {
+            //
+
+        }else
+        {
+            
             Debug.Log("동료선택모음창 오류");
         }
 

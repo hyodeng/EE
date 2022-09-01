@@ -14,10 +14,15 @@ public class DataManager : MonoBehaviour
     Customized customized;
     public Customized Customized => customized;
 
+    //동료 인원수를 가져오기 위해서
+    PopupController popupController;
+    public PopupController PopupController => popupController;
+
 
     //정보 저장 및 로드 관련 델리게이트 
-    public System.Action SavePlayerToJson;  //플레이어 데이터 json으로 저장(초기화)
-    public System.Action SavePartnerToJson;  //동료 데이터 json으로 저장(초기화)
+    public System.Action SavePlayerToJson;  //플레이어 데이터 json으로 저장(초기화) _CharacterStat.cs에서 연결
+    public System.Action SavePartnerToJson;  //동료 데이터 json으로 저장(초기화) _PartnerSelectView.cs에서 연결
+    public System.Action RefreshPartnerCount;   //동료 인원수 변동 저장 _?? 추가 진행
 
     //싱글톤 ---------------------------------------
     static DataManager instance = null;
@@ -45,12 +50,12 @@ public class DataManager : MonoBehaviour
     private void Start()
     {
         Initailize();
-   
     }
 
     void Initailize()
     {
-
+        customized = FindObjectOfType<Customized>();
+        popupController = FindObjectOfType<PopupController>();
     }
 
     //플레이어 이미지 파츠만 Json으로 저장
@@ -59,7 +64,6 @@ public class DataManager : MonoBehaviour
         // 10 == customized.parts.Length; 인데 안됨.
         playerData.parts = new string[10];
 
-        customized = FindObjectOfType<Customized>();
 
         for (int i = 0; i < customized.parts.Length; i++)
         {
@@ -79,8 +83,6 @@ public class DataManager : MonoBehaviour
     {
         string data = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Player.json");
         playerData = JsonUtility.FromJson<SavePlayerData>(data);
-
-        customized = FindObjectOfType<Customized>();
 
         //테스트용 : 플레이어의 부분별 이미지 가져오기
         for (int i = 0; i < 10; i++)

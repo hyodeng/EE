@@ -15,7 +15,7 @@ public class PopupController : MonoBehaviour
     Button prevButton;
 
     TextMeshProUGUI questionText;
-    WaitForSeconds delayTime0 = new WaitForSeconds(0.5f);
+    WaitForSeconds delayTime0 = new WaitForSeconds(0.2f);
     WaitForSeconds delayTime1 = new WaitForSeconds(3.0f);
 
     GameObject yesbutton;
@@ -24,8 +24,21 @@ public class PopupController : MonoBehaviour
     bool isNextScene = false;
     public bool isReadySave = false;    //true일 때만 json으로 저장됨
 
+    //동료인원수 조정-----------------------------------------------------------
+    const int MaxPartnerCount = 3;   //동료 최대 인원수 : 3명까지
+    int partnerCount;               //현재 동료 인원수
+    public int PartnerCount
+    {
+        get => partnerCount;
+        set
+        {
+            partnerCount = Mathf.Clamp(value, 0, MaxPartnerCount);
+        }
+    }
+    //------------------------------------------------------------------------
+
     public System.Action OnEnabledpartnerSelectView;
-    public System.Action OnPartnerCount;
+    public System.Action OnPartnerBoardCount;
 
     private void Awake()
     {
@@ -46,12 +59,14 @@ public class PopupController : MonoBehaviour
         nextButton.onClick.AddListener(SelectNextScene);
         yesbutton.GetComponent<Button>().onClick.AddListener(SelectYes);
         nobutton.GetComponent<Button>().onClick.AddListener(OnOffSwitch);
+        
     }
 
 
 
     private void Initialize()
     {
+        partnerCount = 0; //동료인원수 초기화
         questionPop.SetActive(false);
         yesbutton.SetActive(false);
         nobutton.SetActive(false);
@@ -65,7 +80,6 @@ public class PopupController : MonoBehaviour
         {
             StartCoroutine(PopUpPartnerSelectQuestion());
         }
-
     }
 
     IEnumerator PopUpQuestion()
@@ -145,17 +159,23 @@ public class PopupController : MonoBehaviour
         }
         else if(questionPop.name == "QuestionPop_2")
         {
-            //파트너 데이터 저장
+            //동료 데이터 저장
             isReadySave = true;
             if (isReadySave)
             {
                 DataManager.Instance.SavePartnerToJson();
             }
-            PartnerBoard.partnerCount++;
-            OnPartnerCount?.Invoke();
+            //동료인원수 증가
+            AddPartnerCount();
+            OnPartnerBoardCount?.Invoke();
             OnOffSwitch();
             isNextScene = true;
         }
+    }
+
+    private void AddPartnerCount()
+    {
+        partnerCount++;
     }
 
 

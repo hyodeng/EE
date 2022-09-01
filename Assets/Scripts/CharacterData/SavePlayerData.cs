@@ -18,7 +18,7 @@ public class SavePlayerData
     public string skilldesc;
 
     //동료NPC 인원수
-    public int partnerNum;
+    public int partnercount;
 
     //플레이어 위치
     public float positionX;

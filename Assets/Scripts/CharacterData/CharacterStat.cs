@@ -17,6 +17,7 @@ public class character
     public string skillname;
     public string skilldesc;
     public string[] equipment;
+    public int partnercount;
 }
 
 
@@ -282,7 +283,7 @@ public class CharacterStat : MonoBehaviour
         playerData.speedup = data.speedup;
         playerData.skillname = data.skillname;
         playerData.skilldesc = data.skilldesc;
-
+        playerData.partnercount = data.partnercount;
     }
 
     void SavePlaverData()

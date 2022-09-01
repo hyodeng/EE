@@ -62,7 +62,7 @@ public class PartnerSelectBoard : MonoBehaviour
         if (this.gameObject.activeSelf == false)
             this.gameObject.SetActive(true);
 
-        if(PartnerBoard.partnerCount == 0)
+        if(DataManager.Instance.PopupController.PartnerCount == 0)
         {
             partner1.SetActive(true);
             partner2.SetActive(false);
@@ -70,7 +70,7 @@ public class PartnerSelectBoard : MonoBehaviour
             ClearCheck();
 
         }
-        else if(PartnerBoard.partnerCount == 1)
+        else if(DataManager.Instance.PopupController.PartnerCount == 1)
         {
             partner1.SetActive(true);
             partner2.SetActive(false);
@@ -78,7 +78,7 @@ public class PartnerSelectBoard : MonoBehaviour
             ClearCheck();
 
         }
-        else if(PartnerBoard.partnerCount == 2)
+        else if(DataManager.Instance.PopupController.PartnerCount == 2)
         {
             partner1.SetActive(true);
             partner2.SetActive(true);
@@ -87,7 +87,7 @@ public class PartnerSelectBoard : MonoBehaviour
 
 
         }
-        else if(PartnerBoard.partnerCount == 3)
+        else if(DataManager.Instance.PopupController.PartnerCount == 3)
         {
 
             partner1.SetActive(true);
