@@ -21,20 +21,20 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
-        actions.Player.Enable();
-        actions.Player.Move.performed += OnMove;
-        actions.Player.Move.canceled += OnStop;
-        actions.Player.Use.performed += OnUse;
+        actions.Player2.Enable();
+        actions.Player2.Move.performed += OnMove;
+        actions.Player2.Move.canceled += OnStop;
+        actions.Player2.Use.performed += OnUse;
         
     }
 
     private void OnDisable()
     {
         
-        actions.Player.Use.performed -= OnUse;
-        actions.Player.Move.canceled -= OnStop;
-        actions.Player.Move.performed -= OnMove;
-        actions.Player.Disable();
+        actions.Player2.Use.performed -= OnUse;
+        actions.Player2.Move.canceled -= OnStop;
+        actions.Player2.Move.performed -= OnMove;
+        actions.Player2.Disable();
     }
     void OnMove(InputAction.CallbackContext context)
     {
