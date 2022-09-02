@@ -25,12 +25,13 @@ public class Player : MonoBehaviour
         actions.Player2.Move.performed += OnMove;
         actions.Player2.Move.canceled += OnStop;
         actions.Player2.Use.performed += OnUse;
+        actions.Player2.Use.canceled += OffUse;
         
     }
 
     private void OnDisable()
     {
-        
+        actions.Player2.Use.canceled -= OffUse;
         actions.Player2.Use.performed -= OnUse;
         actions.Player2.Move.canceled -= OnStop;
         actions.Player2.Move.performed -= OnMove;
@@ -62,7 +63,12 @@ public class Player : MonoBehaviour
 
     void OnUse(InputAction.CallbackContext context)
     {
-        anim.SetBool("Use", true);
+        anim.SetBool("isUse", true);
+    }
+
+    void OffUse(InputAction.CallbackContext context)
+    {
+        anim.SetBool("isUse", false);
     }
     private void FixedUpdate()
     {

@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class Portal_Change : MonoBehaviour
+
+public class Aura_Next_Stage2 : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Use"))
         {
-            SceneManager.LoadScene("MainScene");
+            SceneManager.LoadScene("Stage_2");
         }
     }
 }
