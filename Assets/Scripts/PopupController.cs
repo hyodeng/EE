@@ -37,6 +37,11 @@ public class PopupController : MonoBehaviour
     }
     //------------------------------------------------------------------------
 
+    AudioSource audioSource;
+    public AudioClip audionpopGood;
+    public AudioClip audiopopBad;   //나중에 추가
+    public AudioClip audiosave;
+
     public System.Action OnEnabledpartnerSelectView;
     public System.Action OnPartnerBoardCount;
 
@@ -48,6 +53,7 @@ public class PopupController : MonoBehaviour
         savebutton = GameObject.Find("SaveButton").GetComponent<Button>();
         nextButton = nextSceneButton.GetComponent<Button>();
         prevButton = prevSceneButton.GetComponent<Button>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -58,11 +64,8 @@ public class PopupController : MonoBehaviour
         savebutton.onClick.AddListener(PopUpSaveQuestion);
         nextButton.onClick.AddListener(SelectNextScene);
         yesbutton.GetComponent<Button>().onClick.AddListener(SelectYes);
-        nobutton.GetComponent<Button>().onClick.AddListener(OnOffSwitch);
-        
+        nobutton.GetComponent<Button>().onClick.AddListener(OnOffSwitch);   
     }
-
-
 
     private void Initialize()
     {
@@ -131,6 +134,7 @@ public class PopupController : MonoBehaviour
     private void PopUpSaveQuestion()
     {
         OnOffSwitch();
+        PlaySound("Save");
         questionText.text = "현재의 캐릭터 정보로 저장하시겠습니까?";
     }
 
@@ -171,11 +175,34 @@ public class PopupController : MonoBehaviour
             OnOffSwitch();
             isNextScene = true;
         }
+
+        PlaySound("Yes");
+
     }
 
     private void AddPartnerCount()
     {
         partnerCount++;
+    }
+
+
+    void PlaySound(string action)
+    {
+        switch (action)
+        {
+            case "Yes":
+                audioSource.clip = audionpopGood;
+                break;
+            case "No":
+                break;
+            case "Save":
+                audioSource.clip = audiosave;
+                break;
+            default:
+                break;
+        }
+
+        audioSource.Play();
     }
 
 
