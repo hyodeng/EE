@@ -14,75 +14,33 @@ public class Battle : MonoBehaviour
 
     public Camera cam;
 
-    public CharacterData target;
-
-    public GameObject UserParty, Monsters;
     public GameObject[] Avatars;
     public Transform Operator;
     public bool Focusing;
-    public bool targetCam;
-    public bool normalAttack;
 
     public int index = 0;
-    public int Index
-    {
-        get => index;
-        set
-        {
-            index = value;
-            if (value == characters.Length)
-            {
-                targetCam = false;
-                Focusing = false;
-                index = 0;
-            }
-            else
-            {
-                Debug.Log(characters[value].transform.parent.name);
-                if (characters[value].transform.parent.name.IndexOf("User")>-1)
-                {
-                    OperateCharacter(Random.Range(1, 3));
-                }
-                else
-                {
-                    OperateCharacter(1);
-                }
-            }
-        }
-    }
 
     public GameObject TargetPoint;
 
-    private void Awake()
-    {
-        for (int i = 0; i<4; i++)
-        {
-            if (GameManager.Inst.userPartyCheck[i])
-            {
-                GameObject.Find("UserParty").transform.Find($"Character{i}").gameObject.SetActive(true);
-            }
-        }
-    }
     private void Start()
     {
         Initialize();
     }
     private void Update()
     {
-        if (Focusing && !targetCam)
+        if (Focusing)
         {
-            cam.orthographicSize = 3.5f;
-            cam.transform.position = Avatars[index].transform.position - new Vector3(0, 0, 100);
+            cam.orthographicSize = 2f;
+            cam.transform.position = Avatars[index].transform.position - new Vector3(0, 0, 10);
         }
-        else if(!Focusing && !targetCam)
+        else
         {
             cam.orthographicSize = 5f;
-            cam.transform.position = Vector3.zero - new Vector3(0, 0, 100);
+            cam.transform.position = Vector3.zero - new Vector3(0, 0, 10);
         }
-        else if(targetCam)
+        if(index == 8)
         {
-            cam.orthographicSize = 3.5f;
-            cam.transform.position = target.transform.position - new Vector3(0, 0, 100);
+            index = 0;
         }
     }
     private void Initialize()
@@ -96,7 +54,7 @@ public class Battle : MonoBehaviour
         Operator.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OnTarget());
         Operator.GetChild(1).GetComponent<Button>().onClick.AddListener(() => OperateCharacter(2));
         Operator.GetChild(2).GetComponent<Button>().onClick.AddListener(() => OperateCharacter(3));
-        
+
         SetTurn();
     }
     public void SetTurn()
@@ -104,10 +62,8 @@ public class Battle : MonoBehaviour
         characters = FindObjectsOfType<CharacterData>();
         charactersList = new List<CharacterData>(characters);
 
-
         for (int i = 0; i < characters.Length; i++)
         {
-
             for (int j = i + 1; j < characters.Length; j++)
             {
                 if (characters[i].speed < characters[j].speed)
@@ -131,19 +87,17 @@ public class Battle : MonoBehaviour
         characters[index].State = State;
         Operator.gameObject.SetActive(false);
     }
-    public void NormalAttack()
+    public void CameraMove()
     {
-        normalAttack = true;
-        OnTarget();
+
     }
     public void OnTarget()
     {
-        Operator.gameObject.SetActive(false);
         TargetPoint.SetActive(true);
-        Targetting(new(0, 999));
+        Targetting(0);
     }
-    public void Targetting(Vector2 pos)
+    public void Targetting(int target)
     {
-        TargetPoint.transform.position = new Vector3(pos.x, pos.y , 0);
+        TargetPoint.transform.position = new Vector3(6, -98.5f + target * 2f , 0);
     }
 }
