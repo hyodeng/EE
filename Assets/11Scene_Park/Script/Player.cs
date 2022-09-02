@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         rigid.MovePosition(rigid.position + MoveSpeed * Time.fixedDeltaTime * inputDir);
+        Debug.Log(MoveSpeed * Time.fixedDeltaTime * inputDir);
     }
 
 

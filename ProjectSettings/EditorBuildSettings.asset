@@ -21,9 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Battle_Scene.unity
     guid: 46c79cc886e941349947e9a2a4ed743e
   - enabled: 1
-    path: Assets/Scenes/Boss_Scene.unity
-    guid: eebc07eb82458884f9a83e7229265c57
-  - enabled: 1
     path: Assets/Scenes/CharacterCustomize.unity
     guid: 06ba231f1cb4e2848a083e7f2b4d0eef
   - enabled: 1
@@ -33,25 +30,28 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelectPartner.unity
     guid: e76ddfa1baddb604981ea59231b11243
   - enabled: 1
-    path: Assets/Scenes/Desert_Scene.unity
-    guid: 5d36b2e18fb10d74b884579ffee8cf25
-  - enabled: 1
     path: Assets/Scenes/FoodScene.unity
     guid: 58cbe7f0096b1eb47affef991fcbf7c0
-  - enabled: 1
-    path: Assets/Scenes/Grass_Scene.unity
-    guid: 8540e4ef67e583b47a84ed2375717403
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: c9f9b5050e7a39240909fc07e4f7574c
   - enabled: 1
-    path: Assets/Scenes/Repair_Scene.unity
-    guid: 34eedb23061df0b47a8c533e39927bcc
+    path: Assets/11Scene_Park/Scene/Stage_1.unity
+    guid: 8540e4ef67e583b47a84ed2375717403
   - enabled: 1
-    path: Assets/Scenes/Stage_Scene.unity
+    path: Assets/11Scene_Park/Scene/Stage_2.unity
+    guid: 5d36b2e18fb10d74b884579ffee8cf25
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_3.unity
+    guid: eebc07eb82458884f9a83e7229265c57
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_Scene.unity
     guid: 05728c5061da24242a2e3144f2343a3c
   - enabled: 1
-    path: Assets/Scenes/Start_Scene.unity
+    path: Assets/11Scene_Park/Scene/Start_Scene.unity
     guid: ecb731bbe467ef74a94b6d221f332d04
   - enabled: 1
     path: Assets/Scenes/Test_Button.unity

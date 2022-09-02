@@ -14,6 +14,7 @@ TagManager:
   - ChickenLeg
   - Mob
   - DoorOpen
+  - Use
   layers:
   - Default
   - TransparentFX
@@ -21,9 +22,9 @@ TagManager:
   - Player
   - Water
   - UI
-  - 
-  - Ground
-  - 
+  - COVER BUTTON
+  - BUTTON
+  - Background
   - 
   - 
   - 
