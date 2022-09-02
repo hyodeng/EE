@@ -255,7 +255,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: []
   monster: []
-  characters: []
   charactersList: []
   parts: []
   cam: {fileID: 519420031}
@@ -768,8 +767,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 1964778313}
     m_Modifications:
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mhp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mmp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: magic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: speed
-      value: 4
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: attack
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: battle
@@ -777,7 +800,7 @@ PrefabInstance:
       objectReference: {fileID: 103828560}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: defence
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: moveSpeed
@@ -1077,14 +1100,14 @@ MonoBehaviour:
       - m_Target: {fileID: 103828560}
         m_TargetAssemblyTypeName: Battle, Assembly-CSharp
         m_MethodName: NormalAttack
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &663280716
 MonoBehaviour:
@@ -1132,13 +1155,41 @@ PrefabInstance:
     m_TransformParent: {fileID: 2110275763}
     m_Modifications:
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mhp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mmp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: magic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: speed
-      value: 9
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: attack
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: defence
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: moveSpeed
       value: 10
@@ -1338,13 +1389,41 @@ PrefabInstance:
     m_TransformParent: {fileID: 1964778313}
     m_Modifications:
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mhp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mmp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: magic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: speed
-      value: 6
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: attack
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: defence
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: moveSpeed
       value: 10
@@ -1544,13 +1623,41 @@ PrefabInstance:
     m_TransformParent: {fileID: 2110275763}
     m_Modifications:
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mhp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mmp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: magic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: speed
-      value: 10
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: attack
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: defence
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: isPlayer
       value: 1
@@ -2015,13 +2122,41 @@ PrefabInstance:
     m_TransformParent: {fileID: 2110275763}
     m_Modifications:
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mhp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mmp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: magic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: speed
-      value: 8
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: attack
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: defence
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: moveSpeed
       value: 10
@@ -2445,10 +2580,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CharacterData, Assembly-CSharp
-        m_MethodName: Skill
-        m_Mode: 1
+      - m_Target: {fileID: 103828560}
+        m_TargetAssemblyTypeName: Battle, Assembly-CSharp
+        m_MethodName: NormalAttack
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2503,13 +2638,41 @@ PrefabInstance:
     m_TransformParent: {fileID: 1964778313}
     m_Modifications:
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mhp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mmp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: magic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: speed
-      value: 5
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: attack
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: defence
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: moveSpeed
       value: 10
@@ -2704,13 +2867,41 @@ PrefabInstance:
     m_TransformParent: {fileID: 1964778313}
     m_Modifications:
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mhp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mmp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: magic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: speed
-      value: 7
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: attack
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: battle
       value: 
       objectReference: {fileID: 103828560}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: defence
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: moveSpeed
       value: 10
@@ -2940,8 +3131,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 2110275763}
     m_Modifications:
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mhp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: mmp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: magic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: speed
-      value: 7
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
+      propertyPath: attack
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: battle
@@ -2949,7 +3164,7 @@ PrefabInstance:
       objectReference: {fileID: 103828560}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: defence
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1628160541, guid: 1d5de5b1bbe91a14bb7230fbe8caf15a, type: 3}
       propertyPath: moveSpeed

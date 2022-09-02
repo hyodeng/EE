@@ -528,7 +528,9 @@ MonoBehaviour:
   anim: {fileID: 0}
   battle: {fileID: 0}
   state: 0
+  mhp: 0
   hp: 0
+  mmp: 0
   mp: 0
   attack: 0
   magic: 0
@@ -550,9 +552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a119c34bbfb35e14d8b70b5885c84bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textAsset: {fileID: 4900000, guid: f137153b77e7a8e40bd39605ad95bbeb, type: 3}
-  character:
-    character: []
+  CharacterJson: {fileID: 4900000, guid: f137153b77e7a8e40bd39605ad95bbeb, type: 3}
   jsonname: 
   jsonhp: 0
   jsonmp: 0

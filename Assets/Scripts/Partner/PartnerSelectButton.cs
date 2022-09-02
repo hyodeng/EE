@@ -17,8 +17,6 @@ public class PartnerSelectButton : MonoBehaviour
     public Button nextButton;
 
     Customized customized;
-    
-    Character partnerData;
 
     public PartnerSelect spawner;
 
@@ -37,35 +35,32 @@ public class PartnerSelectButton : MonoBehaviour
         customized = GameObject.Find("Character1").GetComponent<Customized>();
 
         string data = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
-        partnerData = JsonUtility.FromJson<Character>(data);
+        //partnerData = JsonUtility.FromJson<Character>(data);
 
-        btnWarrior.onClick.AddListener( () => DataSetUp(CharacterType.Warrior));
-        btnMage.onClick.AddListener(() => DataSetUp(CharacterType.Mage));
-        btnCleric.onClick.AddListener(() => DataSetUp(CharacterType.Cleric));
-        btnThief.onClick.AddListener(() => DataSetUp(CharacterType.Thief));
-        btnPopstar.onClick.AddListener(() => DataSetUp(CharacterType.Popstar));
-        btnChef.onClick.AddListener(() => DataSetUp(CharacterType.Chef));
+        btnWarrior.onClick.AddListener( () => DataSetUp(CharacterType.warrior));
+        btnMage.onClick.AddListener(() => DataSetUp(CharacterType.mage));
+        btnCleric.onClick.AddListener(() => DataSetUp(CharacterType.cleric));
+        btnThief.onClick.AddListener(() => DataSetUp(CharacterType.thief));
+        btnPopstar.onClick.AddListener(() => DataSetUp(CharacterType.popstar));
+        btnChef.onClick.AddListener(() => DataSetUp(CharacterType.chef));
 
     }
     private void DataSetUp(CharacterType type)
     {
-        //customized.GetComponent<CharacterData>().characterClass = type;
-        SetPartnerParts(type);
+        customized.GetComponent<CharacterData>().characterClass = type;
+        SetPartnerParts();
     }
 
-    private void SetPartnerParts(CharacterType type)
+    private void SetPartnerParts()
     {
-        for (int i = 0; i < customized.parts.Length; i++)
+        for (int i = 0; i < 5; i++)
         {
-            if (partnerData.character[(int)type].parts[i] != "")
+            if(i == 2)
             {
-                customized.SetParts(i, partnerData.character[(int)type].parts[i].ToString());
+                continue;
             }
+            customized.RandomParts(i);
         }
-    }
-    void LoadJsonPartnerData()
-    {
-
     }
     void NextScene()
     {

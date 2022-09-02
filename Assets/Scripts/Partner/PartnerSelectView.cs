@@ -8,6 +8,7 @@ using TMPro;
 
 public class PartnerSelectView : MonoBehaviour
 {
+    /*
     Button btnWarrior;
     Button btnMage;
     Button btnCleric;
@@ -19,32 +20,20 @@ public class PartnerSelectView : MonoBehaviour
     
     Character partner;
 
-    public SavePlayerData partnerData = new SavePlayerData();
+    //동료 인원 최대 : 3명?? 다시 확인 필요, TEST 필요
+    SavePlayerData partnerData = new SavePlayerData();
 
     PartnerBoard partnerboard;
-
-    PopupController popupController;
-
     PartnerSelectBoard selectboard;
-    TextMeshProUGUI partnerName1;
-    TextMeshProUGUI skillName1;
-    TextMeshProUGUI PartnerExplanation1;
 
-    TextMeshProUGUI partnerName2;
-    TextMeshProUGUI skillName2;
-    TextMeshProUGUI PartnerExplanation2;
+    Button savebutton;
 
-    TextMeshProUGUI partnerName3;
-    TextMeshProUGUI skillName3;
-    TextMeshProUGUI PartnerExplanation3;
-
-    public System.Action onPartnerSelectBoard;
-    public System.Action offPartnerSelectBoard;
-
+    bool IsReadySave = false;
+    uint index;
 
     private void Awake()
     {
-        //transform.getchild(0).getcomponent<button> 은 왜 안될까?
+        //transform.find("Btn_Warrior").getcomponent<button> 은 왜 안될까?
         btnWarrior = GameObject.Find("Btn_Warrior").GetComponent<Button>();
         btnMage = GameObject.Find("Btn_Mage").GetComponent<Button>();
         btnCleric = GameObject.Find("Btn_Cleric").GetComponent<Button>();
@@ -54,33 +43,18 @@ public class PartnerSelectView : MonoBehaviour
 
         partnerboard = GameObject.Find("PartnerBoard").GetComponent<PartnerBoard>();
         selectboard = GameObject.Find("PartnerSelectBoard").GetComponent<PartnerSelectBoard>();
-        //동료1의 직업, 설명
-        partnerName1 = selectboard.transform.Find("Partner1").GetChild(1).GetComponent<TextMeshProUGUI>();
-        skillName1 = selectboard.transform.Find("Partner1").GetChild(2).GetComponent<TextMeshProUGUI>();
-        PartnerExplanation1 = selectboard.transform.Find("Partner1").GetChild(3).GetComponent<TextMeshProUGUI>();
 
-        //동료2의 직업, 설명
-        partnerName2 = selectboard.transform.Find("Partner2").GetChild(1).GetComponent<TextMeshProUGUI>();
-        skillName2 = selectboard.transform.Find("Partner2").GetChild(2).GetComponent<TextMeshProUGUI>();
-        PartnerExplanation2 = selectboard.transform.Find("Partner2").GetChild(3).GetComponent<TextMeshProUGUI>();
-
-        //동료3의 직업, 설명
-        partnerName3 = selectboard.transform.Find("Partner3").GetChild(1).GetComponent<TextMeshProUGUI>();
-        skillName3 = selectboard.transform.Find("Partner3").GetChild(2).GetComponent<TextMeshProUGUI>();
-        PartnerExplanation3 = selectboard.transform.Find("Partner3").GetChild(3).GetComponent<TextMeshProUGUI>();
-
-        popupController = GameObject.Find("PopupController").GetComponent<PopupController>();
+        savebutton = GameObject.Find("SaveButton").GetComponent<Button>();
 
     }
 
     private void Start()
-    {
-
+    {    
         customized = FindObjectOfType<Customized>();
 
-        this.gameObject.SetActive(false);
-
-        LoadCharacterData();
+        //Character.Json에서 데이터 꺼내옴
+        string character = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
+        partner = JsonUtility.FromJson<Character>(character);
 
         btnWarrior.onClick.AddListener( () => DataSetUp(CharacterType.Warrior));
         btnMage.onClick.AddListener(() => DataSetUp(CharacterType.Mage));
@@ -88,77 +62,65 @@ public class PartnerSelectView : MonoBehaviour
         btnThief.onClick.AddListener(() => DataSetUp(CharacterType.Thief));
         btnPopstar.onClick.AddListener(() => DataSetUp(CharacterType.Popstar));
         btnChef.onClick.AddListener(() => DataSetUp(CharacterType.Chef));
-        
-        popupController.OnEnabledpartnerSelectView += OnOffViewState;
-
-        DataManager.Instance.SavePartnerToJson = SavePartnerData;
+        savebutton.onClick.AddListener(SelectCompletePartner);
     }
 
 
-    private void OnOffViewState()
+
+    private void SelectCompletePartner()
     {
-        if (this.gameObject.activeSelf)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);   
-        }
+
+        //스태틱변수 : PartnerBoard.partnerCount;
+        //DataManager.Instance.PartnerBoard. ?? partnerCount 로는 접근이 안되나?
+
+        IsReadySave = true;
+        SavePartnerDataToJson();
+
     }
 
-    void LoadCharacterData()
-    {
-        //Character.Json에서 데이터 꺼내옴
-        string character = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
-        partner = JsonUtility.FromJson<Character>(character);
-    }
+
 
     private void DataSetUp(CharacterType type)
     {
-        partnerboard.onPartnerSelectBoardOpen?.Invoke();
+        partnerboard.OnPartnerSelectBoardOpen?.Invoke();
 
         switch (type)
         {
             case CharacterType.Warrior:
                 //파트너의 파츠별 이미지 
-                ClearParts();
                 SetPartnerParts(type);
+                //파트너셀렉트보드의 내용을 CharacterJson에서 가져와 변경
+                UpdatePartnerSelectBoard(type);
+                //선택한 파트너정보를 json저장으로 초기화 
                 InitializePartenrData(type);
-                RefreshDataPartnerSelectBoard(type);
-
+                //save버튼을 누르면 json으로 저장
+                SavePartnerDataToJson();
                 break;
             case CharacterType.Mage:
-                ClearParts();
                 SetPartnerParts(type);
+                UpdatePartnerSelectBoard(type);
                 InitializePartenrData(type);
-                RefreshDataPartnerSelectBoard(type);
-
+                SavePartnerDataToJson();
                 break;
             case CharacterType.Cleric:
-                ClearParts();
                 SetPartnerParts(type);
+                UpdatePartnerSelectBoard(type);
                 InitializePartenrData(type);
-                RefreshDataPartnerSelectBoard(type);
                 break;
             case CharacterType.Thief:
-                ClearParts();
                 SetPartnerParts(type);
+                UpdatePartnerSelectBoard(type);
                 InitializePartenrData(type);
-                RefreshDataPartnerSelectBoard(type);
-
                 break;
             case CharacterType.Popstar:
-                ClearParts();
                 SetPartnerParts(type);
+                UpdatePartnerSelectBoard(type);
                 InitializePartenrData(type);
-                RefreshDataPartnerSelectBoard(type);
                 break;
             case CharacterType.Chef:
-                ClearParts();
                 SetPartnerParts(type);
+                UpdatePartnerSelectBoard(type);
                 InitializePartenrData(type);
-                RefreshDataPartnerSelectBoard(type);
                 break;
             default:
                 Debug.Log("파트너 직업 선택 오류");
@@ -166,36 +128,10 @@ public class PartnerSelectView : MonoBehaviour
         }
     }
 
-    //파츠 이미지 지우기_수정중
-    void ClearParts()
-    {
-        for (int i = 0; i < customized.parts.Length; i++)
-        {
-            //customized.SetParts(i, "");
-        }
-    }
-
-    //동료의 파츠별 이미지 보여줌
-    private void SetPartnerParts(CharacterType type)
-    {
-        for (int i = 0; i < customized.parts.Length; i++)
-        {
-            if (partner.character[(int)type].parts[i] != "")
-            {
-                customized.SetParts(i, partner.character[(int)type].parts[i].ToString());
-            }
-            else
-            {
-                //customized.SetParts(i, partner.character[(int)type].parts[2].ToString());
-
-                // Debug.Log($"{type}의 빈 파츠 번호: {i}");
-            }
-        }
-    }
-
 
     private void InitializePartenrData(CharacterType type)
     {
+
         partnerData._name = partner.character[(int)type]._name;
         partnerData.desc = partner.character[(int)type].desc;
         partnerData.maxhp = partner.character[(int)type].maxhp;
@@ -213,50 +149,75 @@ public class PartnerSelectView : MonoBehaviour
         partnerData.skillname = partner.character[(int)type].skillname;
         partnerData.skilldesc = partner.character[(int)type].skilldesc;
 
+        Debug.Log("파트너 스탯 입력");
+
+        //partnerData.partnerNum = 
         //partnerData.positionX;
         //partnerData.positionY;
 
     }
 
-    void SavePartnerData()
+    //Sava버튼을 누르면 저장
+    void SavePartnerDataToJson()
     {
-        string data = JsonUtility.ToJson(partnerData);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/Partner_{PartnerBoard.partnerCount}.json", data);
-        Debug.Log($"동료_{PartnerBoard.partnerCount} 스탯 저장");
+        if (IsReadySave)
+        {
+            Debug.Log($"동료정보Json 저장 전: {PartnerBoard.partnerCount}");
+            string data = JsonUtility.ToJson(partnerData);
+            File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/Partner_{PartnerBoard.partnerCount}.json", data);
+            Debug.Log("파트너 스탯 초기화");
+        }
+        //동료 인원수 증가
+        PartnerBoard.partnerCount++;
+        Debug.Log($"동료정보Json 저장 후: {PartnerBoard.partnerCount}");
     }
 
 
-    void RefreshDataPartnerSelectBoard(CharacterType type)
+
+    //동료의 파츠별 이미지 보여줌
+    private void SetPartnerParts(CharacterType type)
+    {
+        for (int i = 0; i < customized.parts.Length; i++)
+        {
+            if (partner.character[(int)type].parts[i] != "")
+            {
+                customized.SetParts(i, partner.character[(int)type].parts[i].ToString());
+            }
+            else
+            {
+                Debug.Log($"{type}의 빈 파츠 번호: {i}");
+            }
+        }
+    }
+
+    
+    void UpdatePartnerSelectBoard(CharacterType type)
     {
         if (PartnerBoard.partnerCount == 0)
         {
-            onPartnerSelectBoard?.Invoke();
-
-            partnerName1.text = partner.character[(int)type]._name;
-            skillName1.text = partner.character[(int)type].skillname;
-            PartnerExplanation1.text = partner.character[(int)type].skilldesc;
-        }
-        else if (PartnerBoard.partnerCount == 1)
+            selectboard.partner1.SetActive(true);
+            selectboard.partnerName1.text = partner.character[(int)type]._name;
+            //이 부분은 나중에 수정 필요
+            selectboard.PartnerExplanation1.text += partner.character[(int)type].skillname + partner.character[(int)type].skilldesc;
+        }else if(PartnerBoard.partnerCount == 1)
         {
-            onPartnerSelectBoard?.Invoke();
-            partnerName2.text = partner.character[(int)type]._name;
-            skillName2.text = partner.character[(int)type].skillname;
-            PartnerExplanation2.text = partner.character[(int)type].skilldesc;
-        }
-        else if (PartnerBoard.partnerCount == 2)
-        {
-            onPartnerSelectBoard?.Invoke();
-            partnerName3.text = partner.character[(int)type]._name;
-            skillName3.text = partner.character[(int)type].skillname;
-            PartnerExplanation3.text = partner.character[(int)type].skilldesc;
+            selectboard.partner1.SetActive(true);
+            selectboard.partner2.SetActive(true);
+            selectboard.partnerName2.text = partner.character[(int)type]._name;
+            //이 부분은 나중에 수정 필요
+            selectboard.PartnerExplanation2.text += partner.character[(int)type].skillname + partner.character[(int)type].skilldesc;
         }
         else
         {
             Debug.Log("동료선택모음창 오류");
         }
-
     }
 
 
 
+    void ClearPartnerSelectBoard()
+    {
+
+    }
+    */
 }
