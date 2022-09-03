@@ -8,7 +8,7 @@ public class PartnerSelect : MonoBehaviour
 
     void Start()
     {
-        GameObject.Find("Character0").transform.position = new Vector3(0, 0, 0);
-        GameObject.Find("Character1").transform.position = new Vector3(-6.43f, 0, 0);
+        //GameObject.Find("Character0").transform.position = new Vector3(0, 0, 0);
+        //GameObject.Find("Character1").transform.position = new Vector3(-6.43f, 0, 0);
     }
 }

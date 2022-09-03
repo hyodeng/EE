@@ -17,7 +17,7 @@ public class PartnerSelectButton : MonoBehaviour
     public Button nextButton;
 
     Customized customized;
-    
+
     Character partnerData;
 
     public PartnerSelect spawner;
@@ -39,7 +39,7 @@ public class PartnerSelectButton : MonoBehaviour
         string data = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
         partnerData = JsonUtility.FromJson<Character>(data);
 
-        btnWarrior.onClick.AddListener( () => DataSetUp(CharacterType.Warrior));
+        btnWarrior.onClick.AddListener(() => DataSetUp(CharacterType.Warrior));
         btnMage.onClick.AddListener(() => DataSetUp(CharacterType.Mage));
         btnCleric.onClick.AddListener(() => DataSetUp(CharacterType.Cleric));
         btnThief.onClick.AddListener(() => DataSetUp(CharacterType.Thief));
@@ -49,7 +49,7 @@ public class PartnerSelectButton : MonoBehaviour
     }
     private void DataSetUp(CharacterType type)
     {
-        customized.GetComponent<CharacterData>().characterClass = type;
+        //customized.GetComponent<CharacterData>().characterClass = type;
         SetPartnerParts(type);
     }
 

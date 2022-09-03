@@ -7,52 +7,25 @@ using System;
 
 public class PartnerSelectBoard : MonoBehaviour
 {
-    PartnerBoard partnerBoard;
-
     public GameObject partner1;
     public GameObject partner2;
     public GameObject partner3;
-    Image check1;
+    Button cancelButton;
 
-    public TextMeshProUGUI partnerNum1;
-    public TextMeshProUGUI partnerName1;
-    public TextMeshProUGUI PartnerExplanation1;
-
-    public TextMeshProUGUI partnerNum2;
-    public TextMeshProUGUI partnerName2;
-    public TextMeshProUGUI PartnerExplanation2;
-
-    public TextMeshProUGUI partnerNum3;
-    public TextMeshProUGUI partnerName3;
-    public TextMeshProUGUI PartnerExplanation3;
-
+    PartnerBoard partnerBoard;
+    PartnerSelectView partnerSelectView;
 
     private void Awake()
     {
         partnerBoard = GameObject.Find("PartnerBoard").GetComponent<PartnerBoard>();
+        partnerSelectView = GameObject.Find("PartnerSelectView").GetComponent<PartnerSelectView>();
+        //partnerSelectView = DataManager.Instance.PartnerSelectView;
 
         partner1 = transform.GetChild(3).gameObject;
         partner2 = transform.GetChild(4).gameObject;
         partner3 = transform.GetChild(5).gameObject;
-        //체크 버튼 가져오기
 
-        //동료1의 숫자, 직업, 설명
-        partnerNum1 = partner1.GetComponentsInChildren<TextMeshProUGUI>()[0];
-        partnerName1 = partner1.GetComponentsInChildren<TextMeshProUGUI>()[1];
-        PartnerExplanation1 = partner1.GetComponentsInChildren<TextMeshProUGUI>()[2];
-
-
-        //동료2의 숫자, 직업, 설명
-        partnerNum2 = partner2.GetComponentsInChildren<TextMeshProUGUI>()[0];
-        partnerName2 = partner2.GetComponentsInChildren<TextMeshProUGUI>()[1];
-        PartnerExplanation2 = partner2.GetComponentsInChildren<TextMeshProUGUI>()[2];
-
-        //동료3의 숫자, 직업, 설명
-
-        partnerNum3 = partner2.GetComponentsInChildren<TextMeshProUGUI>()[0];
-        partnerName3 = partner2.GetComponentsInChildren<TextMeshProUGUI>()[1];
-        PartnerExplanation3 = partner2.GetComponentsInChildren<TextMeshProUGUI>()[2];
-
+        cancelButton = transform.GetComponentInChildren<Button>();
     }
 
     private void Start()
@@ -60,10 +33,14 @@ public class PartnerSelectBoard : MonoBehaviour
         this.gameObject.SetActive(false);
 
         //델리게이트 등록
-        partnerBoard.OnPartnerSelectBoardOpen += Open;
-        partnerBoard.OnPartnerSelectBoardClose += Close;
-        partnerBoard.OnOffSwitch += OnOffSwitch;
+        partnerBoard.onPartnerSelectBoardOpen += Open;
+        partnerBoard.onPartnerSelectBoardClose += Close;
+        partnerBoard.onOffSwitch += OnOffSwitch;
 
+        partnerSelectView.onPartnerSelectBoard += Open;
+        partnerSelectView.offPartnerSelectBoard += Close;
+
+        cancelButton.onClick.AddListener(Close);
     }
 
 
@@ -87,9 +64,10 @@ public class PartnerSelectBoard : MonoBehaviour
 
         if (PartnerBoard.partnerCount == 0)
         {
-            partner1.SetActive(false);
+            partner1.SetActive(true);
             partner2.SetActive(false);
             partner3.SetActive(false);
+            ClearCheck();
 
         }
         else if (PartnerBoard.partnerCount == 1)
@@ -97,12 +75,17 @@ public class PartnerSelectBoard : MonoBehaviour
             partner1.SetActive(true);
             partner2.SetActive(false);
             partner3.SetActive(false);
+            ClearCheck();
+
         }
         else if (PartnerBoard.partnerCount == 2)
         {
             partner1.SetActive(true);
             partner2.SetActive(true);
             partner3.SetActive(false);
+            ClearCheck();
+
+
         }
         else if (PartnerBoard.partnerCount == 3)
         {
@@ -110,6 +93,7 @@ public class PartnerSelectBoard : MonoBehaviour
             partner1.SetActive(true);
             partner2.SetActive(true);
             partner3.SetActive(true);
+            ClearCheck();
 
         }
         else
@@ -118,9 +102,17 @@ public class PartnerSelectBoard : MonoBehaviour
         }
     }
 
-    private void Close()
+    public void Close()
     {
         this.gameObject.SetActive(false);
     }
+
+    void ClearCheck()
+    {
+        partner1.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.clear;
+        partner2.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.clear;
+        partner3.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.clear;
+    }
+
 
 }
