@@ -69,7 +69,9 @@ public class Customized : MonoBehaviour
                 break;
         }
         GameManager.Inst.temp[i, index] = parts[i].sprite;
+        GameManager.Inst.partsName[i] = _name;
     }
+
     public Sprite MakeSprite(string filePath)
     {
         byte[] pngBytes = File.ReadAllBytes(filePath);

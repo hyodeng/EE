@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using TMPro;
 
 public class PartnerSelectView : MonoBehaviour
@@ -17,9 +19,10 @@ public class PartnerSelectView : MonoBehaviour
 
     Customized customized;
 
-    Character partner;
+    SavePlayerData characterData = new SavePlayerData();
+    JObject Jsonpartner;
+    JToken jTokenPartner;
 
-    public SavePlayerData partnerData = new SavePlayerData();
 
     PartnerBoard partnerboard;
 
@@ -91,7 +94,7 @@ public class PartnerSelectView : MonoBehaviour
 
         popupController.OnEnabledpartnerSelectView += OnOffViewState;
 
-        //DataManager.Instance.SavePartnerToJson = SavePartnerData;
+        DataManager.Instance.SavePartnerToJson = SavePartnerData;
     }
 
 
@@ -110,54 +113,58 @@ public class PartnerSelectView : MonoBehaviour
     void LoadCharacterData()
     {
         //Character.Json에서 데이터 꺼내옴
-        //string character = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
-        //partner = JsonUtility.FromJson<Character>(character);
+        string character = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
+        Jsonpartner = JObject.Parse(character);
     }
 
     private void DataSetUp(CharacterType type)
     {
         partnerboard.onPartnerSelectBoardOpen?.Invoke();
+        int index = 0;
 
         switch (type)
         {
             case CharacterType.warrior:
+                jTokenPartner = Jsonpartner["warrior"];
+
                 //파트너의 파츠별 이미지 
                 ClearParts();
-                SetPartnerParts(type);
-                InitializePartenrData(type);
+                InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
 
                 break;
             case CharacterType.mage:
+                jTokenPartner = Jsonpartner["mage"];
+
                 ClearParts();
-                SetPartnerParts(type);
-                InitializePartenrData(type);
+                InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
 
                 break;
             case CharacterType.cleric:
+                jTokenPartner = Jsonpartner["cleric"];
+
                 ClearParts();
-                SetPartnerParts(type);
-                InitializePartenrData(type);
+                InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
                 break;
             case CharacterType.thief:
+                jTokenPartner = Jsonpartner["thief"];
                 ClearParts();
-                SetPartnerParts(type);
-                InitializePartenrData(type);
+                InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
 
                 break;
             case CharacterType.popstar:
+                jTokenPartner = Jsonpartner["popstar"];
                 ClearParts();
-                SetPartnerParts(type);
-                InitializePartenrData(type);
+                InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
                 break;
             case CharacterType.chef:
+                jTokenPartner = Jsonpartner["chef"];
                 ClearParts();
-                SetPartnerParts(type);
-                InitializePartenrData(type);
+                InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
                 break;
             default:
@@ -175,80 +182,73 @@ public class PartnerSelectView : MonoBehaviour
         //}
     }
 
-    //동료의 파츠별 이미지 보여줌
-    private void SetPartnerParts(CharacterType type)
+
+
+    //동료의 파츠 이미지와 캐릭터를 초기화
+    private void InitializePartenrData(int index)
     {
-        //for (int i = 0; i < customized.parts.Length; i++)
-        //{
-        //    if (partner.character[(int)type].parts[i] != "")
-        //    {
-        //        customized.SetParts(i, partner.character[(int)type].parts[i].ToString());
-        //    }
-        //    else
-        //    {
-        //        //customized.SetParts(i, partner.character[(int)type].parts[2].ToString());
+        string jsonCharacter = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
+        Jsonpartner = JObject.Parse(jsonCharacter);
 
-        //        // Debug.Log($"{type}의 빈 파츠 번호: {i}");
-        //    }
-        //}
-    }
+        customized.AsyncParts(index);
 
 
-    private void InitializePartenrData(CharacterType type)
-    {
-        //partnerData._name = partner.character[(int)type]._name;
-        //partnerData.desc = partner.character[(int)type].desc;
-        //partnerData.maxhp = partner.character[(int)type].maxhp;
-        //partnerData.hp = partner.character[(int)type].hp;
-        //partnerData.maxmp = partner.character[(int)type].maxmp;
-        //partnerData.mp = partner.character[(int)type].mp;
-        //partnerData.attack = partner.character[(int)type].attack;
-        //partnerData.attackup = partner.character[(int)type].attackup;
-        //partnerData.magic = partner.character[(int)type].magic;
-        //partnerData.magicup = partner.character[(int)type].magicup;
-        //partnerData.defence = partner.character[(int)type].defence;
-        //partnerData.defenceup = partner.character[(int)type].defenceup;
-        //partnerData.speed = partner.character[(int)type].speed;
-        //partnerData.speedup = partner.character[(int)type].speedup;
-        //partnerData.skillname = partner.character[(int)type].skillname;
-        //partnerData.skilldesc = partner.character[(int)type].skilldesc;
+        characterData._name = jTokenPartner["_name"].Value<string>();
+        characterData.maxhp = jTokenPartner["hp"][0].Value<int>(); //maxHP
+        characterData.hp = jTokenPartner["hp"][1].Value<int>(); //hp
+        characterData.maxmp = jTokenPartner["mp"][0].Value<int>();
+        characterData.mp = jTokenPartner["mp"][1].Value<int>();
+        characterData.maxattack = jTokenPartner["attack"][0].Value<int>();
+        characterData.attack = jTokenPartner["attack"][1].Value<int>();
+        characterData.maxmagic = jTokenPartner["magic"][0].Value<int>();
+        characterData.maxmagic = jTokenPartner["magic"][1].Value<int>();
+        characterData.maxdefence = jTokenPartner["defence"][0].Value<int>();
+        characterData.defence = jTokenPartner["defence"][1].Value<int>();
+        characterData.maxspeed = jTokenPartner["speed"][0].Value<int>();
+        characterData.speed = jTokenPartner["speed"][1].Value<int>();
+        characterData.skillname = jTokenPartner["skill"][0].Value<string>();
+        characterData.skilldesc = jTokenPartner["skill"][1].Value<string>();
 
-        //partnerData.positionX;
-        //partnerData.positionY;
+        //나중에 추가
+        //characterData.armor = jTokenplayer["armor"].Value<string>();
+        //characterData.weapon = jTokenplayer["weapon"].Value<string>();
+        characterData.desc = jTokenPartner["desc"].Value<string>();
+
 
     }
 
     void SavePartnerData()
     {
-        string data = JsonUtility.ToJson(partnerData);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/Partner_{PartnerBoard.partnerCount}.json", data);
-        Debug.Log($"동료_{PartnerBoard.partnerCount} 스탯 저장");
+        string partner = JsonConvert.SerializeObject(jTokenPartner);
+        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/Partner_{GameManager.Inst.partnerCount}.json", partner);
+
+        Debug.Log($"파트너 데이터_{GameManager.Inst.partnerCount}번 Json 저장");
     }
 
 
     void RefreshDataPartnerSelectBoard(CharacterType type)
     {
-        if (PartnerBoard.partnerCount == 0)
+        if (GameManager.Inst.partnerCount == 0)
         {
             onPartnerSelectBoard?.Invoke();
 
-            //partnerName1.text = partner.character[(int)type]._name;
-            //skillName1.text = partner.character[(int)type].skillname;
-            //PartnerExplanation1.text = partner.character[(int)type].skilldesc;
+            partnerName1.text = characterData._name;
+            skillName1.text = characterData.skillname;
+            PartnerExplanation1.text = characterData.skilldesc;
         }
-        else if (PartnerBoard.partnerCount == 1)
+        else if (GameManager.Inst.partnerCount == 1)
         {
             onPartnerSelectBoard?.Invoke();
-            //partnerName2.text = partner.character[(int)type]._name;
-            //skillName2.text = partner.character[(int)type].skillname;
-            //PartnerExplanation2.text = partner.character[(int)type].skilldesc;
+            partnerName2.text = characterData._name;
+            skillName2.text = characterData.skillname;
+            PartnerExplanation2.text = characterData.skilldesc;
         }
-        else if (PartnerBoard.partnerCount == 2)
+        else if (GameManager.Inst.partnerCount == 2)
         {
             onPartnerSelectBoard?.Invoke();
-            //partnerName3.text = partner.character[(int)type]._name;
-            //skillName3.text = partner.character[(int)type].skillname;
-            //PartnerExplanation3.text = partner.character[(int)type].skilldesc;
+            partnerName3.text = characterData._name;
+            skillName3.text = characterData.skillname;
+            PartnerExplanation3.text = characterData.skilldesc;
         }
         else
         {

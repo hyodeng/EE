@@ -13,8 +13,6 @@ public class PartnerBoard : MonoBehaviour
 
     Button partnerListButton; //동료리스트 버튼
 
-    //동료 인원수 : static 이나 추후 변경 필요
-    public static uint partnerCount = 0;
 
     //델리게이트
     //아래 2개 삭제 해야하나??
@@ -41,7 +39,6 @@ public class PartnerBoard : MonoBehaviour
         Initialize();
 
         partnerListButton.onClick.AddListener(OnOffSelectBoard);
-        //addListener 두개하면 2개 메서드가 등록되나요?
 
         popupController.OnPartnerCount += OpenPartnerCount;
     }
@@ -51,7 +48,7 @@ public class PartnerBoard : MonoBehaviour
     void Initialize()
     {
         requestTxt.text = "동료를 선택하세요";
-        countTxt.text = partnerCount.ToString();
+        countTxt.text = GameManager.Inst.partnerCount.ToString();
         StartCoroutine(PopUpQuestion());
     }
     IEnumerator PopUpQuestion()
@@ -75,7 +72,7 @@ public class PartnerBoard : MonoBehaviour
     {
         yield return delayTime;
         requestTxt.text = "동료를 선택했습니다";
-        countTxt.text = partnerCount.ToString();
+        countTxt.text = GameManager.Inst.partnerCount.ToString();
     }
 
 }

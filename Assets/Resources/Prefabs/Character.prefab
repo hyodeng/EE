@@ -437,7 +437,6 @@ GameObject:
   - component: {fileID: 1628160543}
   - component: {fileID: 1628160542}
   - component: {fileID: 1628160541}
-  - component: {fileID: 1628160540}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -528,6 +527,10 @@ MonoBehaviour:
   anim: {fileID: 0}
   battle: {fileID: 0}
   state: 0
+  skillName: 
+  skillDesc: 
+  AOE: 0
+  skillDmg: 0
   mhp: 0
   hp: 0
   mmp: 0
@@ -539,46 +542,7 @@ MonoBehaviour:
   BehaviorEnd: 0
   Trigger: 0
   isPlayer: 0
-  characterClass: 0
---- !u!114 &1628160540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 646484574680006744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a119c34bbfb35e14d8b70b5885c84bbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CharacterJson: {fileID: 4900000, guid: f137153b77e7a8e40bd39605ad95bbeb, type: 3}
-  jsonname: 
-  jsonhp: 0
-  jsonmp: 0
-  jsonattack: 0
-  jsonmagic: 0
-  jsondefence: 0
-  jsonspeed: 0
-  statHp: 15
-  statMp: 8
-  statAttack: 12
-  statMagic: 7
-  statDefence: 6
-  statSpeed: 12
-  button_warrior: {fileID: 3999984028107220334, guid: c5a3dadb02430af4d9fc54051595405a, type: 3}
-  button_mage: {fileID: 248032167304590792, guid: 93917c2446d83474d8851530e8615179, type: 3}
-  button_clreic: {fileID: 6792882095544968674, guid: 1b260980c7f89434c9270f0a59e687fb, type: 3}
-  button_thief: {fileID: 8354053286912448710, guid: 4ba024a5b45480f409577647996261dc, type: 3}
-  button_popstar: {fileID: 8899784847170188685, guid: 1cc6fba301614734eaed86eac876d942, type: 3}
-  button_chef: {fileID: 1144594398403022705, guid: d2c048c53e77ca04487459eeb2ad27b3, type: 3}
-  nextButton: {fileID: 0}
-  hpSlider: {fileID: 0}
-  mpSlider: {fileID: 0}
-  attackSlider: {fileID: 0}
-  magicSlider: {fileID: 0}
-  defenceSlider: {fileID: 0}
-  speedSlider: {fileID: 0}
+  characterclass: 0
 --- !u!1 &646484574780790581
 GameObject:
   m_ObjectHideFlags: 0

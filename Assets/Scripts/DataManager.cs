@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Converters;
-
 
 public class DataManager : MonoBehaviour
 {
-    //Json 클래스에 저장하기 위한 변수 생성 
-    SavePlayerData playerData = new SavePlayerData();
-    //public SavePlayerData PlayerData => playerData;
-
+    //Json 저장하기 위한 변수
+    JObject parts = new JObject();
+    JObject jsonPlayer = new JObject();
 
     //캐릭터 커스터마이즈(착장) 정보
     Customized customized;
@@ -56,44 +54,27 @@ public class DataManager : MonoBehaviour
 
     }
 
-    //플레이어 이미지 파츠만 Json으로 저장
+    //플레이어 파츠 이름을 Json으로 저장
     public void SavePlayerParts()
     {
-        // 10 == customized.parts.Length; 인데 안됨.
-        playerData.parts = new string[10];
+
+        //string jsonCharacter = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
+        //jsonPlayer = JObject.Parse(jsonCharacter);
 
         customized = FindObjectOfType<Customized>();
 
         for (int i = 0; i < customized.parts.Length; i++)
         {
-            playerData.parts[i] = customized.parts[i].name;
+           parts.Add($"{i}", GameManager.Inst.partsName[i]);
         }
 
+        //jsonPlayer.Add(parts);
 
-        //json으로 파츠 이름 저장
-        string player = JsonUtility.ToJson(playerData);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Player.json", player);
+        //재저장
+        string playerparts = JsonConvert.SerializeObject(parts);
+        File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/PlayerParts.json", playerparts);
         Debug.Log("플레이어 파츠 저장");
 
-    }
-
-
-    //플레이어 데이터 로드
-    public void LoadPalyerParts()
-    {
-        string data = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Player.json");
-        playerData = JsonUtility.FromJson<SavePlayerData>(data);
-
-        customized = FindObjectOfType<Customized>();
-
-        //테스트용 : 플레이어의 부분별 이미지 가져오기
-        for (int i = 0; i < 10; i++)
-        {
-            if (playerData.parts[i] != "")
-            {
-                customized.SetParts(i, playerData.parts[i]);
-            }
-        }
     }
 
 

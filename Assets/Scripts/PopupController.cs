@@ -138,7 +138,7 @@ public class PopupController : MonoBehaviour
             isReadySave = true;
             if (isReadySave)
             {
-                //DataManager.Instance.SavePlayerToJson();
+                DataManager.Instance.SavePlayerToJson();
             }
             OnOffSwitch();
             isNextScene = true;
@@ -150,7 +150,7 @@ public class PopupController : MonoBehaviour
             isReadySave = true;
             if (isReadySave)
             {
-                DataManager.Instance.SavePartnerToJson();
+                //DataManager.Instance.SavePartnerToJson();
             }
             
             OnPartnerCount?.Invoke();

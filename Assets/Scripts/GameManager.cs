@@ -20,10 +20,12 @@ public class GameManager : MonoBehaviour
     public bool?[] dataSkillTarget;
     public bool[] dataAOE;
 
+    public int partnerCount = 0;
+
     static GameManager instance = null;
     public static GameManager Inst => instance;
     public CharacterData[] userPartyData = new CharacterData[4];
-    public string[,] partsName = new string[10, 4];
+    public string[] partsName = new string[10];
     public Sprite[,] temp = new Sprite[10, 4];
     public Color[,] partsColor = new Color[3, 4];
     public bool[] userPartyCheck = new bool[4];
