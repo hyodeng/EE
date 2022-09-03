@@ -8,11 +8,13 @@ public class DataManager : MonoBehaviour
     //Json 클래스에 저장하기 위한 변수 생성 
     SavePlayerData playerData = new SavePlayerData();
 
-    //캐릭터 스탯 정보
-    CharacterStat stats;
-
     //캐릭터 커스터마이즈(착장) 정보
     Customized customized;
+
+
+    public System.Action SavePlayerToJson;
+    public System.Action SavePartnerToJson;
+
 
     //싱글톤 ---------------------------------------
     static DataManager instance = null;
@@ -39,31 +41,13 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        Initailize();
-
-        stats = FindObjectOfType<CharacterStat>();
-    }
-
-    void Initailize()
-    {
 
     }
+
 
     //플레이어 데이터 Json 저장
     public void SavePlayerData()
     {
-        if (stats != null)
-        {
-            playerData._name = stats.jsonname;
-            playerData.hp = stats.jsonhp;
-            playerData.mp = stats.jsonmp;
-            playerData.attack = stats.jsonattack;
-            playerData.magic = stats.jsonmagic;
-            playerData.defence = stats.jsondefence;
-            playerData.speed = stats.jsonspeed;
-        }
-
-
         // 10 == customized.parts.Length; 인데 안됨.
         playerData.parts = new string[10];
 
@@ -82,8 +66,6 @@ public class DataManager : MonoBehaviour
 
         File.WriteAllText(Application.persistentDataPath + "/PlayerData.json", json);
 
-        PrintData();
-
     }
 
     //플레이어 데이터 로드
@@ -101,28 +83,7 @@ public class DataManager : MonoBehaviour
             {
                 customized.SetParts(i, playerData.parts[i]);
             }
-
         }
-
-
-    }
-
-    //디버그용 출력
-    void PrintData()
-    {
-        Debug.Log(Application.persistentDataPath);  //json 데이터 저장 경로 
-     
-        //Debug.Log(playerData._name);
-        //Debug.Log(playerData.hp);
-        //Debug.Log(playerData.mp);
-        //Debug.Log(playerData.attack);
-        //Debug.Log(playerData.defence);
-        //Debug.Log(playerData.speed);
-
-        //for (int i = 0; i < playerData.parts.Length; i++)
-        //{
-        //    Debug.Log(playerData.parts[i]);
-        //}
     }
 
 
