@@ -82,16 +82,16 @@ public class PartnerSelectView : MonoBehaviour
 
         LoadCharacterData();
 
-        btnWarrior.onClick.AddListener(() => DataSetUp(CharacterType.Warrior));
-        btnMage.onClick.AddListener(() => DataSetUp(CharacterType.Mage));
-        btnCleric.onClick.AddListener(() => DataSetUp(CharacterType.Cleric));
-        btnThief.onClick.AddListener(() => DataSetUp(CharacterType.Thief));
-        btnPopstar.onClick.AddListener(() => DataSetUp(CharacterType.Popstar));
-        btnChef.onClick.AddListener(() => DataSetUp(CharacterType.Chef));
+        btnWarrior.onClick.AddListener(() => DataSetUp(CharacterType.warrior));
+        btnMage.onClick.AddListener(() => DataSetUp(CharacterType.mage));
+        btnCleric.onClick.AddListener(() => DataSetUp(CharacterType.cleric));
+        btnThief.onClick.AddListener(() => DataSetUp(CharacterType.thief));
+        btnPopstar.onClick.AddListener(() => DataSetUp(CharacterType.popstar));
+        btnChef.onClick.AddListener(() => DataSetUp(CharacterType.chef));
 
         popupController.OnEnabledpartnerSelectView += OnOffViewState;
 
-        DataManager.Instance.SavePartnerToJson = SavePartnerData;
+        //DataManager.Instance.SavePartnerToJson = SavePartnerData;
     }
 
 
@@ -110,8 +110,8 @@ public class PartnerSelectView : MonoBehaviour
     void LoadCharacterData()
     {
         //Character.Json에서 데이터 꺼내옴
-        string character = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
-        partner = JsonUtility.FromJson<Character>(character);
+        //string character = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
+        //partner = JsonUtility.FromJson<Character>(character);
     }
 
     private void DataSetUp(CharacterType type)
@@ -120,7 +120,7 @@ public class PartnerSelectView : MonoBehaviour
 
         switch (type)
         {
-            case CharacterType.Warrior:
+            case CharacterType.warrior:
                 //파트너의 파츠별 이미지 
                 ClearParts();
                 SetPartnerParts(type);
@@ -128,33 +128,33 @@ public class PartnerSelectView : MonoBehaviour
                 RefreshDataPartnerSelectBoard(type);
 
                 break;
-            case CharacterType.Mage:
+            case CharacterType.mage:
                 ClearParts();
                 SetPartnerParts(type);
                 InitializePartenrData(type);
                 RefreshDataPartnerSelectBoard(type);
 
                 break;
-            case CharacterType.Cleric:
+            case CharacterType.cleric:
                 ClearParts();
                 SetPartnerParts(type);
                 InitializePartenrData(type);
                 RefreshDataPartnerSelectBoard(type);
                 break;
-            case CharacterType.Thief:
+            case CharacterType.thief:
                 ClearParts();
                 SetPartnerParts(type);
                 InitializePartenrData(type);
                 RefreshDataPartnerSelectBoard(type);
 
                 break;
-            case CharacterType.Popstar:
+            case CharacterType.popstar:
                 ClearParts();
                 SetPartnerParts(type);
                 InitializePartenrData(type);
                 RefreshDataPartnerSelectBoard(type);
                 break;
-            case CharacterType.Chef:
+            case CharacterType.chef:
                 ClearParts();
                 SetPartnerParts(type);
                 InitializePartenrData(type);
@@ -169,49 +169,49 @@ public class PartnerSelectView : MonoBehaviour
     //파츠 이미지 지우기_수정중
     void ClearParts()
     {
-        for (int i = 0; i < customized.parts.Length; i++)
-        {
-            //customized.SetParts(i, "");
-        }
+        //for (int i = 0; i < customized.parts.Length; i++)
+        //{
+        //    //customized.SetParts(i, "");
+        //}
     }
 
     //동료의 파츠별 이미지 보여줌
     private void SetPartnerParts(CharacterType type)
     {
-        for (int i = 0; i < customized.parts.Length; i++)
-        {
-            if (partner.character[(int)type].parts[i] != "")
-            {
-                customized.SetParts(i, partner.character[(int)type].parts[i].ToString());
-            }
-            else
-            {
-                //customized.SetParts(i, partner.character[(int)type].parts[2].ToString());
+        //for (int i = 0; i < customized.parts.Length; i++)
+        //{
+        //    if (partner.character[(int)type].parts[i] != "")
+        //    {
+        //        customized.SetParts(i, partner.character[(int)type].parts[i].ToString());
+        //    }
+        //    else
+        //    {
+        //        //customized.SetParts(i, partner.character[(int)type].parts[2].ToString());
 
-                // Debug.Log($"{type}의 빈 파츠 번호: {i}");
-            }
-        }
+        //        // Debug.Log($"{type}의 빈 파츠 번호: {i}");
+        //    }
+        //}
     }
 
 
     private void InitializePartenrData(CharacterType type)
     {
-        partnerData._name = partner.character[(int)type]._name;
-        partnerData.desc = partner.character[(int)type].desc;
-        partnerData.maxhp = partner.character[(int)type].maxhp;
-        partnerData.hp = partner.character[(int)type].hp;
-        partnerData.maxmp = partner.character[(int)type].maxmp;
-        partnerData.mp = partner.character[(int)type].mp;
-        partnerData.attack = partner.character[(int)type].attack;
-        partnerData.attackup = partner.character[(int)type].attackup;
-        partnerData.magic = partner.character[(int)type].magic;
-        partnerData.magicup = partner.character[(int)type].magicup;
-        partnerData.defence = partner.character[(int)type].defence;
-        partnerData.defenceup = partner.character[(int)type].defenceup;
-        partnerData.speed = partner.character[(int)type].speed;
-        partnerData.speedup = partner.character[(int)type].speedup;
-        partnerData.skillname = partner.character[(int)type].skillname;
-        partnerData.skilldesc = partner.character[(int)type].skilldesc;
+        //partnerData._name = partner.character[(int)type]._name;
+        //partnerData.desc = partner.character[(int)type].desc;
+        //partnerData.maxhp = partner.character[(int)type].maxhp;
+        //partnerData.hp = partner.character[(int)type].hp;
+        //partnerData.maxmp = partner.character[(int)type].maxmp;
+        //partnerData.mp = partner.character[(int)type].mp;
+        //partnerData.attack = partner.character[(int)type].attack;
+        //partnerData.attackup = partner.character[(int)type].attackup;
+        //partnerData.magic = partner.character[(int)type].magic;
+        //partnerData.magicup = partner.character[(int)type].magicup;
+        //partnerData.defence = partner.character[(int)type].defence;
+        //partnerData.defenceup = partner.character[(int)type].defenceup;
+        //partnerData.speed = partner.character[(int)type].speed;
+        //partnerData.speedup = partner.character[(int)type].speedup;
+        //partnerData.skillname = partner.character[(int)type].skillname;
+        //partnerData.skilldesc = partner.character[(int)type].skilldesc;
 
         //partnerData.positionX;
         //partnerData.positionY;
@@ -232,23 +232,23 @@ public class PartnerSelectView : MonoBehaviour
         {
             onPartnerSelectBoard?.Invoke();
 
-            partnerName1.text = partner.character[(int)type]._name;
-            skillName1.text = partner.character[(int)type].skillname;
-            PartnerExplanation1.text = partner.character[(int)type].skilldesc;
+            //partnerName1.text = partner.character[(int)type]._name;
+            //skillName1.text = partner.character[(int)type].skillname;
+            //PartnerExplanation1.text = partner.character[(int)type].skilldesc;
         }
         else if (PartnerBoard.partnerCount == 1)
         {
             onPartnerSelectBoard?.Invoke();
-            partnerName2.text = partner.character[(int)type]._name;
-            skillName2.text = partner.character[(int)type].skillname;
-            PartnerExplanation2.text = partner.character[(int)type].skilldesc;
+            //partnerName2.text = partner.character[(int)type]._name;
+            //skillName2.text = partner.character[(int)type].skillname;
+            //PartnerExplanation2.text = partner.character[(int)type].skilldesc;
         }
         else if (PartnerBoard.partnerCount == 2)
         {
             onPartnerSelectBoard?.Invoke();
-            partnerName3.text = partner.character[(int)type]._name;
-            skillName3.text = partner.character[(int)type].skillname;
-            PartnerExplanation3.text = partner.character[(int)type].skilldesc;
+            //partnerName3.text = partner.character[(int)type]._name;
+            //skillName3.text = partner.character[(int)type].skillname;
+            //PartnerExplanation3.text = partner.character[(int)type].skilldesc;
         }
         else
         {

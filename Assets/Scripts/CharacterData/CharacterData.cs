@@ -1,9 +1,22 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
+using Newtonsoft.Json.Linq;
 using TMPro;
 
+[Serializable]
+public class Character
+{
+    public JObject jobject;
+    public JObject classData;
+
+    public Character(string text, string cl)
+    {
+        jobject = JObject.Parse(text);
+        classData = (JObject)jobject[cl];
+    }
+}
 public class CharacterData : MonoBehaviour
 {
     public GameObject DamagePrefab;
@@ -14,18 +27,25 @@ public class CharacterData : MonoBehaviour
     public Animator anim;
     public Battle battle;
     public int state = 0;
+    public string skillName;
+    public string skillDesc;
+    public bool? skillTarget;
+    public bool AOE;
+    public float skillDmg;
     public int mhp, hp, mmp, mp, attack, magic, defence, speed;
     public int HP
     {
         get => hp;
         set
         {
-            if(value < 0)
+            if (value < 0)
             {
                 value = 0;
+                battle.charactersList.Remove(this);
+                gameObject.SetActive(false);
             }
             hp = value;
-            if(transform.parent != null)
+            if (transform.parent != null)
             {
                 transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * Mathf.Sign(transform.parent.lossyScale.x), 1, 1);
             }
@@ -36,7 +56,28 @@ public class CharacterData : MonoBehaviour
     public bool Trigger;
 
     public bool isPlayer;
-    public CharacterType characterClass;
+    public CharacterType characterclass;
+    public CharacterType characterClass
+    {
+        get => characterclass;
+        set
+        {
+            characterclass = value;
+            switch (value)
+            {
+                case CharacterType.mage:
+                    weaponType = "Magic";
+                    break;
+                case CharacterType.popstar:
+                    weaponType = "Magic";
+                    break;
+                default:
+                    weaponType = "Normal";
+                    break;
+            }
+            GameManager.Inst.SetInitStat(new Character(GameManager.Inst.CharacterJson.text, Enum.GetName(typeof(CharacterType), value)), this);
+        }
+    }
 
     public int State
     {
@@ -53,6 +94,7 @@ public class CharacterData : MonoBehaviour
                     break;
                 case 1:
                     battle.Focusing = true;
+                    battle.normalAttack = true;
                     StartCoroutine(TargettingAttack());
                     break;
                 case 2:
@@ -64,9 +106,11 @@ public class CharacterData : MonoBehaviour
     }
     private void Awake()
     {
-        hp = 10;
-        mhp = HP;
         anim = GetComponent<Animator>();
+    }
+    private void Start()
+    {
+        AsyncData(System.Convert.ToInt32(gameObject.name.Replace("Character", "")));
     }
     IEnumerator Move()
     {
@@ -85,9 +129,9 @@ public class CharacterData : MonoBehaviour
                 targetPos += new Vector3(-2, 0, 0);
             }
         }
-        while((transform.position - targetPos).sqrMagnitude > 0.01f)
+        while ((transform.position - targetPos).sqrMagnitude > 0.01f)
         {
-            transform.position  = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * moveSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * moveSpeed);
             yield return null;
         }
         transform.position = targetPos;
@@ -112,24 +156,24 @@ public class CharacterData : MonoBehaviour
         if (!isPlayer)
         {
             List<CharacterData> list = new();
-            for (int i = 0; i < battle.characters.Length; i++)
+            for (int i = 0; i < battle.charactersList.Count; i++)
             {
-                if (transform.parent.name.IndexOf("User") > -1 && battle.characters[i].name.IndexOf("Monster") > -1)
+                if (transform.parent.name.IndexOf("User") > -1 && battle.charactersList[i].name.IndexOf("Monster") > -1)
                 {
-                    list.Add(battle.characters[i]);
+                    list.Add(battle.charactersList[i]);
                 }
-                else if (transform.parent.name.IndexOf("Monsters") > -1 && battle.characters[i].name.IndexOf("Character") > -1)
+                else if (transform.parent.name.IndexOf("Monsters") > -1 && battle.charactersList[i].name.IndexOf("Character") > -1)
                 {
-                    list.Add(battle.characters[i]);
+                    list.Add(battle.charactersList[i]);
                 }
             }
-            battle.target = list[Random.Range(0, list.Count)];
+            battle.target = list[UnityEngine.Random.Range(0, list.Count)];
         }
         yield return StartCoroutine(Move());
         anim.Play($"2_Attack_{weaponType}");
         while (!BehaviorEnd)
         {
-            if(Trigger)
+            if (Trigger)
             {
                 TakeDamage(CalcDmg(1, false));
                 Trigger = false;
@@ -138,7 +182,7 @@ public class CharacterData : MonoBehaviour
         }
         BehaviorEnd = false;
         transform.localScale = new Vector3(-2, 2, 2);
-        if(name.IndexOf("Monster")>-1)
+        if (name.IndexOf("Monster") > -1)
         {
             transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * -1, 1, 1);
             transform.Find("hpbar").localPosition = new Vector3(0.3f, -0.5f, 0);
@@ -172,7 +216,7 @@ public class CharacterData : MonoBehaviour
     }
     private int CalcDmg(float val, bool heal)
     {
-        if(!heal)
+        if (!heal)
         {
             if (weaponType == "Normal" || weaponType == "Bow")
             {
@@ -190,27 +234,27 @@ public class CharacterData : MonoBehaviour
     }
     public void Skill()
     {
-        if(characterClass == CharacterType.Warrior)
+        if (characterClass == CharacterType.warrior)
         {
             StartCoroutine(WarriorSkill());
         }
-        else if (characterClass == CharacterType.Mage)
+        else if (characterClass == CharacterType.mage)
         {
             StartCoroutine(MageSkill());
         }
-        else if (characterClass == CharacterType.Cleric)
+        else if (characterClass == CharacterType.cleric)
         {
-            StartCoroutine(MageSkill());
+            StartCoroutine(ClericSkill());
         }
-        else if (characterClass == CharacterType.Thief)
+        else if (characterClass == CharacterType.thief)
         {
             StartCoroutine(ThiefSkill());
         }
-        else if (characterClass == CharacterType.Popstar)
+        else if (characterClass == CharacterType.popstar)
         {
             StartCoroutine(PopstarSkill());
         }
-        else if (characterClass == CharacterType.Chef)
+        else if (characterClass == CharacterType.chef)
         {
             StartCoroutine(ChefSkill());
         }
@@ -224,12 +268,12 @@ public class CharacterData : MonoBehaviour
         {
             if (Trigger)
             {
-                foreach (CharacterData a in battle.charactersList)
+                for (int i = battle.charactersList.Count - 1; i >= 0; i--)
                 {
-                    if(a.transform.parent.name.IndexOf("Monsters")>-1)
+                    if (battle.charactersList[i].transform.parent.name.IndexOf("Monster") > -1)
                     {
-                        battle.target = a;
-                        TakeDamage(CalcDmg(0.6f, false));
+                        battle.target = battle.charactersList[i];
+                        TakeDamage(CalcDmg(skillDmg, skillDmg < 0));
                     }
                 }
                 Trigger = false;
@@ -246,17 +290,16 @@ public class CharacterData : MonoBehaviour
         battle.targetCam = false;
         battle.Focusing = false;
         anim.Play($"5_Skill_Magic");
-        yield return new WaitForSeconds(1f);
         while (!BehaviorEnd)
         {
             if (Trigger)
             {
-                foreach (CharacterData a in battle.charactersList)
+                for (int i = battle.charactersList.Count - 1; i >= 0; i--)
                 {
-                    if (a.transform.parent.name.IndexOf("User") > -1)
+                    if (battle.charactersList[i].transform.parent.name.IndexOf("Monster") > -1)
                     {
-                        battle.target = a;
-                        TakeDamage(CalcDmg(-0.5f, true));
+                        battle.target = battle.charactersList[i];
+                        TakeDamage(CalcDmg(skillDmg, skillDmg < 0));
                     }
                 }
                 Trigger = false;
@@ -273,12 +316,19 @@ public class CharacterData : MonoBehaviour
         battle.targetCam = false;
         battle.Focusing = false;
         anim.Play($"5_Skill_Magic");
-        yield return new WaitForSeconds(1f);
         while (!BehaviorEnd)
         {
             if (Trigger)
             {
-                TakeDamage(CalcDmg(0.5f, false));
+                for (int i = battle.charactersList.Count - 1; i >= 0; i--)
+                {
+                    Debug.Log(i);
+                    if (battle.charactersList[i].transform.parent.name.IndexOf("User") > -1)
+                    {
+                        battle.target = battle.charactersList[i];
+                        TakeDamage(CalcDmg(skillDmg, skillDmg < 0));
+                    }
+                }
                 Trigger = false;
             }
             yield return null;
@@ -290,23 +340,41 @@ public class CharacterData : MonoBehaviour
     }
     public IEnumerator ThiefSkill()
     {
+        if (!isPlayer)
+        {
+            List<CharacterData> list = new();
+            for (int j = 0; j < battle.charactersList.Count; j++)
+            {
+                if (transform.parent.name.IndexOf("User") > -1 && battle.charactersList[j].name.IndexOf("Monster") > -1)
+                {
+                    list.Add(battle.charactersList[j]);
+                }
+                else if (transform.parent.name.IndexOf("Monsters") > -1 && battle.charactersList[j].name.IndexOf("Character") > -1)
+                {
+                    list.Add(battle.charactersList[j]);
+                }
+            }
+            battle.target = list[UnityEngine.Random.Range(0, list.Count)];
+        }
         battle.targetCam = false;
+        battle.Focusing = true;
         yield return StartCoroutine(Move());
-        anim.Play($"2_Skill_Normal");
-        yield return new WaitForSeconds(1f);
+        anim.Play($"5_Skill_Normal");
         int i = 0;
         while (!BehaviorEnd)
         {
-            if (i == 3)
-            {
-                Trigger = false;
-            }
             if (Trigger)
             {
-                TakeDamage(CalcDmg(1, false));
+                if (i == 3)
+                {
+                    Trigger = false;
+                    break;
+                }
+                TakeDamage(CalcDmg(skillDmg, skillDmg < 0));
+                i++;
+                yield return new WaitForSeconds(0.1f);
             }
             yield return null;
-            i++;
         }
         BehaviorEnd = false;
         transform.localScale = new Vector3(-2, 2, 2);
@@ -327,15 +395,14 @@ public class CharacterData : MonoBehaviour
         battle.targetCam = false;
         battle.Focusing = false;
         anim.Play($"5_Skill_Magic");
-        yield return new WaitForSeconds(1f);
         while (!BehaviorEnd)
         {
             if (Trigger)
             {
-                foreach (CharacterData a in battle.charactersList)
+                for (int i = battle.charactersList.Count - 1; i >= 0; i--)
                 {
-                    battle.target = a;
-                    TakeDamage(CalcDmg(0.4f, false));
+                    battle.target = battle.charactersList[i];
+                    TakeDamage(CalcDmg(skillDmg, skillDmg < 0));
                 }
                 Trigger = false;
             }
@@ -348,25 +415,30 @@ public class CharacterData : MonoBehaviour
     }
     public IEnumerator ChefSkill()
     {
-        battle.targetCam = false;
         if (!isPlayer)
         {
             List<CharacterData> list = new();
-            for (int i = 0; i < battle.characters.Length; i++)
+            for (int j = 0; j < battle.charactersList.Count; j++)
             {
-                if (transform.parent.name.IndexOf("User") > -1)
+                if (transform.parent.name.IndexOf("User") > -1 && battle.charactersList[j].name.IndexOf("Monster") > -1)
                 {
-                    list.Add(battle.characters[i]);
+                    list.Add(battle.charactersList[j]);
+                }
+                else if (transform.parent.name.IndexOf("Monsters") > -1 && battle.charactersList[j].name.IndexOf("Character") > -1)
+                {
+                    list.Add(battle.charactersList[j]);
                 }
             }
-            battle.target = list[Random.Range(0, list.Count)];
+            battle.target = list[UnityEngine.Random.Range(0, list.Count)];
         }
-        anim.Play($"2_Skill_Normal");
+        battle.targetCam = false;
+        battle.Focusing = true;
+        anim.Play($"5_Skill_Normal");
         while (!BehaviorEnd)
         {
             if (Trigger)
             {
-                TakeDamage(CalcDmg(-1.5f, false));
+                TakeDamage(CalcDmg(skillDmg, skillDmg < 0));
                 Trigger = false;
             }
             yield return null;
@@ -380,15 +452,12 @@ public class CharacterData : MonoBehaviour
     {
         BehaviorEnd = true;
     }
-    public void OnMouseEnter()
-    {
-        battle.Targetting(this.transform.position);
-    }
     public void OnMouseOver()
     {
+        battle.Targetting(this.transform.position);
         if (Input.GetMouseButtonDown(0) && battle.TargetPoint.activeSelf)
         {
-            if(battle.normalAttack)
+            if (battle.normalAttack)
             {
                 battle.target = this;
                 battle.OperateCharacter(1);
@@ -409,8 +478,36 @@ public class CharacterData : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         battle.target.HP -= dmg;
+        if (battle.target.HP > battle.target.mhp)
+        {
+            battle.target.HP = battle.target.mhp;
+        }
         GameObject Damage = Instantiate(DamagePrefab);
         Damage.transform.position = battle.target.transform.position + new Vector3(0, 1f, -50);
-        Damage.GetComponent<TextMeshPro>().text = dmg.ToString();
+        if (dmg < 0)
+        {
+            Damage.GetComponent<TextMeshPro>().color = Color.green;
+        }
+        Damage.GetComponent<TextMeshPro>().text = Mathf.Abs(dmg).ToString();
+    }
+    public void AsyncData(int index)
+    {
+        characterClass = GameManager.Inst.dataClass[index];
+        HP = GameManager.Inst.dataHP[index];
+        mhp = HP;
+        if (hp > 0 && transform.Find("hpbar") != null)
+        {
+            transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * Mathf.Sign(transform.parent.lossyScale.x), 1, 1);
+        }
+        mp = GameManager.Inst.dataHP[index];
+        attack = GameManager.Inst.dataHP[index];
+        magic = GameManager.Inst.dataHP[index];
+        defence = GameManager.Inst.dataHP[index];
+        speed = GameManager.Inst.dataHP[index];
+        skillName = GameManager.Inst.dataSkillName[index];
+        skillDesc = GameManager.Inst.dataSkillDesc[index];
+        skillTarget = GameManager.Inst.dataSkillTarget[index];
+        AOE = GameManager.Inst.dataAOE[index];
+        skillDmg = GameManager.Inst.dataSkillDmg[index];
     }
 }

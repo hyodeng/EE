@@ -29,34 +29,43 @@ public class Customized : MonoBehaviour
                 parts[0].sprite = MakeSprite(Directory.GetFiles(Application.streamingAssetsPath + "/Character/Face", _name)[0]);
                 GameManager.Inst.partsColor[i, index] = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 parts[0].color = GameManager.Inst.partsColor[i, index];
+                GameManager.Inst.temp[i, index] = parts[i].sprite;
                 break;
             case 1:
                 parts[1].sprite = MakeSprite(Directory.GetFiles(Application.streamingAssetsPath + "/Character/Hair", _name)[0]);
                 GameManager.Inst.partsColor[i, index] = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 parts[1].color = GameManager.Inst.partsColor[i, index];
+                GameManager.Inst.temp[i, index] = parts[i].sprite;
                 break;
             case 2:
                 parts[2].sprite = MakeSprite(Directory.GetFiles(Application.streamingAssetsPath + "/Character/Beard", _name)[0]);
                 GameManager.Inst.partsColor[i, index] = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 parts[2].color = GameManager.Inst.partsColor[i, index];
+                GameManager.Inst.temp[i, index] = parts[i].sprite;
                 break;
             case 3:
                 for (int j = 0; j < Resources.LoadAll<Sprite>($"Character/Armor/{_name.Replace(".png", "")}").Length; j++)
                 {
                     parts[j + 3].sprite = Resources.LoadAll<Sprite>($"Character/Armor/{_name.Replace(".png", "")}")[j];
+                    GameManager.Inst.temp[j + 3, index] = parts[j + 3].sprite;
+                    GameManager.Inst.temp[j+3,  index] = parts[j+3].sprite;
                 }
                 break;
             case 4:
                 for (int j = 0; j < Resources.LoadAll<Sprite>($"Character/Pant/{_name.Replace(".png", "")}").Length; j++)
                 {
                     parts[j + 6].sprite = Resources.LoadAll<Sprite>($"Character/Pant/{_name.Replace(".png", "")}")[j];
+                    GameManager.Inst.temp[j + 6, index] = parts[j + 6].sprite;
+                    GameManager.Inst.temp[j + 6, index] = parts[j + 6].sprite;
                 }
                 break;
             case 5:
                 parts[8].sprite = Resources.Load<Sprite>($"Character/Weapons/{_name.Replace(".png", "")}");
+                GameManager.Inst.temp[i, index] = parts[i].sprite;
                 break;
             case 6:
                 parts[9].sprite = Resources.Load<Sprite>($"Character/Weapons/{_name.Replace(".png", "")}");
+                GameManager.Inst.temp[i, index] = parts[i].sprite;
                 break;
         }
         GameManager.Inst.temp[i, index] = parts[i].sprite;
@@ -75,7 +84,7 @@ public class Customized : MonoBehaviour
         return fromTex;
     }
     // 0: 얼굴, 1: 헤어, 2: 수염, 3: 아머, 4: 바지, 5:오른쪽 무기, 6 : 왼손 무기
-    public void RandomParts(int i)  
+    public void RandomParts(int i)
     {
         DirectoryInfo directoryInfo;
         switch (i)
@@ -112,10 +121,10 @@ public class Customized : MonoBehaviour
     }
     public void AsyncParts(int index)
     {
-        for(int i = 0; i<parts.Length; i++)
+        for (int i = 0; i < parts.Length; i++)
         {
             if (GameManager.Inst.temp[i, index] != null)
-            { 
+            {
                 parts[i].sprite = GameManager.Inst.temp[i, index];
             }
         }

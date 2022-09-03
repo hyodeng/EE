@@ -8,10 +8,10 @@ using UnityEngine.UI;
 
 public class CharacterCustomize : MonoBehaviour
 {
-    Button nextScene;              //다음씬 선택 버튼
+    public Button nextScene;              //다음씬 선택 버튼
     private void Start()
     {
-        nextScene = GameObject.Find("NextButton").GetComponent<Button>();
+        //nextScene = GameObject.Find("NextButton0").GetComponent<Button>();
         Customized custom = FindObjectOfType<Customized>();
         nextScene.onClick.AddListener(() => {
             for(int i = 0; i<10; i++)

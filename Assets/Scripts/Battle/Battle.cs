@@ -7,7 +7,6 @@ public class Battle : MonoBehaviour
 {
     public Player[] player;
     public Monster[] monster;
-    public CharacterData[] characters;
 
     public List<CharacterData> charactersList;
     public List<SpriteRenderer> parts;
@@ -22,45 +21,100 @@ public class Battle : MonoBehaviour
     public bool Focusing;
     public bool targetCam;
     public bool normalAttack;
-
+    bool InitTemp = false;
     public int index = 0;
     public int Index
     {
         get => index;
         set
         {
+            bool BothAlive = false;
+            List<string> dataNames = new();
             index = value;
-            if (value == characters.Length)
+            if (charactersList.Count > 1)
             {
-                targetCam = false;
-                Focusing = false;
-                index = 0;
-            }
-            else
-            {
-                Debug.Log(characters[value].transform.parent.name);
-                if (characters[value].transform.parent.name.IndexOf("User")>-1)
+                foreach (CharacterData data in charactersList)
                 {
-                    OperateCharacter(Random.Range(1, 3));
+                    if (data)
+                    {
+                        dataNames.Add(data.name);
+                    }
+                }
+                for (int i = 1; i < charactersList.Count; i++)
+                {
+                    if (dataNames[i - 1].Length != dataNames[i].Length)
+                    {
+                        BothAlive = true;
+                        break;
+                    }
+                }
+                if (!BothAlive)
+                {
+                    if (charactersList[0].transform.parent.name.IndexOf("User") > -1)
+                    {
+                        BattleEnd(true);
+                    }
+                    else
+                    {
+                        BattleEnd(false);
+                    }
                 }
                 else
                 {
-                    OperateCharacter(1);
+                    if (value == charactersList.Count)
+                    {
+                        targetCam = false;
+                        Focusing = false;
+                        Index = 0;
+                    }
+                    else
+                    {
+                        if (InitTemp)
+                        {
+                            if (charactersList[value].transform.parent.name.IndexOf("User") > -1)
+                            {
+                                if (!charactersList[value].isPlayer)
+                                {
+                                    OperateCharacter(Random.Range(1, 3));
+                                }
+                                else
+                                {
+                                    Operator.gameObject.SetActive(true);
+                                    TargetPoint.SetActive(false);
+                                }
+                            }
+                            else
+                            {
+                                OperateCharacter(1);
+                            }
+                        }
+                    }
                 }
+            }
+            else if (charactersList.Count == 1)
+            {
+                if (charactersList[0].transform.parent.name.IndexOf("User") > -1)
+                {
+                    BattleEnd(true);
+                }
+                else
+                {
+                    BattleEnd(false);
+                }
+            }
+            else if (charactersList.Count == 0)
+            {
+                BattleEnd(false);
             }
         }
     }
-
     public GameObject TargetPoint;
 
     private void Awake()
     {
-        for (int i = 0; i<4; i++)
+        for (int i = 0; i < 4; i++)
         {
-            if (GameManager.Inst.userPartyCheck[i])
-            {
-                GameObject.Find("UserParty").transform.Find($"Character{i}").gameObject.SetActive(true);
-            }
+            GameObject.Find("UserParty").transform.Find($"Character{i}").gameObject.SetActive(GameManager.Inst.userPartyCheck[i]);
         }
     }
     private void Start()
@@ -74,12 +128,12 @@ public class Battle : MonoBehaviour
             cam.orthographicSize = 3.5f;
             cam.transform.position = Avatars[index].transform.position - new Vector3(0, 0, 100);
         }
-        else if(!Focusing && !targetCam)
+        else if (!Focusing && !targetCam)
         {
             cam.orthographicSize = 5f;
             cam.transform.position = Vector3.zero - new Vector3(0, 0, 100);
         }
-        else if(targetCam)
+        else if (targetCam)
         {
             cam.orthographicSize = 3.5f;
             cam.transform.position = target.transform.position - new Vector3(0, 0, 100);
@@ -93,15 +147,15 @@ public class Battle : MonoBehaviour
         monster = Transform.FindObjectsOfType<Monster>();
         System.Array.Sort<Monster>(monster, (x, y) => x.transform.GetSiblingIndex().CompareTo(y.transform.GetSiblingIndex()));
 
-        Operator.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OnTarget());
-        Operator.GetChild(1).GetComponent<Button>().onClick.AddListener(() => OperateCharacter(2));
+        //Operator.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OnTarget());
+        //Operator.GetChild(1).GetComponent<Button>().onClick.AddListener(() => OperateCharacter(2));
         Operator.GetChild(2).GetComponent<Button>().onClick.AddListener(() => OperateCharacter(3));
-        
+
         SetTurn();
     }
     public void SetTurn()
     {
-        characters = FindObjectsOfType<CharacterData>();
+        CharacterData[] characters = FindObjectsOfType<CharacterData>();
         charactersList = new List<CharacterData>(characters);
 
 
@@ -125,16 +179,29 @@ public class Battle : MonoBehaviour
         {
             Avatars[i] = characters[i].gameObject;
         }
+        int k = 0;
+        foreach (CharacterData character in charactersList)
+        {
+            if (character.isPlayer)
+            {
+                Index = k;
+                InitTemp = true;
+            }
+            k++;
+        }
     }
     public void OperateCharacter(int State)
     {
-        characters[index].State = State;
+        charactersList[Index].State = State;
         Operator.gameObject.SetActive(false);
     }
-    public void NormalAttack()
+    public void NormalAttack(bool normal)
     {
-        normalAttack = true;
-        OnTarget();
+        normalAttack = normal;
+        if (charactersList[Index].isPlayer)
+        {
+            OnTarget();
+        }
     }
     public void OnTarget()
     {
@@ -144,6 +211,17 @@ public class Battle : MonoBehaviour
     }
     public void Targetting(Vector2 pos)
     {
-        TargetPoint.transform.position = new Vector3(pos.x, pos.y , 0);
+        TargetPoint.transform.position = new Vector3(pos.x, pos.y, 0);
+    }
+    public void BattleEnd(bool vic)
+    {
+        if (vic)
+        {
+            Debug.Log("전투 승리");
+        }
+        else
+        {
+            Debug.Log("전투 패배");
+        }
     }
 }

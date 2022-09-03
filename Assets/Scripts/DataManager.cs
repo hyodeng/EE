@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Converters;
+
 
 public class DataManager : MonoBehaviour
 {
@@ -63,8 +66,9 @@ public class DataManager : MonoBehaviour
 
         for (int i = 0; i < customized.parts.Length; i++)
         {
-            playerData.parts[i] = customized.tempImageName[i];
+            playerData.parts[i] = customized.parts[i].name;
         }
+
 
         //json으로 파츠 이름 저장
         string player = JsonUtility.ToJson(playerData);
@@ -92,6 +96,5 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    //파트너 데이터 로드
 
 }
