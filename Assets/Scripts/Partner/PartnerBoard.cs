@@ -11,25 +11,36 @@ public class PartnerBoard : MonoBehaviour
     TextMeshPro requestTxt;
     TextMeshPro countTxt;
 
-    Button partnerListButton; //동료리스트 버튼
+    GameObject questionPop;
+    public string popText;
+    Button yesbutton;
+    Button nobutton;
+    Button selectbutton;
 
 
-    //아래 2개 삭제 해야하나??
-    public Action onPartnerSelectBoardOpen;
-    public Action onPartnerSelectBoardClose;
-    public Action onOffSwitch;
+    //동료 인원수 : static 이나 추후 변경 필요
+    public static uint partnerCount = 0;
 
-    PopupController popupController;
-
-    WaitForSeconds delayTime = new WaitForSeconds(0.5f);
+    //델리게이트
+    public Action OnPartnerSelectBoardOpen;
+    public Action OnPartnerSelectBoardClose;
+    public Action OnOffSwitch;
 
     private void Awake()
     {
         requestTxt = transform.GetChild(0).GetComponent<TextMeshPro>();
         countTxt = transform.GetChild(1).GetComponent<TextMeshPro>();
 
-        partnerListButton = transform.GetComponentInChildren<Button>();
-        popupController = GameObject.Find("PopupController").gameObject.GetComponent<PopupController>();
+        //동료 선택 여부 물어보는 창
+        questionPop = transform.Find("QuestionPop").gameObject;
+        yesbutton = transform.GetComponentsInChildren<Button>()[0];     //팝업창 : 동료 추가 yes버튼
+        nobutton = transform.GetComponentsInChildren<Button>()[1];      //팝업창 : 동료 추가 no버튼
+        selectbutton = transform.GetComponentsInChildren<Button>()[2];  //동료리스트 버튼 
+
+
+        //왜 안되지?
+        //yesbutton = questionPop.transform.GetChild(0).GetComponent<Button>();
+        //nobutton = questionPop.transform.GetChild(1).GetComponent<Button>();
 
     }
 
@@ -37,41 +48,64 @@ public class PartnerBoard : MonoBehaviour
     {
         Initialize();
 
-        partnerListButton.onClick.AddListener(OnOffSelectBoard);
+        yesbutton.onClick.AddListener(SelectPartner);
+        nobutton.onClick.AddListener(NoSelectPartner);
+        selectbutton.onClick.AddListener(OnOffSelectBoard);
+
         //addListener 두개하면 2개 메서드가 등록되나요?
 
-        popupController.OnPartnerBoardCount += PopPartnerCount;
+
+        //StartCoroutine(PopPartnerBoard());
+        //partnerSelect.text = "선택 가능한 인원수가 넘었습니다";
     }
+
+
 
     void Initialize()
     {
         requestTxt.text = "동료를 선택하세요";
-        countTxt.text = popupController.PartnerCount.ToString();
+        countTxt.text = partnerCount.ToString();
+        questionPop.SetActive(false);
+
         StartCoroutine(PopUpQuestion());
     }
 
-    IEnumerator PopUpQuestion()
-    {
-        yield return delayTime;
-    }
 
 
-    //동료리스트버튼 : PartnerSelectBoard 온오프 스위치
     public void OnOffSelectBoard()
     {
-        onOffSwitch?.Invoke();
+        OnOffSwitch?.Invoke();
+
     }
 
-    private void PopPartnerCount()
+
+    IEnumerator PopUpQuestion()
     {
-        StartCoroutine(OpenPartnerBoard());
+        yield return new WaitForSeconds(0.5f);
+        questionPop.SetActive(true);
+
+        questionPop.GetComponentInChildren<TextMeshProUGUI>().text = "여행을 함께할 동료를 선택할 수 있습니다.\n동료를 선택하시겠습니까?";
     }
 
-    IEnumerator OpenPartnerBoard()
+    public void SelectPartner()
     {
-        yield return delayTime;
+        questionPop.SetActive(false);
+        //선택된 동료모음창 오픈
+        OnPartnerSelectBoardOpen?.Invoke();
+    }
+
+    private void NoSelectPartner()
+    {
+        questionPop.SetActive(false);
+        OnPartnerSelectBoardClose?.Invoke();
+    }
+
+    //
+    IEnumerator PopPartnerBoard()
+    {
+        yield return new WaitForSeconds(2.0f);
         requestTxt.text = "동료를 선택했습니다";
-        countTxt.text = popupController.PartnerCount.ToString();
+        countTxt.text = partnerCount.ToString();
     }
 
 }

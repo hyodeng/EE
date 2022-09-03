@@ -8,15 +8,17 @@ using UnityEngine.UI;
 
 public class CharacterCustomize : MonoBehaviour
 {
+    Button nextScene;              //다음씬 선택 버튼
     private void Start()
     {
+        nextScene = GameObject.Find("NextButton").GetComponent<Button>();
         Customized custom = FindObjectOfType<Customized>();
-        {
-            for (int i = 0; i < 10; i++)
+        nextScene.onClick.AddListener(() => {
+            for(int i = 0; i<10; i++)
             {
-                GamaMan.Inst.temp[i, 0] = custom.parts[i].sprite;
+                GameManager.Inst.temp[i, 0] = custom.parts[i].sprite;
             }
-
-        }; //addListener는 이벤트 발생 시마다 실행됨
+            SceneManager.LoadScene("CharacterSelect");
+            }); //addListener는 이벤트 발생 시마다 실행됨
     }
 }

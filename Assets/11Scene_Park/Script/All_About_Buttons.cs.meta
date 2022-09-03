@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ea2b783c5481d3a479c332c0b9a55b88
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - stage_One: {fileID: 5319836823304421088, guid: a0a23de4ba8a11547b7421090c4d2c36, type: 3}
+  - stage_Two: {fileID: 887839550755549519, guid: 6b2307017ba9ed64a93556ce3346d2d1, type: 3}
+  - stage_Boss: {fileID: 5107005791848845328, guid: 8c7725773b49b514c9338a7b15890f48, type: 3}
+  - stage_Select: {fileID: 4438722363204503635, guid: a9faf385514f96541870ccc038a6cf65, type: 3}
+  - Enemy: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
