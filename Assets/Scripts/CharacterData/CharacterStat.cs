@@ -4,12 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Newtonsoft.Json.Linq;
+
+[Serializable]
+public class character
+{
+    public string _name, desc, skillname, skilldesc;
+    public int maxhp, hp, maxmp, mp, attack, attackup, magic, magicup, defence, defenceup, speed, speedup;
+    public string[] parts, equipment;
+}
+[Serializable]
+public class Character
+{
+    public character[] character;
+}
 
 
 public class CharacterStat : MonoBehaviour
 {
-    public CharacterData characterData;
+    //Json 읽어오기 위한 변수
+    public TextAsset textAsset;
+    public Character character;
 
     //Json 저장용 변수
     public string jsonname;
@@ -31,7 +45,7 @@ public class CharacterStat : MonoBehaviour
 
     public Button button_warrior;
     public Button button_mage;
-    public Button button_cleric;
+    public Button button_clreic;
     public Button button_thief;
     public Button button_popstar;
     public Button button_chef;
@@ -64,6 +78,8 @@ public class CharacterStat : MonoBehaviour
     private void Awake()
     {
         //Resource 폴더/Json 폴더/Character.json 파일에서 게임초기 선택할 캐릭터 정보 읽어옴
+        character = JsonUtility.FromJson<Character>(textAsset.text);
+
         characterBoard = GameObject.Find("Canvas").transform.Find("CharacterBoard").gameObject;
         statBarText = GameObject.Find("Canvas").transform.Find("StatBarText").gameObject;
 
@@ -81,38 +97,29 @@ public class CharacterStat : MonoBehaviour
         characterBoard.SetActive(false);
         statBarText.SetActive(false);
     }
-
     private void Start()
     {
-        button_warrior.onClick.AddListener(() => { characterData.characterClass = CharacterType.warrior; });
-        button_mage.onClick.AddListener(() => { characterData.characterClass = CharacterType.mage; });
-        button_cleric.onClick.AddListener(() => { characterData.characterClass = CharacterType.cleric; });
-        button_thief.onClick.AddListener(() => { characterData.characterClass = CharacterType.thief; });
-        button_popstar.onClick.AddListener(() => { characterData.characterClass = CharacterType.popstar; });
-        button_chef.onClick.AddListener(() => { characterData.characterClass = CharacterType.chef; });
- 
-        //button_warrior.onClick.AddListener(() => DataSetup(CharacterType.Warrior));
-        //button_mage.onClick.AddListener(() => DataSetup(CharacterType.Mage));
-        //button_clreic.onClick.AddListener(() => DataSetup(CharacterType.Cleric));
-        //button_thief.onClick.AddListener(() => DataSetup(CharacterType.Thief));
-        //button_popstar.onClick.AddListener(() => DataSetup(CharacterType.Popstar));
-        //button_chef.onClick.AddListener(() => DataSetup(CharacterType.Chef));
+        button_warrior.onClick.AddListener(() => DataSetup(CharacterType.Warrior));
+        button_mage.onClick.AddListener(() => DataSetup(CharacterType.Mage));
+        button_clreic.onClick.AddListener(() => DataSetup(CharacterType.Cleric));
+        button_thief.onClick.AddListener(() => DataSetup(CharacterType.Thief));
+        button_popstar.onClick.AddListener(() => DataSetup(CharacterType.Popstar));
+        button_chef.onClick.AddListener(() => DataSetup(CharacterType.Chef));
         nextButton.onClick.AddListener(NextScene);
 
         backAura = GameObject.Find("BackAura").GetComponent<ParticleSystem>();
     }
 
-    /*
     public void DataSetup(CharacterType type)
     {
-        Character data;
+        character data;
 
         statBarText.SetActive(true);
         FindObjectOfType<CharacterData>().characterClass = type;
         switch (type)
         {
             case CharacterType.Warrior:
-                data = character.jobject["character"][];
+                data = character.character[(int)CharacterType.Warrior];
 
                 SetCharacterStat(data);
                 SetCharacterExplanation(data);
@@ -238,7 +245,6 @@ public class CharacterStat : MonoBehaviour
         playerExplanation.transform.parent.gameObject.SetActive(true);
 
     }
-    */
     //5 : 오른쪽무기
     void SetWeapon()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
     public enum CharacterType
     {
-        warrior = 0, mage, cleric, thief, popstar, chef
+        Warrior = 0, Mage, Cleric, Thief, Popstar, Chef
     }
 
    // int count = System.Enum.GetValues(typeof(CharacterType)).Length;

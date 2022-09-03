@@ -8,7 +8,6 @@ using TMPro;
 
 public class PartnerSelectView : MonoBehaviour
 {
-    /*
     Button btnWarrior;
     Button btnMage;
     Button btnCleric;
@@ -219,5 +218,5 @@ public class PartnerSelectView : MonoBehaviour
     {
 
     }
-    */
+
 }
