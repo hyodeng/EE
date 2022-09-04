@@ -22,14 +22,14 @@ public class Test_Player : MonoBehaviour
         actions.Player.Enable();
         actions.Player.Move.performed += OnMove;
         actions.Player.Move.canceled += OnMove;
-        actions.Player.Use.performed += OnUse;
-        actions.Player.Use.canceled += OnUse;
+        //actions.Player.Use.performed += OnUse;
+        //actions.Player.Use.canceled += OnUse;
     }
 
     private void OnDisable()
     {
-        actions.Player.Use.canceled -= OnUse;
-        actions.Player.Use.performed -= OnUse;
+        //actions.Player.Use.canceled -= OnUse;
+        //actions.Player.Use.performed -= OnUse;
         actions.Player.Move.canceled -= OnMove;
         actions.Player.Move.performed -= OnMove;  
         actions.Player.Disable();   
