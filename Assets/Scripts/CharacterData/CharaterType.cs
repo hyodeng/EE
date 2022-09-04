@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-    public enum CharacterType
-    {
-        Warrior = 0, Mage, Cleric, Thief, Popstar, Chef
-    }
-    public enum ItemCode
+public enum CharacterType
+{
+    warrior = 0, mage, cleric, thief, popstar, chef
+}
+public enum ItemCode
     {
         Weapon = 0, Armor, Consumable
     }
