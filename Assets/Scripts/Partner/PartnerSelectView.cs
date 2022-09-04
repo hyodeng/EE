@@ -17,6 +17,7 @@ public class PartnerSelectView : MonoBehaviour
     Button btnPopstar;
     Button btnChef;
 
+    Character partner;
     Customized customized;
 
     SavePlayerData characterData = new SavePlayerData();
@@ -72,7 +73,7 @@ public class PartnerSelectView : MonoBehaviour
         skillName3 = selectboard.transform.Find("Partner3").GetChild(2).GetComponent<TextMeshProUGUI>();
         PartnerExplanation3 = selectboard.transform.Find("Partner3").GetChild(3).GetComponent<TextMeshProUGUI>();
 
-        popupController = GameObject.Find("PopupController").GetComponent<PopupController>();
+        popupController = GameObject.Find("PopupNextSceneController").GetComponent<PopupController>();
 
     }
 
@@ -120,6 +121,8 @@ public class PartnerSelectView : MonoBehaviour
     private void DataSetUp(CharacterType type)
     {
         partnerboard.onPartnerSelectBoardOpen?.Invoke();
+
+        //테스트로 일단 해놓음 
         int index = 0;
 
         switch (type)
@@ -128,7 +131,7 @@ public class PartnerSelectView : MonoBehaviour
                 jTokenPartner = Jsonpartner["warrior"];
 
                 //파트너의 파츠별 이미지 
-                ClearParts();
+                //ClearParts();
                 InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
 
@@ -136,7 +139,7 @@ public class PartnerSelectView : MonoBehaviour
             case CharacterType.mage:
                 jTokenPartner = Jsonpartner["mage"];
 
-                ClearParts();
+                //ClearParts();
                 InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
 
@@ -144,26 +147,26 @@ public class PartnerSelectView : MonoBehaviour
             case CharacterType.cleric:
                 jTokenPartner = Jsonpartner["cleric"];
 
-                ClearParts();
+                //ClearParts();
                 InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
                 break;
             case CharacterType.thief:
                 jTokenPartner = Jsonpartner["thief"];
-                ClearParts();
+                //ClearParts();
                 InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
 
                 break;
             case CharacterType.popstar:
                 jTokenPartner = Jsonpartner["popstar"];
-                ClearParts();
+                //ClearParts();
                 InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
                 break;
             case CharacterType.chef:
                 jTokenPartner = Jsonpartner["chef"];
-                ClearParts();
+                //ClearParts();
                 InitializePartenrData(index);
                 RefreshDataPartnerSelectBoard(type);
                 break;
@@ -187,11 +190,12 @@ public class PartnerSelectView : MonoBehaviour
     //동료의 파츠 이미지와 캐릭터를 초기화
     private void InitializePartenrData(int index)
     {
-        string jsonCharacter = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
-        Jsonpartner = JObject.Parse(jsonCharacter);
 
-        customized.AsyncParts(index);
-
+        //일단 테스트로 1번 해놓음 , 파츠 이미지 
+        for (int i = 0; i < customized.parts.Length; i++)
+        {
+            GameManager.Inst.temp[i, index] = customized.parts[i].sprite;
+        }
 
         characterData._name = jTokenPartner["_name"].Value<string>();
         characterData.maxhp = jTokenPartner["hp"][0].Value<int>(); //maxHP
@@ -213,12 +217,19 @@ public class PartnerSelectView : MonoBehaviour
         //characterData.armor = jTokenplayer["armor"].Value<string>();
         //characterData.weapon = jTokenplayer["weapon"].Value<string>();
         characterData.desc = jTokenPartner["desc"].Value<string>();
-
-
     }
 
     void SavePartnerData()
     {
+        for (int i = 0; i < customized.parts.Length; i++)
+        {
+            //jTokenPartner["parts"][i].AddAfterSelf(GameManager.Inst.partsName[i]);
+        }
+
+        //var properties = (JObject)jsonObj["properties"];
+        //properties.Add(new JProperty("pcName-B", new JObject { ["model"] = "xyz" }));
+        //Console.WriteLine(jsonObj);
+
         string partner = JsonConvert.SerializeObject(jTokenPartner);
         File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/Partner_{GameManager.Inst.partnerCount}.json", partner);
 

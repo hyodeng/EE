@@ -19,7 +19,6 @@ public class PartnerSelectBoard : MonoBehaviour
     {
         partnerBoard = GameObject.Find("PartnerBoard").GetComponent<PartnerBoard>();
         partnerSelectView = GameObject.Find("PartnerSelectView").GetComponent<PartnerSelectView>();
-        //partnerSelectView = DataManager.Instance.PartnerSelectView;
 
         partner1 = transform.GetChild(3).gameObject;
         partner2 = transform.GetChild(4).gameObject;

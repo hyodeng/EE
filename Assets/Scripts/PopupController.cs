@@ -11,6 +11,12 @@ public class PopupController : MonoBehaviour
     public GameObject questionPop;
     public GameObject nextSceneButton;
     public GameObject prevSceneButton;
+
+    public AudioClip audioSave;
+    public AudioClip audioYes;
+    public AudioClip audioNo;
+    AudioSource audioSource;
+
     Button nextButton;
     Button prevButton;
 
@@ -35,6 +41,7 @@ public class PopupController : MonoBehaviour
         savebutton = GameObject.Find("SaveButton").GetComponent<Button>();
         nextButton = nextSceneButton.GetComponent<Button>();
         prevButton = prevSceneButton.GetComponent<Button>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -46,6 +53,7 @@ public class PopupController : MonoBehaviour
         nextButton.onClick.AddListener(SelectNextScene);
         yesbutton.GetComponent<Button>().onClick.AddListener(SelectYes);
         nobutton.GetComponent<Button>().onClick.AddListener(OnOffSwitch);
+
     }
 
 
@@ -72,6 +80,7 @@ public class PopupController : MonoBehaviour
     IEnumerator PopUpQuestion()
     {
         yield return delayTime0;
+        
         questionText.text = "여행을 떠나기 위해\n 당신의 플레이어를 꾸며보세요.";
         questionText.fontSize = 45.0f;
         questionPop.SetActive(true);
@@ -119,11 +128,13 @@ public class PopupController : MonoBehaviour
     {
         OnOffSwitch();
         questionText.text = "현재의 캐릭터 정보로 저장하시겠습니까?";
+        PlaySound("Save");
     }
 
     //팝업창의 yes 버튼을 눌렀을 때 
     void SelectYes()
     {
+        PlaySound("Yes");
         if (questionPop.name == "QuestionPop_0")
         {
             //플레이어 파츠 저장
@@ -150,15 +161,34 @@ public class PopupController : MonoBehaviour
             isReadySave = true;
             if (isReadySave)
             {
-                //DataManager.Instance.SavePartnerToJson();
+                DataManager.Instance.SavePartnerToJson();
             }
             
             OnPartnerCount?.Invoke();
             OnOffSwitch();
             isNextScene = true;
         }
+
     }
 
+    void PlaySound(string action)
+    {
+        switch (action)
+        {
+            case "Save":
+                audioSource.clip = audioSave;
+                break;
+            case "Yes":
+                audioSource.clip = audioYes;
+                break;
+            case "No":
+                audioSource.clip = audioNo;
+                break;
+            default:
+                break;
+        }
+        audioSource.Play();
+    }
 
     public void SelectNextScene()
     {

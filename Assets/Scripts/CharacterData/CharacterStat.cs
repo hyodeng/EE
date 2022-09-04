@@ -286,6 +286,8 @@ public class CharacterStat : MonoBehaviour
 
     void SetPlayerToJson()
     {
+        
+        //DataManager의 플레이어 파츠 내용을 합쳐서 저장하려고 했는데 실패... 나중에 수정
         string player = JsonConvert.SerializeObject(jTokenplayer);
         File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Player.json", player);
 

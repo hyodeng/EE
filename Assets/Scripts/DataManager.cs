@@ -8,8 +8,8 @@ using Newtonsoft.Json.Linq;
 public class DataManager : MonoBehaviour
 {
     //Json 저장하기 위한 변수
-    JObject parts = new JObject();
     JObject jsonPlayer = new JObject();
+    public JObject parts = new JObject();
 
     //캐릭터 커스터마이즈(착장) 정보
     Customized customized;
@@ -57,21 +57,17 @@ public class DataManager : MonoBehaviour
     //플레이어 파츠 이름을 Json으로 저장
     public void SavePlayerParts()
     {
-
-        //string jsonCharacter = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
-        //jsonPlayer = JObject.Parse(jsonCharacter);
-
         customized = FindObjectOfType<Customized>();
-
+        
         for (int i = 0; i < customized.parts.Length; i++)
         {
            parts.Add($"{i}", GameManager.Inst.partsName[i]);
+            Debug.Log($"{i}, {GameManager.Inst.partsName[i]}");
         }
 
-        //jsonPlayer.Add(parts);
 
-        //재저장
-        string playerparts = JsonConvert.SerializeObject(parts);
+        //백업 저장
+        string playerparts = JsonConvert.SerializeObject(jsonPlayer);
         File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/PlayerParts.json", playerparts);
         Debug.Log("플레이어 파츠 저장");
 

@@ -30,7 +30,7 @@ public class PartnerBoard : MonoBehaviour
         countTxt = transform.GetChild(1).GetComponent<TextMeshPro>();
 
         partnerListButton = transform.GetComponentInChildren<Button>();
-        popupController = GameObject.Find("PopupController").gameObject.GetComponent<PopupController>();
+        popupController = GameObject.Find("PopupNextSceneController").gameObject.GetComponent<PopupController>();
 
     }
 
