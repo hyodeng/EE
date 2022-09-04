@@ -14,8 +14,9 @@ public class CharacterStat : MonoBehaviour
     //플레이어 Json 저장용 --------------------------------------
     SavePlayerData characterData = new SavePlayerData();
     JObject jobject;
-    JToken jTokenplayer;
+    public JToken jTokenplayer;
     //---------------------------------------------------------
+    
     Button button_warrior;
     Button button_mage;
     Button button_cleric;
@@ -104,8 +105,7 @@ public class CharacterStat : MonoBehaviour
 
         backAura = GameObject.Find("BackAura").GetComponent<ParticleSystem>();
 
-        //플레이어 데이터 델리게이트 연결
-        DataManager.Instance.SavePlayerToJson = SetPlayerToJson;
+
     }
 
 
@@ -279,18 +279,10 @@ public class CharacterStat : MonoBehaviour
 
     IEnumerator DelaySkillDesc()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.5f);
         skillBoard.alpha = 0;
 
     }
 
-    void SetPlayerToJson()
-    {
-        
-        //DataManager의 플레이어 파츠 내용을 합쳐서 저장하려고 했는데 실패... 나중에 수정
-        string player = JsonConvert.SerializeObject(jTokenplayer);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Player.json", player);
 
-        Debug.Log("플레이어 데이터 Json 저장");
-    }
 }

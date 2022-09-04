@@ -8,17 +8,27 @@ using Newtonsoft.Json.Linq;
 public class DataManager : MonoBehaviour
 {
     //Json 저장하기 위한 변수
-    JObject jsonPlayer = new JObject();
+    public JObject jsonPlayer = new JObject();
     public JObject parts = new JObject();
+    public JToken jtoken;
+
+    private string SAVE_DATA_DIRECTORY; 
+
 
     //캐릭터 커스터마이즈(착장) 정보
     Customized customized;
     public Customized Customized => customized;
 
+    //플레이어 스탯
+    CharacterStat characterStat;
+    public CharacterStat CharacterStat => characterStat;
 
-    //정보 저장 및 로드 관련 델리게이트 
-    public System.Action SavePlayerToJson;  //플레이어 데이터 json으로 저장(초기화)
-    public System.Action SavePartnerToJson;  //동료 데이터 json으로 저장(초기화)
+    //동료 스탯
+    PartnerSelectView partnerSelectView;
+    public PartnerSelectView PartnerSelectView => partnerSelectView;
+
+    PartnerSelectBoard partnerSelectBoard;
+    public PartnerSelectBoard PartnerSelectBoard => partnerSelectBoard;
 
     //싱글톤 ---------------------------------------
     static DataManager instance = null;
@@ -45,6 +55,8 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
+        SAVE_DATA_DIRECTORY = Application.dataPath + "/Resources/Json/";
+        
         Initailize();
 
     }
@@ -54,24 +66,79 @@ public class DataManager : MonoBehaviour
 
     }
 
+
     //플레이어 파츠 이름을 Json으로 저장
     public void SavePlayerParts()
     {
         customized = FindObjectOfType<Customized>();
         
+        //jobject
         for (int i = 0; i < customized.parts.Length; i++)
         {
            parts.Add($"{i}", GameManager.Inst.partsName[i]);
             Debug.Log($"{i}, {GameManager.Inst.partsName[i]}");
         }
 
+        jsonPlayer.Add("parts", parts);
 
         //백업 저장
-        string playerparts = JsonConvert.SerializeObject(jsonPlayer);
+        string playerparts = JsonConvert.SerializeObject(jsonPlayer, Formatting.Indented);
         File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/PlayerParts.json", playerparts);
         Debug.Log("플레이어 파츠 저장");
-
     }
+
+    public void SetPlayerToJson()
+    {
+        characterStat = FindObjectOfType<CharacterStat>();
+
+        if (!Directory.Exists(SAVE_DATA_DIRECTORY))
+            Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
+
+        jtoken = characterStat.jTokenplayer;
+        
+        //DataManager의 플레이어 파츠 내용을 합쳐서 저장하려고 했는데 실패... 나중에 수정
+        string player = JsonConvert.SerializeObject(jtoken, Formatting.Indented);
+        File.WriteAllText(SAVE_DATA_DIRECTORY + "/Player.json", player);
+
+        Debug.Log("플레이어 데이터 Json 초기화");
+    }
+
+    //미사용중
+    public void SavePartnerParts()
+    {
+        if (!Directory.Exists(SAVE_DATA_DIRECTORY))
+            Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
+        //PartnerParts_0으로 별도로 저장할 건지 의논
+
+        for (int i = 0; i < customized.parts.Length; i++)
+        {
+            parts.Add($"{i}", GameManager.Inst.partsName[i]);
+        }
+
+        jsonPlayer.Add("parts", parts);
+
+        string playerparts = JsonConvert.SerializeObject(jsonPlayer, Formatting.Indented);
+        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/PartnerParts_{GameManager.Inst.partnerCount}.json", playerparts);
+        Debug.Log("플레이어 파츠 저장");
+    }
+
+    public void SetPartnerToJson()
+    {
+
+        partnerSelectView = FindObjectOfType<PartnerSelectView>();
+
+        if (!Directory.Exists(SAVE_DATA_DIRECTORY))
+            Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
+
+        jtoken = PartnerSelectView.jTokenPartner;
+
+        string partner = JsonConvert.SerializeObject(jtoken, Formatting.Indented);
+        File.WriteAllText(SAVE_DATA_DIRECTORY + $"/Partner_{GameManager.Inst.partnerCount}.json", partner);
+
+        Debug.Log($"파트너 데이터_{GameManager.Inst.partnerCount}번 Json 초기화");
+    }
+
+    
 
 
 }

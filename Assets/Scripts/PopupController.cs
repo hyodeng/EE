@@ -17,8 +17,6 @@ public class PopupController : MonoBehaviour
     public AudioClip audioNo;
     AudioSource audioSource;
 
-    Button nextButton;
-    Button prevButton;
 
     TextMeshProUGUI questionText;
     WaitForSeconds delayTime0 = new WaitForSeconds(0.5f);
@@ -27,11 +25,14 @@ public class PopupController : MonoBehaviour
     GameObject yesbutton;
     GameObject nobutton;
     Button savebutton;
+    Button nextButton;
+    Button prevButton;
     bool isNextScene = false;
     public bool isReadySave = false;    //true일 때만 json으로 저장됨
 
     public System.Action OnEnabledpartnerSelectView;
     public System.Action OnPartnerCount;
+
 
     private void Awake()
     {
@@ -134,6 +135,7 @@ public class PopupController : MonoBehaviour
     //팝업창의 yes 버튼을 눌렀을 때 
     void SelectYes()
     {
+
         PlaySound("Yes");
         if (questionPop.name == "QuestionPop_0")
         {
@@ -141,7 +143,6 @@ public class PopupController : MonoBehaviour
             DataManager.Instance.SavePlayerParts();
             OnOffSwitch();
             isNextScene = true;
-
         }
         else if (questionPop.name == "QuestionPop_1")
         {
@@ -149,7 +150,7 @@ public class PopupController : MonoBehaviour
             isReadySave = true;
             if (isReadySave)
             {
-                DataManager.Instance.SavePlayerToJson();
+                DataManager.Instance.SetPlayerToJson();
             }
             OnOffSwitch();
             isNextScene = true;
@@ -161,12 +162,13 @@ public class PopupController : MonoBehaviour
             isReadySave = true;
             if (isReadySave)
             {
-                DataManager.Instance.SavePartnerToJson();
+                DataManager.Instance.SetPartnerToJson();
             }
             
             OnPartnerCount?.Invoke();
             OnOffSwitch();
             isNextScene = true;
+
         }
 
     }
@@ -197,14 +199,15 @@ public class PopupController : MonoBehaviour
             if (nextButton.name == "NextButton_0")
             {
                 SceneManager.LoadScene("CharacterSelect");
-
             }
             else if (nextButton.name == "NextButton_1")
             {
+                
                 SceneManager.LoadScene("CharacterSelectPartner");
             }
             else if (nextButton.name == "NextButton_2")
             {
+
                 SceneManager.LoadScene("Stage_Scene");
             }
             else
@@ -223,6 +226,7 @@ public class PopupController : MonoBehaviour
             StartCoroutine(DelayNextStep());
         }
     }
+
 
     IEnumerator DelayNextStep()
     {
