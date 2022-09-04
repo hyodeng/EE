@@ -883,6 +883,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 316083256}
     m_Modifications:
+    - target: {fileID: 4326181462627282761, guid: d55705b8210a3ce4a903ed104e14445a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -149
+      objectReference: {fileID: 0}
     - target: {fileID: 4326181463756919112, guid: d55705b8210a3ce4a903ed104e14445a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -979,9 +983,17 @@ PrefabInstance:
       propertyPath: cancel
       value: 
       objectReference: {fileID: 651215256}
+    - target: {fileID: 4933865925098288738, guid: d55705b8210a3ce4a903ed104e14445a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -146
+      objectReference: {fileID: 0}
     - target: {fileID: 6823994616706896190, guid: d55705b8210a3ce4a903ed104e14445a, type: 3}
       propertyPath: m_RaycastTarget
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7758328012732613310, guid: d55705b8210a3ce4a903ed104e14445a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -146
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d55705b8210a3ce4a903ed104e14445a, type: 3}
