@@ -47,7 +47,19 @@ public class CharacterData : MonoBehaviour
             hp = value;
             if (transform.parent != null)
             {
-                transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * Mathf.Sign(transform.parent.lossyScale.x), 1, 1);
+                Relocation();
+            }
+        }
+    }
+    public int MP
+    {
+        get => mp;
+        set
+        {
+            mp = Mathf.Max(value, 0);
+            if (transform.parent != null)
+            {
+                Relocation();
             }
         }
     }
@@ -93,8 +105,14 @@ public class CharacterData : MonoBehaviour
                     Idle();
                     break;
                 case 1:
+                    if(MP<1)
+                    {
+                        State = 0;
+                        break;
+                    }
                     battle.Focusing = true;
                     battle.normalAttack = true;
+                    MP--;
                     StartCoroutine(TargettingAttack());
                     break;
                 case 2:
@@ -104,6 +122,8 @@ public class CharacterData : MonoBehaviour
             }
         }
     }
+
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -138,16 +158,7 @@ public class CharacterData : MonoBehaviour
     }
     public void Idle()
     {
-        if (name.IndexOf("Monster") > -1)
-        {
-            transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * 1, 1, 1);
-            transform.Find("hpbar").localPosition = new Vector3(-0.3f, -0.5f, 0);
-        }
-        else
-        {
-            transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * -1, 1, 1);
-            transform.Find("hpbar").localPosition = new Vector3(0.3f, -0.5f, 0);
-        }
+        Relocation();
         battle.Operator.gameObject.SetActive(false);
     }
     public IEnumerator TargettingAttack()
@@ -182,16 +193,7 @@ public class CharacterData : MonoBehaviour
         }
         BehaviorEnd = false;
         transform.localScale = new Vector3(-2, 2, 2);
-        if (name.IndexOf("Monster") > -1)
-        {
-            transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * -1, 1, 1);
-            transform.Find("hpbar").localPosition = new Vector3(0.3f, -0.5f, 0);
-        }
-        else
-        {
-            transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * 1, 1, 1);
-            transform.Find("hpbar").localPosition = new Vector3(-0.3f, -0.5f, 0);
-        }
+        Relocation();
         anim.Play("1_Run");
         battle.targetCam = false;
         while (transform.position != oriPos)
@@ -200,19 +202,17 @@ public class CharacterData : MonoBehaviour
             yield return null;
         }
         transform.localScale = new Vector3(2, 2, 2);
-        if (name.IndexOf("Monster") > -1)
-        {
-            transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * 1, 1, 1);
-            transform.Find("hpbar").localPosition = new Vector3(-0.3f, -0.5f, 0);
-        }
-        else
-        {
-            transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * -1, 1, 1);
-            transform.Find("hpbar").localPosition = new Vector3(0.3f, -0.5f, 0);
-        }
+        Relocation();
         State = 0;
         battle.Operator.gameObject.SetActive(true);
         battle.Index++;
+    }
+    private void Relocation()
+    {
+        transform.Find("hpbar").localPosition = new Vector3(-0.3f * Mathf.Sign(transform.lossyScale.x), -0.5f, 0);
+        transform.Find("mpbar").localPosition = new Vector3(-0.3f * Mathf.Sign(transform.lossyScale.x), -0.6f, 0);
+        transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * Mathf.Sign(transform.lossyScale.x), 1, 1);
+        transform.Find("mpbar").localScale = new Vector3((float)mp / (float)mmp * Mathf.Sign(transform.lossyScale.x), 1, 1);
     }
     private int CalcDmg(float val, bool heal)
     {
@@ -497,9 +497,14 @@ public class CharacterData : MonoBehaviour
         mhp = HP;
         if (hp > 0 && transform.Find("hpbar") != null)
         {
-            transform.Find("hpbar").localScale = new Vector3((float)hp / (float)mhp * Mathf.Sign(transform.parent.lossyScale.x), 1, 1);
+            Relocation();
         }
         mp = GameManager.Inst.dataHP[index];
+        mmp = MP;
+        if (mp > 0 && transform.Find("mpbar") != null)
+        {
+            Relocation();
+        }
         attack = GameManager.Inst.dataHP[index];
         magic = GameManager.Inst.dataHP[index];
         defence = GameManager.Inst.dataHP[index];

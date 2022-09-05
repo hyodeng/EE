@@ -111,6 +111,7 @@ public class CharacterStat : MonoBehaviour
 
     public void DataSetup(CharacterType type)
     {
+        customized.GetComponent<CharacterData>().characterClass = type;
         statBarText.SetActive(true);
 
         //Character.Jsonø°º≠ µ•¿Ã≈Õ ≤®≥ªø»
