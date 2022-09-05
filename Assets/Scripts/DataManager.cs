@@ -12,6 +12,9 @@ public class DataManager : MonoBehaviour
     public JObject parts = new JObject();
     public JToken jtoken;
 
+    public JObject jPartner1 = new JObject();
+    public JObject jPartner2 = new JObject();
+
     private string SAVE_DATA_DIRECTORY; 
 
 
@@ -138,7 +141,22 @@ public class DataManager : MonoBehaviour
         Debug.Log($"파트너 데이터_{GameManager.Inst.partnerCount}번 Json 초기화");
     }
 
-    
+    //SelectPartner씬에서 선택된 동료의 정보를 가져오기 위한 함수
+    public void LoadPartnerData()
+    {
+        if (GameManager.Inst.partnerCount == 2)
+        {
+            string partner1 = File.ReadAllText(SAVE_DATA_DIRECTORY + $"/Partner_{GameManager.Inst.partnerCount- 1}.json");
+            jPartner1 = JObject.Parse(partner1);
 
+        }else if(GameManager.Inst.partnerCount == 3)
+        {
+            string partner1 = File.ReadAllText(SAVE_DATA_DIRECTORY + $"/Partner_{GameManager.Inst.partnerCount - 2}.json");
+            jPartner1 = JObject.Parse(partner1);
 
+            string partner2 = File.ReadAllText(SAVE_DATA_DIRECTORY + $"/Partner_{GameManager.Inst.partnerCount - 1}.json");
+            jPartner2 = JObject.Parse(partner2);
+
+        }
+    }
 }

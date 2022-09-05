@@ -173,7 +173,7 @@ public class PartnerSelectView : MonoBehaviour
     private void SetPartnerParts()
     {
         //테스트용
-        GameManager.Inst.partnerCount = 1;
+        GameManager.Inst.partnerCount = 3;
 
         for (int i = 0; i < 6; i++)
         {
@@ -192,13 +192,13 @@ public class PartnerSelectView : MonoBehaviour
         if (GameManager.Inst.partnerCount == 1)
         {
             onPartnerSelectBoard?.Invoke();
-
             partnerName1.text = characterData._name;
             skillName1.text = characterData.skillname;
             PartnerExplanation1.text = characterData.skilldesc;
         }
         else if (GameManager.Inst.partnerCount == 2)
         {
+            RefreshPartnerExp();
             onPartnerSelectBoard?.Invoke();
             partnerName2.text = characterData._name;
             skillName2.text = characterData.skillname;
@@ -206,6 +206,7 @@ public class PartnerSelectView : MonoBehaviour
         }
         else if (GameManager.Inst.partnerCount == 3)
         {
+            RefreshPartnerExp();
             onPartnerSelectBoard?.Invoke();
             partnerName3.text = characterData._name;
             skillName3.text = characterData.skillname;
@@ -218,7 +219,27 @@ public class PartnerSelectView : MonoBehaviour
 
     }
 
+    void RefreshPartnerExp()
+    {
+        DataManager.Instance.LoadPartnerData();
 
+        if(GameManager.Inst.partnerCount == 2)
+        {
+            partnerName1.text = DataManager.Instance.jPartner1["_name"].Value<string>();
+            skillName1.text = DataManager.Instance.jPartner1["skill"][0].Value<string>();
+            PartnerExplanation1.text = DataManager.Instance.jPartner1["skill"][1].Value<string>();
 
+        }else if (GameManager.Inst.partnerCount == 3)
+        {
+            partnerName1.text = DataManager.Instance.jPartner1["_name"].Value<string>();
+            skillName1.text = DataManager.Instance.jPartner1["skill"][0].Value<string>();
+            PartnerExplanation1.text = DataManager.Instance.jPartner1["skill"][1].Value<string>();
 
+            partnerName2.text = DataManager.Instance.jPartner2["_name"].Value<string>();
+            skillName2.text = DataManager.Instance.jPartner2["skill"][0].Value<string>();
+            PartnerExplanation2.text = DataManager.Instance.jPartner2["skill"][1].Value<string>();
+
+        }
+
+    }
 }
