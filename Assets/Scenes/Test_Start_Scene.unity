@@ -1730,8 +1730,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 988044399}
-        m_TargetAssemblyTypeName: Start_to_Select, Assembly-CSharp
-        m_MethodName: StartToSelect
+        m_TargetAssemblyTypeName: Change_Scene_Click, Assembly-CSharp
+        m_MethodName: ToCustomize
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
