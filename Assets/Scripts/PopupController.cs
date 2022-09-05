@@ -256,6 +256,7 @@ public class PopupController : MonoBehaviour
     }
 
 
+
     //partnerSelect.text = "선택 가능한 인원수가 넘었습니다";
 
 
