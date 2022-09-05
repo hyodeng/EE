@@ -45,7 +45,6 @@ public class PartnerSelectView : MonoBehaviour
     public System.Action offPartnerSelectBoard;
 
 
-
     private void Awake()
     {
         btnWarrior = GameObject.Find("Btn_Warrior").GetComponent<Button>();

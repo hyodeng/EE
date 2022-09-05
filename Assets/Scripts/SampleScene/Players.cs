@@ -65,6 +65,7 @@ public class Players : MonoBehaviour
             Mobspoan.SetActive(false);
             
             Timer.SetActive(false);
+            //게임 : 이미지 추가 
         }
     }
 

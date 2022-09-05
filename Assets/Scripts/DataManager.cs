@@ -90,6 +90,15 @@ public class DataManager : MonoBehaviour
         Debug.Log("플레이어 파츠 저장");
     }
 
+
+    public void LoadPlayerparts()
+    {
+        string pparts = File.ReadAllText(SAVE_DATA_DIRECTORY + "/PlayerParts.json");
+        parts = JObject.Parse(pparts);
+
+    }
+
+
     public void SetPlayerToJson()
     {
         characterStat = FindObjectOfType<CharacterStat>();
@@ -141,6 +150,8 @@ public class DataManager : MonoBehaviour
         Debug.Log($"파트너 데이터_{GameManager.Inst.partnerCount}번 Json 초기화");
     }
 
+
+
     //SelectPartner씬에서 선택된 동료의 정보를 가져오기 위한 함수
     public void LoadPartnerData()
     {
@@ -159,4 +170,18 @@ public class DataManager : MonoBehaviour
 
         }
     }
+
+    //5:오른쪽 무기, 6 : 왼손 무기
+    void ChangeWeapon()
+    {
+
+        Customized.SetParts(5,"");
+    }
+
+    void ChangeShield()
+    {
+
+
+    }
+
 }
