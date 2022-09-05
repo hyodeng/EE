@@ -48,10 +48,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Repair_Scene.unity
     guid: 34eedb23061df0b47a8c533e39927bcc
   - enabled: 1
-    path: Assets/Scenes/Stage_Scene.unity
+    path: Assets/11Scene_Park/Scene/Stage_Scene.unity
     guid: 05728c5061da24242a2e3144f2343a3c
   - enabled: 1
-    path: Assets/Scenes/Start_Scene.unity
+    path: Assets/11Scene_Park/Scene/Start_Scene.unity
     guid: ecb731bbe467ef74a94b6d221f332d04
   - enabled: 1
     path: Assets/Scenes/Test_Button.unity
@@ -62,4 +62,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test_Start_Scene.unity
     guid: d76c5474a93e93344ac0a0341366f62d
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_1.5.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_1.unity
+    guid: 208498722870d8d4fb51af7f2be3c1bb
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_2.5.unity
+    guid: 85ed28027983b05439f5b2e370a7514e
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_2.unity
+    guid: b3f1302880a53e440bd917e855f27ea5
+  - enabled: 1
+    path: Assets/11Scene_Park/Scene/Stage_3.unity
+    guid: c2342407b17d0d24daf63ad115ba831b
   m_configObjects: {}
