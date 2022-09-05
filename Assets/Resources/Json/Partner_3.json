@@ -1,5 +1,5 @@
 {
-  "_name": "Thief",
+  "_name": "thief",
   "hp": [
     10,
     6,
@@ -37,9 +37,8 @@
     false,
     0.7
   ],
-  "parts": [],
-  "armor": [],
-  "weapon": [],
+  "skillname": "회오리",
+  "skilldesc": "현란하게 움직이며 적에게 3번의 피해를 준다",
   "aoe": false,
   "desc": "날쌘 움직임과 다양한 기술로 적을\n농락하며 전투를 유리하게 만든다"
 }
