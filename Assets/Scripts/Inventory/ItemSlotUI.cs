@@ -51,6 +51,14 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
             itemImage.color = Color.clear;  // 투명하게 만들기
         }
     }
+
+
+    //랜덤한 이미지를 불러오는 함수
+
+    
+    //팝업창을 띄워서 무기를 바뀌시겠습니까? 
+    //yes를 누르면 바뀌는 
+
     public void OnPointerClick(PointerEventData eventData)
     {
         // 마우스 왼쪽 버튼 클릭일 때
@@ -59,7 +67,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
             // 그냥 클릭한 상황
             if (!ItemSlot.IsEmpty())
             {
-
+                //플레이어 무기가 바뀌는 함수
             }
         }
     }
