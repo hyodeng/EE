@@ -124,6 +124,7 @@ public class PartnerSelectView : MonoBehaviour
 
     private void DataSetUp(CharacterType type)
     {
+        customized.GetComponent<CharacterData>().characterClass = type;
         partnerboard.onPartnerSelectBoardOpen?.Invoke();
 
 

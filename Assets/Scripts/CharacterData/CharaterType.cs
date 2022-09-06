@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum CharacterType
 {
-    warrior = 0, mage, cleric, thief, popstar, chef
+    warrior = 0, mage, cleric, thief, popstar, chef, monster
 }
 public enum ItemCode
     {
