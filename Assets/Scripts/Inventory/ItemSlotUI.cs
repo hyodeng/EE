@@ -5,7 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using TMPro;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.IO;
 
 public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
 {
@@ -30,6 +32,13 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
         //popupMenu.gameObject.SetActive(false);
         OnOffPopup?.Invoke();
     }
+
+    private void Start()
+    {
+        PopEquipmentImage();
+    }
+
+
     public void Initialize(uint newID, ItemSlot targetSlot)
     {
         invenUI = ItemDataManager.Inst.InvenUI;
@@ -57,13 +66,14 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    string shieldName;
 
     //랜덤 장비이미지
     public void PopEquipmentImage()
     {
         //shield : 리소스/실드 폴더 9개 이미지
         int shieldIndex = Random.Range(0, 10);
-        string shieldName = $"Shield_{shieldIndex}";
+        shieldName = $"Shield_{shieldIndex}";
 
         //weapon : 리소스/웨폰 폴더 sword 6개 이미지 중 
         int weaponIndex = Random.Range(0, 7);
@@ -83,16 +93,24 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
                 OnOffPopup?.Invoke();
 
                 //플레이어 무기가 바뀌는 함수
-
+                TestChange();
             }
         }
     }
 
-    void Test()
+    JObject jobject = new JObject();
+
+    public void TestChange()
     {
-        DataManager.Instance.LoadPlayerparts();
+        string partner1 = File.ReadAllText(Application.dataPath + "/Resources/Json/" + $"/PartnerParts_1.json");
+        jobject = JObject.Parse(partner1);
 
+        jobject.Add("weapon", shieldName);
+        string partner = JsonConvert.SerializeObject(jobject, Formatting.Indented);
+        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/PartnerParts_1.json", partner);
+        /*{GameManager.Inst.partnerCount}*/
+
+        Debug.Log($"파트너_1번 장비 추가 ");
     }
-
 
 }

@@ -16,12 +16,12 @@ public class DataManager : MonoBehaviour
     public JObject jPartner1 = new JObject();
     public JObject jPartner2 = new JObject();
 
-    private string SAVE_DATA_DIRECTORY; 
+    string SAVE_DATA_DIRECTORY; 
 
 
     //캐릭터 커스터마이즈(착장) 정보
     Customized customized;
-    public Customized Customized => customized;
+    //public Customized Customized => customized;
 
     //플레이어 스탯
     CharacterStat characterStat;
@@ -72,12 +72,11 @@ public class DataManager : MonoBehaviour
     public Sprite[] sprites = new Sprite[10];
 
 
-    //플레이어 파츠 이름을 Json으로 저장
+    //플레이어 파츠를 PlayerParts.json 에 저장
     public void SavePlayerParts()
     {
         customized = FindObjectOfType<Customized>();
         
-
         //파츠 이미지
         for (int i = 0; i < customized.parts.Length; i++)
         {
@@ -94,18 +93,10 @@ public class DataManager : MonoBehaviour
         //저장
         string jsonPlayerParts = JsonConvert.SerializeObject(parts, Formatting.Indented);
         File.WriteAllText(SAVE_DATA_DIRECTORY + "/PlayerParts.json", jsonPlayerParts);
-        Debug.Log("플레이어 파츠 저장");
-        
+        Debug.Log("플레이어 파츠 저장");        
     }
 
-    //이미지 입히기는 LoadParts.cs에 상세 구현
-    public void LoadPlayerparts()
-    {
-
-
-    }
-
-
+    //선택한 직업에 따른 플레이어 데이터를 Player.json 에 초기화
     public void SetPlayerToJson()
     {
         characterStat = FindObjectOfType<CharacterStat>();
@@ -122,12 +113,20 @@ public class DataManager : MonoBehaviour
         Debug.Log("플레이어 데이터 Json 초기화");
     }
 
-    //미사용중
+    //이미지 입히기는 LoadParts.cs에 상세 구현
+    public void LoadPlayerparts()
+    {
+
+
+    }
+
+    //Partner_1 ~3의 파츠이미지를 저장
     public void SavePartnerParts()
     {
+        customized = FindObjectOfType<Customized>();
+
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
             Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
-        //PartnerParts_0으로 별도로 저장할 건지 의논
 
         for (int i = 0; i < customized.parts.Length; i++)
         {
@@ -135,13 +134,16 @@ public class DataManager : MonoBehaviour
             partnerParts.Add($"{i}", GameManager.Inst.partsName[i]);
         }
 
+        //색상
+        for (int i = 0; i < 3; i++)
+        {
+            partnerParts.Add($"color{i}", GameManager.Inst.partsColor[i, 0].ToString());
+            Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
+        }
 
-
-        jsonPlayer.Add("parts", partnerParts);
-
-        string playerparts = JsonConvert.SerializeObject(jsonPlayer, Formatting.Indented);
-        File.WriteAllText(SAVE_DATA_DIRECTORY + $"/PartnerParts_{GameManager.Inst.partnerCount}.json", playerparts);
-        Debug.Log("플레이어 파츠 저장");
+        string partnersParts = JsonConvert.SerializeObject(jsonPlayer, Formatting.Indented);
+        File.WriteAllText(SAVE_DATA_DIRECTORY + $"/PartnerParts_{GameManager.Inst.partnerCount}.json", partnersParts);
+        Debug.Log($"PartnerParts_{GameManager.Inst.partnerCount} 저장");
     }
 
     public void SetPartnerToJson()
@@ -183,7 +185,6 @@ public class DataManager : MonoBehaviour
     void ChangeWeapon()
     {
 
-        Customized.SetParts(5,"");
     }
 
     void ChangeShield()
