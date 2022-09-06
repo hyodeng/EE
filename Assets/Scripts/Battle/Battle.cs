@@ -6,6 +6,7 @@ using TMPro;
 
 public class Battle : MonoBehaviour
 {
+    public GameObject Goblin, Piend, Golem, Darkload, Mosnters;
     public GameObject pepperBox;
     public TextMeshProUGUI hpp, mpp, resp;
 
@@ -21,7 +22,6 @@ public class Battle : MonoBehaviour
     public CharacterData target;
 
     public GameObject UserParty, Monsters;
-    public GameObject[] Avatars;
     public Transform Operator;
     public bool Focusing;
     public bool targetCam;
@@ -118,6 +118,13 @@ public class Battle : MonoBehaviour
     private void Awake()
     {
         pepperBox.SetActive(false);
+        for(int i = 0; i<4; i++)
+        {
+            GameObject goblin = Instantiate(Goblin, Monsters.transform);
+            goblin.name = $"Mosnter{i}";
+            goblin.transform.localPosition = new Vector3(14.62f, i*2, 0);
+            goblin.GetComponent<CharacterData>().battle = this;
+        }
 
         for (int i = 0; i < 4; i++)
         {
@@ -136,7 +143,7 @@ public class Battle : MonoBehaviour
         if (Focusing && !targetCam)
         {
             cam.orthographicSize = 3.5f;
-            cam.transform.position = Avatars[index].transform.position - new Vector3(0, 0, 100);
+            cam.transform.position = charactersList[index].transform.position - new Vector3(0, 0, 100);
         }
         else if (!Focusing && !targetCam)
         {
@@ -180,14 +187,10 @@ public class Battle : MonoBehaviour
         {
             charactersList.Sort((x, y) => x.speed.CompareTo(y.speed) * (-1));
         }
-        System.Array.Resize(ref Avatars, characters.Length);
-        for (int i = 0; i < characters.Length; i++)
-        {
-            Avatars[i] = characters[i].gameObject;
-        }
         int k = 0;
         foreach (CharacterData character in charactersList)
         {
+            character.Relocation();
             if (character.isPlayer)
             {
                 Index = k;

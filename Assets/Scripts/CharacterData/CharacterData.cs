@@ -38,7 +38,7 @@ public class CharacterData : MonoBehaviour
         get => hp;
         set
         {
-            if (value < 0)
+            if (value <= 0)
             {
                 value = 0;
                 battle.charactersList.Remove(this);
@@ -87,7 +87,10 @@ public class CharacterData : MonoBehaviour
                     weaponType = "Normal";
                     break;
             }
-            GameManager.Inst.SetInitStat(new Character(GameManager.Inst.CharacterJson.text, Enum.GetName(typeof(CharacterType), value)), this);
+            if(value!=CharacterType.monster)
+            {
+                GameManager.Inst.SetInitStat(new Character(GameManager.Inst.CharacterJson.text, Enum.GetName(typeof(CharacterType), value)), this);
+            }
         }
     }
 
@@ -105,32 +108,33 @@ public class CharacterData : MonoBehaviour
                     Idle();
                     break;
                 case 1:
-                    if(MP<1)
-                    {
-                        State = 0;
-                        break;
-                    }
                     battle.Focusing = true;
                     battle.normalAttack = true;
-                    MP--;
                     StartCoroutine(TargettingAttack());
                     break;
                 case 2:
+                    if (MP < 1)
+                    {
+                        State = 1;
+                        break;
+                    }
                     battle.Focusing = true;
+                    MP--;
                     Skill();
                     break;
             }
         }
     }
-
-
     private void Awake()
     {
         anim = GetComponent<Animator>();
     }
     private void Start()
     {
-        AsyncData(System.Convert.ToInt32(gameObject.name.Replace("Character", "")));
+        if(gameObject.name.IndexOf("Character")>-1)
+        {
+            AsyncData(System.Convert.ToInt32(gameObject.name.Replace("Character", "")));
+        }
     }
     IEnumerator Move()
     {
@@ -207,7 +211,7 @@ public class CharacterData : MonoBehaviour
         battle.Operator.gameObject.SetActive(true);
         battle.Index++;
     }
-    private void Relocation()
+    public void Relocation()
     {
         transform.Find("hpbar").localPosition = new Vector3(-0.3f * Mathf.Sign(transform.lossyScale.x), -0.5f, 0);
         transform.Find("mpbar").localPosition = new Vector3(-0.3f * Mathf.Sign(transform.lossyScale.x), -0.6f, 0);
