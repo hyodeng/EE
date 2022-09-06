@@ -10,6 +10,7 @@ public class DataManager : MonoBehaviour
     //Json 저장하기 위한 변수
     public JObject jsonPlayer = new JObject();
     public JObject parts = new JObject();
+    public JObject partnerParts = new JObject();
     public JToken jtoken;
 
     public JObject jPartner1 = new JObject();
@@ -68,6 +69,7 @@ public class DataManager : MonoBehaviour
     {
 
     }
+    public Sprite[] sprites = new Sprite[10];
 
 
     //플레이어 파츠 이름을 Json으로 저장
@@ -75,26 +77,31 @@ public class DataManager : MonoBehaviour
     {
         customized = FindObjectOfType<Customized>();
         
-        //jobject
+
+        //파츠 이미지
         for (int i = 0; i < customized.parts.Length; i++)
         {
            parts.Add($"{i}", GameManager.Inst.partsName[i]);
-            Debug.Log($"{i}, {GameManager.Inst.partsName[i]}");
         }
 
-        jsonPlayer.Add("parts", parts);
+        //색상
+        for (int i = 0; i < 3; i++)
+        {
+            parts.Add($"color{i}", GameManager.Inst.partsColor[i, 0].ToString());
+            Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
+        }
 
-        //백업 저장
-        string playerparts = JsonConvert.SerializeObject(jsonPlayer, Formatting.Indented);
-        File.WriteAllText(SAVE_DATA_DIRECTORY + "/PlayerParts.json", playerparts);
+        //저장
+        string jsonPlayerParts = JsonConvert.SerializeObject(parts, Formatting.Indented);
+        File.WriteAllText(SAVE_DATA_DIRECTORY + "/PlayerParts.json", jsonPlayerParts);
         Debug.Log("플레이어 파츠 저장");
+        
     }
 
-
+    //이미지 입히기는 LoadParts.cs에 상세 구현
     public void LoadPlayerparts()
     {
-        string pparts = File.ReadAllText(SAVE_DATA_DIRECTORY + "/PlayerParts.json");
-        parts = JObject.Parse(pparts);
+
 
     }
 
@@ -124,10 +131,13 @@ public class DataManager : MonoBehaviour
 
         for (int i = 0; i < customized.parts.Length; i++)
         {
-            parts.Add($"{i}", GameManager.Inst.partsName[i]);
+            //이미지
+            partnerParts.Add($"{i}", GameManager.Inst.partsName[i]);
         }
 
-        jsonPlayer.Add("parts", parts);
+
+
+        jsonPlayer.Add("parts", partnerParts);
 
         string playerparts = JsonConvert.SerializeObject(jsonPlayer, Formatting.Indented);
         File.WriteAllText(SAVE_DATA_DIRECTORY + $"/PartnerParts_{GameManager.Inst.partnerCount}.json", playerparts);
@@ -136,7 +146,6 @@ public class DataManager : MonoBehaviour
 
     public void SetPartnerToJson()
     {
-
         partnerSelectView = FindObjectOfType<PartnerSelectView>();
 
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
@@ -149,7 +158,6 @@ public class DataManager : MonoBehaviour
 
         Debug.Log($"파트너 데이터_{GameManager.Inst.partnerCount}번 Json 초기화");
     }
-
 
 
     //SelectPartner씬에서 선택된 동료의 정보를 가져오기 위한 함수

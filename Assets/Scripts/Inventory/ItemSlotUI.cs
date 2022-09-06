@@ -88,5 +88,11 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    void Test()
+    {
+        DataManager.Instance.LoadPlayerparts();
+
+    }
+
 
 }

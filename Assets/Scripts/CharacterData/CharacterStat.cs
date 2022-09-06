@@ -85,12 +85,6 @@ public class CharacterStat : MonoBehaviour
 
     private void Start()
     {
-        //button_warrior.onClick.AddListener(() => { characterData.characterClass = CharacterType.warrior; });
-        //button_mage.onClick.AddListener(() => { characterData.characterClass = CharacterType.mage; });
-        //button_cleric.onClick.AddListener(() => { characterData.characterClass = CharacterType.cleric; });
-        //button_thief.onClick.AddListener(() => { characterData.characterClass = CharacterType.thief; });
-        //button_popstar.onClick.AddListener(() => { characterData.characterClass = CharacterType.popstar; });
-        //button_chef.onClick.AddListener(() => { characterData.characterClass = CharacterType.chef; });
 
         button_warrior.onClick.AddListener(() => DataSetup(CharacterType.warrior));
         button_mage.onClick.AddListener(() => DataSetup(CharacterType.mage));
