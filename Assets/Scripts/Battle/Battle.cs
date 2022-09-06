@@ -6,7 +6,7 @@ using TMPro;
 
 public class Battle : MonoBehaviour
 {
-    public GameObject Goblin, Piend, Golem, Darkload, Mosnters;
+    public GameObject Goblin, Piend, Golem, Darkload;
     public GameObject pepperBox;
     public TextMeshProUGUI hpp, mpp, resp;
 
@@ -36,7 +36,11 @@ public class Battle : MonoBehaviour
             bool BothAlive = false;
             List<string> dataNames = new();
             index = value;
-            if (charactersList.Count > 1)
+            if(!UserParty.transform.Find("Character0").gameObject.activeSelf)
+            {
+                BattleEnd(false);
+            }
+            else if (charactersList.Count > 1)
             {
                 foreach (CharacterData data in charactersList)
                 {
@@ -121,7 +125,7 @@ public class Battle : MonoBehaviour
         for(int i = 0; i<4; i++)
         {
             GameObject goblin = Instantiate(Goblin, Monsters.transform);
-            goblin.name = $"Mosnter{i}";
+            goblin.name = $"Monster{i}";
             goblin.transform.localPosition = new Vector3(14.62f, i*2, 0);
             goblin.GetComponent<CharacterData>().battle = this;
         }
@@ -271,9 +275,10 @@ public class Battle : MonoBehaviour
                 if (resurrectPepper > 0)
                 {
                     resurrectPepper--;
-                    foreach (CharacterData data in charactersList)
+                    foreach (Transform obj in UserParty.transform)
                     {
-                        if (data.gameObject.name.IndexOf("Character") > -1 && !data.gameObject.activeSelf)
+                        CharacterData data = obj.GetComponent<CharacterData>();
+                        if (data.gameObject.name.IndexOf("Character") > -1 && !data.gameObject.activeSelf && data.mhp > 2)
                         {
                             data.gameObject.SetActive(true);
                             data.HP = 1;

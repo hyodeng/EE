@@ -77,10 +77,11 @@ public class GameManager : MonoBehaviour
     {
         int index = System.Convert.ToInt32(targetData.gameObject.name.Replace("Character", ""));
         dataClass[index] = targetData.characterClass;
+        targetData.mhp = InitData.classData["hp"][0].Value<int>(); ;
         targetData.HP = InitData.classData["hp"][0].Value<int>();
-        targetData.mhp = targetData.HP;
         dataHP[index] = targetData.HP;
-        targetData.mp = InitData.classData["mp"][0].Value<int>();
+        targetData.mmp = InitData.classData["mp"][0].Value<int>();
+        targetData.MP = InitData.classData["mp"][0].Value<int>();
         dataMP[index] = targetData.mp;
         targetData.attack = InitData.classData["attack"][0].Value<int>();
         dataAttack[index] = targetData.attack;
