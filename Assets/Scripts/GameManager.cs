@@ -51,10 +51,10 @@ public class GameManager : MonoBehaviour
 
         JObject jobject = JObject.Parse(json);
         JToken temp = jobject["asd"][0];
-        Debug.Log(jobject["asd"][0].Type == JTokenType.Null);
-        Debug.Log(temp.Type == JTokenType.Null);
-        Debug.Log(jobject["asd"][1].Value<bool>() == false);
-        Debug.Log(jobject["asd"][2]);
+        //Debug.Log(jobject["asd"][0].Type == JTokenType.Null);
+        //Debug.Log(temp.Type == JTokenType.Null);
+        //Debug.Log(jobject["asd"][1].Value<bool>() == false);
+        //Debug.Log(jobject["asd"][2]);
 
         if (instance == null)
         {
