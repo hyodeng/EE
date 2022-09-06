@@ -6,25 +6,23 @@ using UnityEngine.UI;
 
 public class PopUpMenu : MonoBehaviour
 {
-    Button selectButton;
     Button saveButton;
     Button cancelButton;
-
+    ItemSlotUI itemSlotUI;
 
     private void Awake()
     {
-        selectButton = GameObject.Find("SelectButton").GetComponent<Button>();
         saveButton = transform.Find("SaveButton").GetComponent<Button>();
         cancelButton = transform.Find("CancelButton").GetComponent<Button>();
-
+        itemSlotUI = FindObjectOfType<ItemSlotUI>();
     }
 
     private void Start()
     {
         gameObject.SetActive(false);
-        selectButton.onClick.AddListener(OnCharacterSelected);
         saveButton.onClick.AddListener(OnSaveButton);
         cancelButton.onClick.AddListener(OnCancelButton);
+        itemSlotUI.OnOffPopup += OnOffSwitch;
     }
 
 
@@ -36,10 +34,23 @@ public class PopUpMenu : MonoBehaviour
         }
     }
 
+    public void OnOffSwitch()
+    {
+        if (gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+
+        }
+
+    }
+
     void OnSaveButton() 
     {
-        //Json 데이터로 저장
-        SaveCharacterData();
+        //저장 함수는 ItemSlotUI로 
         gameObject.SetActive(false);
     }
 
@@ -48,11 +59,5 @@ public class PopUpMenu : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-
-    void SaveCharacterData()
-    {
-        //CharacterStat cs 파일 참조
-
-    }
 
 }

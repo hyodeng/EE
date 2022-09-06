@@ -86,7 +86,7 @@ public class DataManager : MonoBehaviour
 
         //백업 저장
         string playerparts = JsonConvert.SerializeObject(jsonPlayer, Formatting.Indented);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/PlayerParts.json", playerparts);
+        File.WriteAllText(SAVE_DATA_DIRECTORY + "/PlayerParts.json", playerparts);
         Debug.Log("플레이어 파츠 저장");
     }
 
@@ -130,7 +130,7 @@ public class DataManager : MonoBehaviour
         jsonPlayer.Add("parts", parts);
 
         string playerparts = JsonConvert.SerializeObject(jsonPlayer, Formatting.Indented);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/PartnerParts_{GameManager.Inst.partnerCount}.json", playerparts);
+        File.WriteAllText(SAVE_DATA_DIRECTORY + $"/PartnerParts_{GameManager.Inst.partnerCount}.json", playerparts);
         Debug.Log("플레이어 파츠 저장");
     }
 

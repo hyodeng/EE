@@ -17,13 +17,18 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
     Inventory inven;
     protected TextMeshProUGUI countText;
 
+    public System.Action OnOffPopup;
+
+
     public uint ID { get => id; }
     public ItemSlot ItemSlot { get => itemSlot; }
     protected virtual void Awake()  // 오버라이드 가능하도록 virtual 추가
     {
         itemImage = transform.GetChild(0).GetComponent<Image>();    // 아이템 표시용 이미지 컴포넌트 찾아놓기
         countText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        
+        //popupMenu = FindObjectOfType<PopUpMenu>();
+        //popupMenu.gameObject.SetActive(false);
+        OnOffPopup?.Invoke();
     }
     public void Initialize(uint newID, ItemSlot targetSlot)
     {
@@ -53,12 +58,19 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
     }
 
 
-    //랜덤한 이미지를 불러오는 함수
+    //랜덤 장비이미지
+    public void PopEquipmentImage()
+    {
+        //shield : 리소스/실드 폴더 9개 이미지
+        int shieldIndex = Random.Range(0, 10);
+        string shieldName = $"Shield_{shieldIndex}";
+
+        //weapon : 리소스/웨폰 폴더 sword 6개 이미지 중 
+        int weaponIndex = Random.Range(0, 7);
+        string weaponName = $"Sword_{weaponIndex}";
+    }
 
     
-    //팝업창을 띄워서 무기를 바뀌시겠습니까? 
-    //yes를 누르면 바뀌는 
-
     public void OnPointerClick(PointerEventData eventData)
     {
         // 마우스 왼쪽 버튼 클릭일 때
@@ -67,8 +79,14 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
             // 그냥 클릭한 상황
             if (!ItemSlot.IsEmpty())
             {
+                //팝업창 띄우기
+                OnOffPopup?.Invoke();
+
                 //플레이어 무기가 바뀌는 함수
+
             }
         }
     }
+
+
 }

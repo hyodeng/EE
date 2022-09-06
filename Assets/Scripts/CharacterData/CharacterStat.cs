@@ -212,18 +212,12 @@ public class CharacterStat : MonoBehaviour
     public void SetPlayerData()
     {
         characterData._name = jTokenplayer["_name"].Value<string>();
-        characterData.maxhp = jTokenplayer["hp"][0].Value<int>(); //maxHP
-        characterData.hp = jTokenplayer["hp"][1].Value<int>(); //hp
-        characterData.maxmp = jTokenplayer["mp"][0].Value<int>();
-        characterData.mp = jTokenplayer["mp"][1].Value<int>();
-        characterData.maxattack = jTokenplayer["attack"][0].Value<int>();
-        characterData.attack = jTokenplayer["attack"][1].Value<int>();
-        characterData.maxmagic = jTokenplayer["magic"][0].Value<int>();
-        characterData.maxmagic = jTokenplayer["magic"][1].Value<int>();
-        characterData.maxdefence = jTokenplayer["defence"][0].Value<int>();
-        characterData.defence = jTokenplayer["defence"][1].Value<int>();
-        characterData.maxspeed = jTokenplayer["speed"][0].Value<int>();
-        characterData.speed = jTokenplayer["speed"][1].Value<int>();
+        characterData.hp = jTokenplayer["hp"][0].Value<int>(); //hp
+        characterData.mp = jTokenplayer["mp"][0].Value<int>();
+        characterData.attack = jTokenplayer["attack"][0].Value<int>();
+        characterData.magic = jTokenplayer["magic"][0].Value<int>();
+        characterData.defence = jTokenplayer["defence"][0].Value<int>();
+        characterData.speed = jTokenplayer["speed"][0].Value<int>();
         characterData.skillname = jTokenplayer["skill"][0].Value<string>();
         characterData.skilldesc = jTokenplayer["skill"][1].Value<string>();
 
@@ -237,12 +231,12 @@ public class CharacterStat : MonoBehaviour
     private void SetSliderBar()
     {
         //스탯바_6가지 셋팅
-        hpSlider.value = (float)characterData.hp / characterData.maxhp;
-        mpSlider.value = (float)characterData.mp / characterData.maxmp;
-        attackSlider.value = (float)characterData.attack / characterData.maxattack;
-        magicSlider.value = (float)characterData.magic / characterData.maxmagic;
-        defenceSlider.value = (float)characterData.defence / characterData.maxdefence;
-        speedSlider.value = (float)characterData.speed / characterData.maxspeed;
+        hpSlider.value = (float)characterData.hp / 20;
+        mpSlider.value = (float)characterData.mp / 20;
+        attackSlider.value = (float)characterData.attack / 20;
+        magicSlider.value = (float)characterData.magic / 20;
+        defenceSlider.value = (float)characterData.defence / 20;
+        speedSlider.value = (float)characterData.speed / 20;
         //스탯바 숫자
         hptext.text = characterData.hp.ToString();
         mptext.text = characterData.mp.ToString();
