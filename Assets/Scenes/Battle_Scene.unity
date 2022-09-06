@@ -276,7 +276,6 @@ MonoBehaviour:
   target: {fileID: 0}
   UserParty: {fileID: 0}
   Monsters: {fileID: 1964778312}
-  Avatars: []
   Operator: {fileID: 1457188552}
   Focusing: 0
   targetCam: 0
@@ -3592,6 +3591,22 @@ PrefabInstance:
     - target: {fileID: 3065501690111759547, guid: 466bd8556114ba44eac913864a9c2a1c, type: 3}
       propertyPath: m_Name
       value: Battle_Grass_Scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990708780059865774, guid: 466bd8556114ba44eac913864a9c2a1c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.134
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990708780059865774, guid: 466bd8556114ba44eac913864a9c2a1c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 44.9256
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990708780059865774, guid: 466bd8556114ba44eac913864a9c2a1c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.883
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990708780059865774, guid: 466bd8556114ba44eac913864a9c2a1c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.7368
       objectReference: {fileID: 0}
     - target: {fileID: 7990708781560343154, guid: 466bd8556114ba44eac913864a9c2a1c, type: 3}
       propertyPath: m_LocalPosition.x

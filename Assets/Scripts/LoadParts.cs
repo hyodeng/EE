@@ -72,21 +72,27 @@ public class LoadParts : MonoBehaviour
         strplayer = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/PlayerParts.json");
         parts = JObject.Parse(strplayer);
 
-        for(int i = 0; i<3; i++)
-        {
-            strpparts[i] = File.ReadAllText(Application.dataPath + "/Resources/Json/" + $"PartnerParts_{i + 1}.json");
-            parts[i] = JObject.Parse(strpparts[i]);
-        }
+        strpparts[0] = File.ReadAllText(Application.dataPath + "/Resources/Json/" + $"PartnerParts_1.json");
+        partnerParts[0] = JObject.Parse(strpparts[0]);
 
+        //Debug.Log(partnerParts[0].ToString());
 
+        strpparts[1] = File.ReadAllText(Application.dataPath + "/Resources/Json/" + $"PartnerParts_2.json");
+        partnerParts[1] = JObject.Parse(strpparts[1]);
+
+        //Debug.Log(partnerParts[1].ToString());
+
+        strpparts[2] = File.ReadAllText(Application.dataPath + "/Resources/Json/" + $"PartnerParts_3.json");
+        partnerParts[2] = JObject.Parse(strpparts[2]);
+
+        //Debug.Log(partnerParts[2].ToString());
 
         LoadPlayerParts();
+        LoadPartnerParts();
     }
 
     void LoadPlayerParts()
     {
-   
-
         for(int i = 0; i < 10; i++)
         {
             name[i] = parts[$"{i}"].ToString();
@@ -95,7 +101,6 @@ public class LoadParts : MonoBehaviour
                 customs[0].SetParts(i, name[i]);
             }
         }
-
 
         facecolor = parts["color0"].ToString();
         haircolor = parts["color1"].ToString();
@@ -133,23 +138,48 @@ public class LoadParts : MonoBehaviour
         {
             for (int i = 0; i < 10; i++)
             {
-                name[i] = parts[$"{i}"].ToString();
+                name[i] = partnerParts[j][$"{i}"].ToString();
                 if (name[i] != "")
                 {
-                    customs[j].SetParts(i, name[i]);
+                    customs[j+1].SetParts(i, name[i]);
                 }
             }
         }
 
-        facecolor = parts["color0"].ToString();
-        haircolor = parts["color1"].ToString();
-        beardcolor = parts["color2"].ToString();
+        //face, hair, beard 색상
+        facecolor = partnerParts[0]["color0"].ToString();
+        haircolor = partnerParts[0]["color1"].ToString();
+        beardcolor = partnerParts[0]["color2"].ToString();
+        
+        float.TryParse(facecolor.Substring(5, 5), out R[0]);
+        float.TryParse(facecolor.Substring(12, 5), out G[0]);
+        float.TryParse(facecolor.Substring(19, 5), out B[0]);
+        float.TryParse(facecolor.Substring(26, 5), out A[0]);
+        
+        float.TryParse(haircolor.Substring(5, 5), out R[1]);
+        float.TryParse(haircolor.Substring(12, 5), out G[1]);
+        float.TryParse(haircolor.Substring(19, 5), out B[1]);
+        float.TryParse(haircolor.Substring(26, 5), out A[1]);
+        
+        float.TryParse(beardcolor.Substring(5, 5), out R[2]);
+        float.TryParse(beardcolor.Substring(12, 5), out G[2]);
+        float.TryParse(beardcolor.Substring(19, 5), out B[2]);
+        float.TryParse(beardcolor.Substring(26, 5), out A[2]);
+
+        for (int i = 0; i < 3; i++)
+        {
+            temp[i] = new(R[i], G[i], B[i], A[i]);
+            customs[1].parts[i].color = temp[i];
+        }
+
+        facecolor = partnerParts[1]["color0"].ToString();
+        haircolor = partnerParts[1]["color1"].ToString();
+        beardcolor = partnerParts[1]["color2"].ToString();
 
         float.TryParse(facecolor.Substring(5, 5), out R[0]);
         float.TryParse(facecolor.Substring(12, 5), out G[0]);
         float.TryParse(facecolor.Substring(19, 5), out B[0]);
         float.TryParse(facecolor.Substring(26, 5), out A[0]);
-        //Debug.Log(facecolor.Substring(26, 5));
 
         float.TryParse(haircolor.Substring(5, 5), out R[1]);
         float.TryParse(haircolor.Substring(12, 5), out G[1]);
@@ -161,18 +191,40 @@ public class LoadParts : MonoBehaviour
         float.TryParse(beardcolor.Substring(19, 5), out B[2]);
         float.TryParse(beardcolor.Substring(26, 5), out A[2]);
 
-        //face, hair, beard 색상
-        for (int j = 0; j < 3; j++)
+        for (int i = 0; i < 3; i++)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                temp[i] = new(R[i], G[i], B[i], A[i]);
-                //Debug.Log(temp[i].ToString());
-                customs[j].parts[i].color = temp[i];
-            }
+            temp[i] = new(R[i], G[i], B[i], A[i]);
+            customs[2].parts[i].color = temp[i];
+            Debug.Log(temp[i].ToString());
+
         }
+
+        facecolor = partnerParts[2]["color0"].ToString();
+        haircolor = partnerParts[2]["color1"].ToString();
+        beardcolor = partnerParts[2]["color2"].ToString();
+
+        float.TryParse(facecolor.Substring(5, 5), out R[0]);
+        float.TryParse(facecolor.Substring(12, 5), out G[0]);
+        float.TryParse(facecolor.Substring(19, 5), out B[0]);
+        float.TryParse(facecolor.Substring(26, 5), out A[0]);
+
+        float.TryParse(haircolor.Substring(5, 5), out R[1]);
+        float.TryParse(haircolor.Substring(12, 5), out G[1]);
+        float.TryParse(haircolor.Substring(19, 5), out B[1]);
+        float.TryParse(haircolor.Substring(26, 5), out A[1]);
+
+        float.TryParse(beardcolor.Substring(5, 5), out R[2]);
+        float.TryParse(beardcolor.Substring(12, 5), out G[2]);
+        float.TryParse(beardcolor.Substring(19, 5), out B[2]);
+        float.TryParse(beardcolor.Substring(26, 5), out A[2]);
+
+        for (int i = 0; i < 3; i++)
+        {
+            temp[i] = new(R[i], G[i], B[i], A[i]);
+            customs[3].parts[i].color = temp[i];
+            Debug.Log(customs[3].parts[i].color.ToString());
+        }
+
+
     }
-
-
-
 }
