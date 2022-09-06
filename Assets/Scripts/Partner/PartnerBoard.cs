@@ -47,7 +47,7 @@ public class PartnerBoard : MonoBehaviour
     void Initialize()
     {
         requestTxt.text = "동료를 선택하세요";
-        if(GameManager.Inst.partnerCount < 5)
+        if(GameManager.Inst.partnerCount < 4)
         {
 
             countTxt.text = GameManager.Inst.partnerCount.ToString();

@@ -126,6 +126,7 @@ public class LoadParts : MonoBehaviour
 
         for(int i = 0; i< 3; i++)
         {
+            //Color[] temp;
             temp[i] = new(R[i], G[i], B[i], A[i]);
             //Debug.Log(temp[i].ToString());
             customs[0].parts[i].color = temp[i];

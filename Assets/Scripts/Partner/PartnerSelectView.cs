@@ -44,6 +44,8 @@ public class PartnerSelectView : MonoBehaviour
     public JObject jsonAllpartner;
     public JToken jTokenPartner;
 
+    bool isStart = false;
+
     public System.Action onPartnerSelectBoard;
     public System.Action offPartnerSelectBoard;
 
@@ -124,8 +126,11 @@ public class PartnerSelectView : MonoBehaviour
 
     private void DataSetUp(CharacterType type)
     {
+        GameManager.Inst.partnerCount = 1;
+
         customized.GetComponent<CharacterData>().characterClass = type;
         partnerboard.onPartnerSelectBoardOpen?.Invoke();
+        isStart = true;
 
         switch (type)
         {
@@ -179,7 +184,7 @@ public class PartnerSelectView : MonoBehaviour
     private void SetPartnerParts()
     {
         //테스트용
-        GameManager.Inst.partnerCount = 1;
+        //GameManager.Inst.partnerCount = 1;
 
         for (int i = 0; i < 6; i++)
         {
@@ -197,7 +202,7 @@ public class PartnerSelectView : MonoBehaviour
     {
          string name = $"Skill_{(int)type}";
 
-        if (GameManager.Inst.partnerCount == 1)
+        if (GameManager.Inst.partnerCount == 0 || GameManager.Inst.partnerCount == 1)
         {
             onPartnerSelectBoard?.Invoke();
             partnerName1.text = characterData._name;
@@ -234,7 +239,17 @@ public class PartnerSelectView : MonoBehaviour
     {
         DataManager.Instance.LoadPartnerData();
 
-        if(GameManager.Inst.partnerCount == 2)
+        if(GameManager.Inst.partnerCount == 1)
+        {
+            if (isStart)
+            {
+                partnerName1.text = DataManager.Instance.jPartner1["_name"].Value<string>();
+                skillName1.text = DataManager.Instance.jPartner1["skill"][0].Value<string>();
+                PartnerExplanation1.text = DataManager.Instance.jPartner1["skill"][1].Value<string>();
+            }
+
+        }
+        else if (GameManager.Inst.partnerCount == 2)
         {
             partnerName1.text = DataManager.Instance.jPartner1["_name"].Value<string>();
             skillName1.text = DataManager.Instance.jPartner1["skill"][0].Value<string>();

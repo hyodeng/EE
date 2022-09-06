@@ -140,7 +140,6 @@ public class PopupController : MonoBehaviour
         if (questionPop.name == "QuestionPop_0")
         {
             //플레이어 파츠 저장
-            DataManager.Instance.SavePlayerParts();
             OnOffSwitch();
             isNextScene = true;
         }
@@ -150,6 +149,7 @@ public class PopupController : MonoBehaviour
             isReadySave = true;
             if (isReadySave)
             {
+                DataManager.Instance.SavePlayerParts();
                 DataManager.Instance.SetPlayerToJson();
             }
             OnOffSwitch();

@@ -52,6 +52,8 @@ public class CharacterStat : MonoBehaviour
 
     //무기 장착 
     Customized customized;
+    public string weapon;
+
 
     private void Awake()
     {
@@ -99,7 +101,6 @@ public class CharacterStat : MonoBehaviour
 
         backAura = GameObject.Find("BackAura").GetComponent<ParticleSystem>();
 
-
     }
 
 
@@ -124,8 +125,8 @@ public class CharacterStat : MonoBehaviour
                 //SetPlayerToJson();
 
                 //직업별 오른쪽손 무기 장착
-                customized.SetParts(5, "Sword_5.png");
-                customized.SetParts(6, "");
+                weapon = "Sword_5.png";
+                customized.SetParts(5, weapon);
                 //캐릭터 배경 파티클
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
@@ -136,11 +137,12 @@ public class CharacterStat : MonoBehaviour
                 SetSliderBar();
                 SetCharacterExplanation();
                 SetSkillBoard(type);
-               // SetPlayerToJson();
+                // SetPlayerToJson();
 
                 //직업별 오른쪽손 무기 장착
-                customized.SetParts(5, "Ward_1.png");
-                customized.SetParts(6, "");
+                weapon = "Ward_1.png";
+                customized.SetParts(5, weapon);
+
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
             case CharacterType.cleric:
@@ -153,8 +155,9 @@ public class CharacterStat : MonoBehaviour
                 //SetPlayerToJson();
 
                 //직업별 오른쪽손 무기 장착
-                customized.SetParts(5, "Cleric_1.png");
-                customized.SetParts(6, "");
+                weapon = "Cleric_1.png";
+                customized.SetParts(5, weapon);
+                //customized.SetParts(6, "");
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
             case CharacterType.thief:
@@ -164,11 +167,12 @@ public class CharacterStat : MonoBehaviour
                 SetSliderBar();
                 SetCharacterExplanation();
                 SetSkillBoard(type);
-               // SetPlayerToJson();
+                // SetPlayerToJson();
 
                 //직업별 오른쪽손, 왼쪽 무기 장착
-                customized.SetParts(5, "Sword_1.png");
-                customized.SetParts(6, "Shield_1.png");
+                weapon = "Sword_1.png";
+                customized.SetParts(5, weapon);
+                //customized.SetParts(6, "Shield_1.png");
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
             case CharacterType.popstar:
@@ -181,8 +185,9 @@ public class CharacterStat : MonoBehaviour
                 //SetPlayerToJson();
 
                 //직업별 오른쪽손 무기 장착
-                customized.SetParts(5, "Pop_Star_Item.png");
-                customized.SetParts(6, "");
+                weapon = "Pop_Star_Item.png";
+                customized.SetParts(5, weapon);
+                //customized.SetParts(6, "");
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
             case CharacterType.chef:
@@ -195,8 +200,9 @@ public class CharacterStat : MonoBehaviour
                 //SetPlayerToJson();
 
                 //직업별 오른쪽손 무기 장착
-                customized.SetParts(5, "Chef_Item.png");
-                customized.SetParts(6, "");
+                weapon = "Chef_Item.png";
+                customized.SetParts(5, weapon);
+                //customized.SetParts(6, "");
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
         }

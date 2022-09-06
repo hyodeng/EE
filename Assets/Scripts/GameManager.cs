@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public bool?[] dataSkillTarget;
     public bool[] dataAOE;
 
-    public int partnerCount = 0;
+    public int partnerCount = 1;
 
     static GameManager instance = null;
     public static GameManager Inst => instance;

@@ -16,12 +16,16 @@ public class DataManager : MonoBehaviour
     public JObject jPartner1 = new JObject();
     public JObject jPartner2 = new JObject();
 
-    string SAVE_DATA_DIRECTORY; 
+    string SAVE_DATA_DIRECTORY;
+
+    public string[] weapons = new string[3];
+    public string[] sheilds = new string[3];
 
 
     //캐릭터 커스터마이즈(착장) 정보
-    Customized customized;
-    //public Customized Customized => customized;
+    GameObject character0;
+    GameObject character1;
+    Customized[] customized = new Customized[2];
 
     //플레이어 스탯
     CharacterStat characterStat;
@@ -59,8 +63,14 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
+        character0 = GameObject.Find("Character0");
+
+        customized[0] = character0.GetComponent<Customized>();
+
+
+        characterStat = FindObjectOfType<CharacterStat>();
+
         SAVE_DATA_DIRECTORY = Application.dataPath + "/Resources/Json/";
-        
         Initailize();
 
     }
@@ -71,14 +81,16 @@ public class DataManager : MonoBehaviour
     }
     public Sprite[] sprites = new Sprite[10];
 
+    JArray array = new JArray();
 
     //플레이어 파츠를 PlayerParts.json 에 저장
     public void SavePlayerParts()
     {
-        customized = FindObjectOfType<Customized>();
-        
+
+        characterStat = FindObjectOfType<CharacterStat>();
+
         //파츠 이미지
-        for (int i = 0; i < customized.parts.Length; i++)
+        for (int i = 0; i < customized[0].parts.Length; i++)
         {
            parts.Add($"{i}", GameManager.Inst.partsName[i]);
         }
@@ -90,17 +102,21 @@ public class DataManager : MonoBehaviour
             Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
         }
 
+        weapons[0] = characterStat.weapon;
+        array.Add(weapons[0]);
+
+        parts.Add(array);
+
         //저장
         string jsonPlayerParts = JsonConvert.SerializeObject(parts, Formatting.Indented);
         File.WriteAllText(SAVE_DATA_DIRECTORY + "/PlayerParts.json", jsonPlayerParts);
         Debug.Log("플레이어 파츠 저장");        
     }
 
+
     //선택한 직업에 따른 플레이어 데이터를 Player.json 에 초기화
     public void SetPlayerToJson()
     {
-        characterStat = FindObjectOfType<CharacterStat>();
-
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
             Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
 
@@ -123,12 +139,12 @@ public class DataManager : MonoBehaviour
     //Partner_1 ~3의 파츠이미지를 저장
     public void SavePartnerParts()
     {
-        customized = FindObjectOfType<Customized>();
-
+        character1 = GameObject.Find("Character1");
+        customized[1] = character1.GetComponent<Customized>();
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
             Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
 
-        for (int i = 0; i < customized.parts.Length; i++)
+        for (int i = 0; i < customized[1].parts.Length; i++)
         {
             //이미지
             partnerParts.Add($"{i}", GameManager.Inst.partsName[i]);
@@ -141,7 +157,7 @@ public class DataManager : MonoBehaviour
             Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
         }
 
-        string partnersParts = JsonConvert.SerializeObject(jsonPlayer, Formatting.Indented);
+        string partnersParts = JsonConvert.SerializeObject(partnerParts, Formatting.Indented);
         File.WriteAllText(SAVE_DATA_DIRECTORY + $"/PartnerParts_{GameManager.Inst.partnerCount}.json", partnersParts);
         Debug.Log($"PartnerParts_{GameManager.Inst.partnerCount} 저장");
     }
@@ -165,7 +181,8 @@ public class DataManager : MonoBehaviour
     //SelectPartner씬에서 선택된 동료의 정보를 가져오기 위한 함수
     public void LoadPartnerData()
     {
-        if (GameManager.Inst.partnerCount == 2)
+
+        if (GameManager.Inst.partnerCount == 1 || GameManager.Inst.partnerCount == 2)
         {
             string partner1 = File.ReadAllText(SAVE_DATA_DIRECTORY + $"/Partner_{GameManager.Inst.partnerCount- 1}.json");
             jPartner1 = JObject.Parse(partner1);

@@ -66,19 +66,6 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    string shieldName;
-
-    //랜덤 장비이미지
-    public void PopEquipmentImage()
-    {
-        //shield : 리소스/실드 폴더 9개 이미지
-        int shieldIndex = Random.Range(0, 10);
-        shieldName = $"Shield_{shieldIndex}";
-
-        //weapon : 리소스/웨폰 폴더 sword 6개 이미지 중 
-        int weaponIndex = Random.Range(0, 7);
-        string weaponName = $"Sword_{weaponIndex}";
-    }
 
     
     public void OnPointerClick(PointerEventData eventData)
@@ -98,16 +85,34 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    string shieldName;
+    string weaponName;
+
+    //랜덤 장비이미지
+    public void PopEquipmentImage()
+    {
+        //shield : 리소스/실드 폴더 9개 이미지
+        int shieldIndex = Random.Range(0, 10);
+        shieldName = $"Shield_{shieldIndex}";
+
+        //weapon : 리소스/웨폰 폴더 sword 6개 이미지 중 
+        int weaponIndex = Random.Range(0, 7);
+        weaponName = $"Sword_{weaponIndex}";
+    }
+
     JObject jobject = new JObject();
+    JArray array = new JArray();
+    JToken jToken;
 
     public void TestChange()
     {
-        string partner1 = File.ReadAllText(Application.dataPath + "/Resources/Json/" + $"/PartnerParts_1.json");
+        string partner1 = File.ReadAllText(Application.dataPath + "/Resources/Json/" + $"/PlayerParts.json");
         jobject = JObject.Parse(partner1);
 
-        jobject.Add("weapon", shieldName);
+
+        jobject.Add("weapon", array);
         string partner = JsonConvert.SerializeObject(jobject, Formatting.Indented);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/PartnerParts_1.json", partner);
+        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/PlayerParts.json", partner);
         /*{GameManager.Inst.partnerCount}*/
 
         Debug.Log($"파트너_1번 장비 추가 ");
