@@ -38,13 +38,21 @@ public class CharacterData : MonoBehaviour
         get => hp;
         set
         {
+            hp = value;
+            if(hp > mhp)
+            {
+                hp = mhp;
+            }
+            if(hp < 0)
+            {
+                hp = 0;
+            }
             if (value <= 0)
             {
                 value = 0;
                 battle.charactersList.Remove(this);
                 gameObject.SetActive(false);
             }
-            hp = value;
             if (transform.parent != null)
             {
                 Relocation();
@@ -56,7 +64,15 @@ public class CharacterData : MonoBehaviour
         get => mp;
         set
         {
-            mp = Mathf.Max(value, 0);
+            mp = value;
+            if (mp > mmp)
+            {
+                mp = mmp;
+            }
+            if (mp < 0)
+            {
+                mp = 0;
+            }
             if (transform.parent != null)
             {
                 Relocation();

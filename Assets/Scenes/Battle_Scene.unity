@@ -274,7 +274,7 @@ MonoBehaviour:
   parts: []
   cam: {fileID: 519420031}
   target: {fileID: 0}
-  UserParty: {fileID: 0}
+  UserParty: {fileID: 2110275762}
   Monsters: {fileID: 1964778312}
   Operator: {fileID: 1457188552}
   Focusing: 0
