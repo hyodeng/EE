@@ -81,7 +81,6 @@ public class DataManager : MonoBehaviour
     }
     public Sprite[] sprites = new Sprite[10];
 
-    JArray array = new JArray();
 
     //플레이어 파츠를 PlayerParts.json 에 저장
     public void SavePlayerParts()
@@ -89,23 +88,26 @@ public class DataManager : MonoBehaviour
 
         characterStat = FindObjectOfType<CharacterStat>();
 
-        //파츠 이미지
-        for (int i = 0; i < customized[0].parts.Length; i++)
-        {
-           parts.Add($"{i}", GameManager.Inst.partsName[i]);
-        }
+        // 0: 얼굴, 1: 헤어, 2: 수염, 3: 아머, 4: 바지, 5:오른쪽 무기, 6 : 왼손 무기
 
-        //색상
+
+        //파츠 0~2번, 색상
         for (int i = 0; i < 3; i++)
         {
+            parts.Add($"{i}", GameManager.Inst.partsName[i]);
             parts.Add($"color{i}", GameManager.Inst.partsColor[i, 0].ToString());
             Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
         }
 
-        weapons[0] = characterStat.weapon;
-        array.Add(weapons[0]);
+        parts.Add($"{3}", GameManager.Inst.partsName[3]);
+        parts.Add($"{4}", GameManager.Inst.partsName[6]);
+        parts.Add($"{5}", GameManager.Inst.partsName[8]);
+        parts.Add($"{6}", GameManager.Inst.partsName[9]);
 
-        parts.Add(array);
+        //플레이어 무기 : 0번
+        //weapons[0] = characterStat.weapon;
+        //array.Add(weapons[0]);
+        parts.Add("weapon0", characterStat.weapon);
 
         //저장
         string jsonPlayerParts = JsonConvert.SerializeObject(parts, Formatting.Indented);
@@ -144,18 +146,18 @@ public class DataManager : MonoBehaviour
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
             Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
 
-        for (int i = 0; i < customized[1].parts.Length; i++)
-        {
-            //이미지
-            partnerParts.Add($"{i}", GameManager.Inst.partsName[i]);
-        }
-
-        //색상
+        //파츠 0~2번, 색상
         for (int i = 0; i < 3; i++)
         {
+            partnerParts.Add($"{i}", GameManager.Inst.partsName[i]);
             partnerParts.Add($"color{i}", GameManager.Inst.partsColor[i, 0].ToString());
             Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
         }
+
+        partnerParts.Add($"{3}", GameManager.Inst.partsName[3]);
+        partnerParts.Add($"{4}", GameManager.Inst.partsName[6]);
+        partnerParts.Add($"{5}", GameManager.Inst.partsName[8]);
+        partnerParts.Add($"{6}", GameManager.Inst.partsName[9]);
 
         string partnersParts = JsonConvert.SerializeObject(partnerParts, Formatting.Indented);
         File.WriteAllText(SAVE_DATA_DIRECTORY + $"/PartnerParts_{GameManager.Inst.partnerCount}.json", partnersParts);
