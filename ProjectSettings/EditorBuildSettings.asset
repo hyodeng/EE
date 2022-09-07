@@ -42,13 +42,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Grass_Scene.unity
     guid: 8540e4ef67e583b47a84ed2375717403
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
+    path: Assets/Scenes/MainScene_2.5.unity
     guid: c9f9b5050e7a39240909fc07e4f7574c
   - enabled: 1
     path: Assets/Scenes/Repair_Scene.unity
     guid: 34eedb23061df0b47a8c533e39927bcc
   - enabled: 1
-    path: Assets/11Scene_Park/Scene/Stage_Scene.unity
+    path: Assets/11Scene_Park/Scene/Stage_Scene 2.unity
     guid: 05728c5061da24242a2e3144f2343a3c
   - enabled: 1
     path: Assets/11Scene_Park/Scene/Start_Scene.unity

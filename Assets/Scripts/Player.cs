@@ -21,11 +21,7 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
-        actions.Player2.Enable();
-        actions.Player2.Move.performed += OnMove;
-        actions.Player2.Move.canceled += OnStop;
-        actions.Player2.Use.performed += OnUse;
-        actions.Player2.Use.canceled += OffUse;
+
         actions.Player.MoveOnlyAD.canceled += OnStopAD;
         
     }
@@ -33,11 +29,7 @@ public class Player : MonoBehaviour
    
     private void OnDisable()
     {
-        actions.Player2.Use.canceled -= OffUse;
-        actions.Player2.Use.performed -= OnUse;
-        actions.Player2.Move.canceled -= OnStop;
-        actions.Player2.Move.performed -= OnMove;
-        actions.Player2.Disable();
+
         actions.Player.Use.performed -= OnUse;
         //actions.Player.Move.canceled -= OnStop;
         //actions.Player.Move.performed -= OnMove;
