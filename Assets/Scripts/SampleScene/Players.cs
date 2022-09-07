@@ -15,8 +15,9 @@ public class Players : MonoBehaviour
     public GameObject Mobspoan = null;
     public GameObject Timer = null;
     public GameObject MainButton = null;
-    
-    
+    public GameObject Background = null;
+
+
 
 
     // Start is called before the first frame update
@@ -61,10 +62,12 @@ public class Players : MonoBehaviour
             float Tamp = Timer.GetComponent<Score>().Timecurrent;
             gameover.GetComponent<Text>().text = $"Game Over \n 최종 점수:{Tamp}";
             gameover.SetActive(true);
+            Background.SetActive(true);
             MainButton.SetActive(true);
             Mobspoan.SetActive(false);
             
             Timer.SetActive(false);
+            //게임 : 이미지 추가 
         }
     }
 

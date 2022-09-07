@@ -17,8 +17,6 @@ public class PopupController : MonoBehaviour
     public AudioClip audioNo;
     AudioSource audioSource;
 
-    Button nextButton;
-    Button prevButton;
 
     TextMeshProUGUI questionText;
     WaitForSeconds delayTime0 = new WaitForSeconds(0.5f);
@@ -27,11 +25,14 @@ public class PopupController : MonoBehaviour
     GameObject yesbutton;
     GameObject nobutton;
     Button savebutton;
+    Button nextButton;
+    Button prevButton;
     bool isNextScene = false;
     public bool isReadySave = false;    //true일 때만 json으로 저장됨
 
     public System.Action OnEnabledpartnerSelectView;
     public System.Action OnPartnerCount;
+
 
     private void Awake()
     {
@@ -134,14 +135,13 @@ public class PopupController : MonoBehaviour
     //팝업창의 yes 버튼을 눌렀을 때 
     void SelectYes()
     {
+
         PlaySound("Yes");
         if (questionPop.name == "QuestionPop_0")
         {
             //플레이어 파츠 저장
-            DataManager.Instance.SavePlayerParts();
             OnOffSwitch();
             isNextScene = true;
-
         }
         else if (questionPop.name == "QuestionPop_1")
         {
@@ -149,7 +149,8 @@ public class PopupController : MonoBehaviour
             isReadySave = true;
             if (isReadySave)
             {
-                DataManager.Instance.SavePlayerToJson();
+                DataManager.Instance.SavePlayerParts();
+                DataManager.Instance.SetPlayerToJson();
             }
             OnOffSwitch();
             isNextScene = true;
@@ -157,16 +158,18 @@ public class PopupController : MonoBehaviour
         }
         else if (questionPop.name == "QuestionPop_2")
         {
-            //파트너 데이터 저장
+            //파트너 데이터와 파츠 저장
             isReadySave = true;
             if (isReadySave)
             {
-                DataManager.Instance.SavePartnerToJson();
+                DataManager.Instance.SetPartnerToJson();
+                DataManager.Instance.SavePartnerParts();
             }
             
             OnPartnerCount?.Invoke();
             OnOffSwitch();
             isNextScene = true;
+
         }
 
     }
@@ -197,14 +200,15 @@ public class PopupController : MonoBehaviour
             if (nextButton.name == "NextButton_0")
             {
                 SceneManager.LoadScene("CharacterSelect");
-
             }
             else if (nextButton.name == "NextButton_1")
             {
+                
                 SceneManager.LoadScene("CharacterSelectPartner");
             }
             else if (nextButton.name == "NextButton_2")
             {
+
                 SceneManager.LoadScene("Stage_Scene");
             }
             else
@@ -223,6 +227,7 @@ public class PopupController : MonoBehaviour
             StartCoroutine(DelayNextStep());
         }
     }
+
 
     IEnumerator DelayNextStep()
     {
@@ -250,6 +255,7 @@ public class PopupController : MonoBehaviour
             Debug.Log("기존 씬 선택 오류");
         }
     }
+
 
 
     //partnerSelect.text = "선택 가능한 인원수가 넘었습니다";

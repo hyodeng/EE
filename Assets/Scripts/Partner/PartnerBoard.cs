@@ -41,14 +41,22 @@ public class PartnerBoard : MonoBehaviour
         partnerListButton.onClick.AddListener(OnOffSelectBoard);
 
         popupController.OnPartnerCount += OpenPartnerCount;
+
     }
-
-
 
     void Initialize()
     {
         requestTxt.text = "동료를 선택하세요";
-        countTxt.text = GameManager.Inst.partnerCount.ToString();
+        if(GameManager.Inst.partnerCount < 4)
+        {
+
+            countTxt.text = GameManager.Inst.partnerCount.ToString();
+        }
+        else
+        {
+            Debug.Log("동료인원수 오류");
+        }
+        
         StartCoroutine(PopUpQuestion());
     }
     IEnumerator PopUpQuestion()
@@ -73,6 +81,7 @@ public class PartnerBoard : MonoBehaviour
         yield return delayTime;
         requestTxt.text = "동료를 선택했습니다";
         countTxt.text = GameManager.Inst.partnerCount.ToString();
+        FindObjectOfType<PartnerSelectBoard>().OnCheck();
     }
 
 }

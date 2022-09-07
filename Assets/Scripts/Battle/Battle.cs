@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Battle : MonoBehaviour
 {
+    public GameObject Goblin, Piend, Golem, Darkload;
+    public GameObject pepperBox;
+    public TextMeshProUGUI hpp, mpp, resp;
+
+    public int hpPepper = 10, mpPepper = 5, resurrectPepper = 1;
     public Player[] player;
     public Monster[] monster;
 
@@ -16,7 +22,6 @@ public class Battle : MonoBehaviour
     public CharacterData target;
 
     public GameObject UserParty, Monsters;
-    public GameObject[] Avatars;
     public Transform Operator;
     public bool Focusing;
     public bool targetCam;
@@ -31,7 +36,11 @@ public class Battle : MonoBehaviour
             bool BothAlive = false;
             List<string> dataNames = new();
             index = value;
-            if (charactersList.Count > 1)
+            if(!UserParty.transform.Find("Character0").gameObject.activeSelf)
+            {
+                BattleEnd(false);
+            }
+            else if (charactersList.Count > 1)
             {
                 foreach (CharacterData data in charactersList)
                 {
@@ -112,6 +121,15 @@ public class Battle : MonoBehaviour
 
     private void Awake()
     {
+        pepperBox.SetActive(false);
+        for(int i = 0; i<4; i++)
+        {
+            GameObject goblin = Instantiate(Goblin, Monsters.transform);
+            goblin.name = $"Monster{i}";
+            goblin.transform.localPosition = new Vector3(14.62f, i*2, 0);
+            goblin.GetComponent<CharacterData>().battle = this;
+        }
+
         for (int i = 0; i < 4; i++)
         {
             GameObject.Find("UserParty").transform.Find($"Character{i}").gameObject.SetActive(GameManager.Inst.userPartyCheck[i]);
@@ -123,10 +141,13 @@ public class Battle : MonoBehaviour
     }
     private void Update()
     {
+        hpp.text = hpPepper.ToString();
+        mpp.text = mpPepper.ToString();
+        resp.text = resurrectPepper.ToString();
         if (Focusing && !targetCam)
         {
             cam.orthographicSize = 3.5f;
-            cam.transform.position = Avatars[index].transform.position - new Vector3(0, 0, 100);
+            cam.transform.position = charactersList[index].transform.position - new Vector3(0, 0, 100);
         }
         else if (!Focusing && !targetCam)
         {
@@ -146,10 +167,6 @@ public class Battle : MonoBehaviour
         System.Array.Sort<Player>(player, (x, y) => x.transform.GetSiblingIndex().CompareTo(y.transform.GetSiblingIndex()));
         monster = Transform.FindObjectsOfType<Monster>();
         System.Array.Sort<Monster>(monster, (x, y) => x.transform.GetSiblingIndex().CompareTo(y.transform.GetSiblingIndex()));
-
-        //Operator.GetChild(0).GetComponent<Button>().onClick.AddListener(() => OnTarget());
-        //Operator.GetChild(1).GetComponent<Button>().onClick.AddListener(() => OperateCharacter(2));
-        Operator.GetChild(2).GetComponent<Button>().onClick.AddListener(() => OperateCharacter(3));
 
         SetTurn();
     }
@@ -174,14 +191,10 @@ public class Battle : MonoBehaviour
         {
             charactersList.Sort((x, y) => x.speed.CompareTo(y.speed) * (-1));
         }
-        System.Array.Resize(ref Avatars, characters.Length);
-        for (int i = 0; i < characters.Length; i++)
-        {
-            Avatars[i] = characters[i].gameObject;
-        }
         int k = 0;
         foreach (CharacterData character in charactersList)
         {
+            character.Relocation();
             if (character.isPlayer)
             {
                 Index = k;
@@ -222,6 +235,59 @@ public class Battle : MonoBehaviour
         else
         {
             Debug.Log("전투 패배");
+        }
+    }
+    public void OnPepper()
+    {
+        pepperBox.SetActive(!pepperBox.activeSelf);
+    }
+    public void UsePepper(int i )
+    {
+        switch(i)
+        {
+            case 0:
+                if(hpPepper>0)
+                {
+                    hpPepper--;
+                    foreach(CharacterData data in charactersList)
+                    {
+                        if(data.gameObject.name.IndexOf("Character")>-1)
+                        {
+                            data.HP++;
+                        }
+                    }
+                }
+                break;
+            case 1:
+                if (mpPepper > 0)
+                {
+                    mpPepper--;
+                    foreach (CharacterData data in charactersList)
+                    {
+                        if (data.gameObject.name.IndexOf("Character") > -1)
+                        {
+                            data.MP++;
+                        }
+                    }
+                }
+                break;
+            case 2:
+                if (resurrectPepper > 0)
+                {
+                    resurrectPepper--;
+                    foreach (Transform obj in UserParty.transform)
+                    {
+                        CharacterData data = obj.GetComponent<CharacterData>();
+                        if (data.gameObject.name.IndexOf("Character") > -1 && !data.gameObject.activeSelf && data.mhp > 2)
+                        {
+                            data.gameObject.SetActive(true);
+                            data.HP = 1;
+                            charactersList.Add(data);
+                        }
+                    }
+                    SetTurn();
+                }
+                break;
         }
     }
 }

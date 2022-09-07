@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public bool?[] dataSkillTarget;
     public bool[] dataAOE;
 
-    public int partnerCount = 0;
+    public int partnerCount = 1;
 
     static GameManager instance = null;
     public static GameManager Inst => instance;
@@ -51,10 +51,10 @@ public class GameManager : MonoBehaviour
 
         JObject jobject = JObject.Parse(json);
         JToken temp = jobject["asd"][0];
-        Debug.Log(jobject["asd"][0].Type == JTokenType.Null);
-        Debug.Log(temp.Type == JTokenType.Null);
-        Debug.Log(jobject["asd"][1].Value<bool>() == false);
-        Debug.Log(jobject["asd"][2]);
+        //Debug.Log(jobject["asd"][0].Type == JTokenType.Null);
+        //Debug.Log(temp.Type == JTokenType.Null);
+        //Debug.Log(jobject["asd"][1].Value<bool>() == false);
+        //Debug.Log(jobject["asd"][2]);
 
         if (instance == null)
         {
@@ -77,10 +77,11 @@ public class GameManager : MonoBehaviour
     {
         int index = System.Convert.ToInt32(targetData.gameObject.name.Replace("Character", ""));
         dataClass[index] = targetData.characterClass;
+        targetData.mhp = InitData.classData["hp"][0].Value<int>(); ;
         targetData.HP = InitData.classData["hp"][0].Value<int>();
-        targetData.mhp = targetData.HP;
         dataHP[index] = targetData.HP;
-        targetData.mp = InitData.classData["mp"][0].Value<int>();
+        targetData.mmp = InitData.classData["mp"][0].Value<int>();
+        targetData.MP = InitData.classData["mp"][0].Value<int>();
         dataMP[index] = targetData.mp;
         targetData.attack = InitData.classData["attack"][0].Value<int>();
         dataAttack[index] = targetData.attack;

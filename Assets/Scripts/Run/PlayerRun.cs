@@ -42,6 +42,8 @@ public class PlayerRun : MonoBehaviour
             Destroy(this.gameObject);
 
             gameover.SetActive(true);
+            //달리기게임 오버 : 이미지 추가 
+
         }
     }
 }

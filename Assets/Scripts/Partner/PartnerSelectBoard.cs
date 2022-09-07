@@ -61,20 +61,12 @@ public class PartnerSelectBoard : MonoBehaviour
         if (this.gameObject.activeSelf == false)
             this.gameObject.SetActive(true);
 
-        if (GameManager.Inst.partnerCount == 0)
+        if (GameManager.Inst.partnerCount == 0 || GameManager.Inst.partnerCount == 1)
         {
             partner1.SetActive(true);
             partner2.SetActive(false);
             partner3.SetActive(false);
-            ClearCheck();
-
-        }
-        else if (GameManager.Inst.partnerCount == 1)
-        {
-            partner1.SetActive(true);
-            partner2.SetActive(false);
-            partner3.SetActive(false);
-            ClearCheck();
+            OffCheck();
 
         }
         else if (GameManager.Inst.partnerCount == 2)
@@ -82,8 +74,7 @@ public class PartnerSelectBoard : MonoBehaviour
             partner1.SetActive(true);
             partner2.SetActive(true);
             partner3.SetActive(false);
-            ClearCheck();
-
+            OffCheck();
 
         }
         else if (GameManager.Inst.partnerCount == 3)
@@ -92,7 +83,7 @@ public class PartnerSelectBoard : MonoBehaviour
             partner1.SetActive(true);
             partner2.SetActive(true);
             partner3.SetActive(true);
-            ClearCheck();
+            OffCheck();
 
         }
         else
@@ -106,12 +97,28 @@ public class PartnerSelectBoard : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    void ClearCheck()
+    void OffCheck()
     {
         partner1.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.clear;
         partner2.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.clear;
         partner3.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.clear;
     }
 
+    public void OnCheck()
+    {
+        if(GameManager.Inst.partnerCount == 1)
+        {
+            partner1.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.white;
 
+        }else if(GameManager.Inst.partnerCount == 2)
+        {
+            partner2.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.white;
+
+        }
+        else if(GameManager.Inst.partnerCount == 3)
+        {
+            partner3.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.white;
+
+        }
+    }
 }

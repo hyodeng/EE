@@ -17,13 +17,7 @@ public class PartnerSelectView : MonoBehaviour
     Button btnPopstar;
     Button btnChef;
 
-    Character partner;
     Customized customized;
-
-    SavePlayerData characterData = new SavePlayerData();
-    JObject Jsonpartner;
-    JToken jTokenPartner;
-
 
     PartnerBoard partnerboard;
 
@@ -33,14 +27,24 @@ public class PartnerSelectView : MonoBehaviour
     TextMeshProUGUI partnerName1;
     TextMeshProUGUI skillName1;
     TextMeshProUGUI PartnerExplanation1;
+    Image skillImage1;
 
     TextMeshProUGUI partnerName2;
     TextMeshProUGUI skillName2;
     TextMeshProUGUI PartnerExplanation2;
+    Image skillImage2;
 
     TextMeshProUGUI partnerName3;
     TextMeshProUGUI skillName3;
     TextMeshProUGUI PartnerExplanation3;
+    Image skillImage3;
+
+    //Json 저장용 
+    SavePlayerData characterData = new SavePlayerData();
+    public JObject jsonAllpartner;
+    public JToken jTokenPartner;
+
+    bool isStart = false;
 
     public System.Action onPartnerSelectBoard;
     public System.Action offPartnerSelectBoard;
@@ -48,7 +52,6 @@ public class PartnerSelectView : MonoBehaviour
 
     private void Awake()
     {
-        //transform.getchild(0).getcomponent<button> 은 왜 안될까?
         btnWarrior = GameObject.Find("Btn_Warrior").GetComponent<Button>();
         btnMage = GameObject.Find("Btn_Mage").GetComponent<Button>();
         btnCleric = GameObject.Find("Btn_Cleric").GetComponent<Button>();
@@ -73,14 +76,18 @@ public class PartnerSelectView : MonoBehaviour
         skillName3 = selectboard.transform.Find("Partner3").GetChild(2).GetComponent<TextMeshProUGUI>();
         PartnerExplanation3 = selectboard.transform.Find("Partner3").GetChild(3).GetComponent<TextMeshProUGUI>();
 
+
+        skillImage1 = selectboard.transform.Find("Partner1").Find("SkillImage").GetComponent<Image>();
+        skillImage2 = selectboard.transform.Find("Partner2").Find("SkillImage").GetComponent<Image>();
+        skillImage3 = selectboard.transform.Find("Partner3").Find("SkillImage").GetComponent<Image>();
         popupController = GameObject.Find("PopupNextSceneController").GetComponent<PopupController>();
 
     }
 
     private void Start()
     {
-
-        customized = FindObjectOfType<Customized>();
+        //프리팹 character1의 정보를 저장하여 다음씬에 프리팹을 새로 생성
+        customized = GameObject.Find("Character1").GetComponent<Customized>();
 
         this.gameObject.SetActive(false);
 
@@ -95,7 +102,6 @@ public class PartnerSelectView : MonoBehaviour
 
         popupController.OnEnabledpartnerSelectView += OnOffViewState;
 
-        DataManager.Instance.SavePartnerToJson = SavePartnerData;
     }
 
 
@@ -115,151 +121,112 @@ public class PartnerSelectView : MonoBehaviour
     {
         //Character.Json에서 데이터 꺼내옴
         string character = File.ReadAllText(Application.dataPath + "/Resources/Json/" + "/Character.json");
-        Jsonpartner = JObject.Parse(character);
+        jsonAllpartner = JObject.Parse(character);
     }
 
     private void DataSetUp(CharacterType type)
     {
-        partnerboard.onPartnerSelectBoardOpen?.Invoke();
+        GameManager.Inst.partnerCount = 1;
 
-        //테스트로 일단 해놓음 
-        int index = 0;
+        customized.GetComponent<CharacterData>().characterClass = type;
+        partnerboard.onPartnerSelectBoardOpen?.Invoke();
+        isStart = true;
 
         switch (type)
         {
             case CharacterType.warrior:
-                jTokenPartner = Jsonpartner["warrior"];
+                jTokenPartner = jsonAllpartner["warrior"];
 
                 //파트너의 파츠별 이미지 
-                //ClearParts();
-                InitializePartenrData(index);
-                RefreshDataPartnerSelectBoard(type);
-
+                SetPartnerParts();
+                RefreshPartnerExp(type);
                 break;
             case CharacterType.mage:
-                jTokenPartner = Jsonpartner["mage"];
+                jTokenPartner = jsonAllpartner["mage"];
 
-                //ClearParts();
-                InitializePartenrData(index);
-                RefreshDataPartnerSelectBoard(type);
+                SetPartnerParts();
+                RefreshPartnerExp(type);
 
                 break;
             case CharacterType.cleric:
-                jTokenPartner = Jsonpartner["cleric"];
+                jTokenPartner = jsonAllpartner["cleric"];
 
-                //ClearParts();
-                InitializePartenrData(index);
-                RefreshDataPartnerSelectBoard(type);
+                SetPartnerParts();
+                RefreshPartnerExp(type);
                 break;
             case CharacterType.thief:
-                jTokenPartner = Jsonpartner["thief"];
-                //ClearParts();
-                InitializePartenrData(index);
-                RefreshDataPartnerSelectBoard(type);
+                jTokenPartner = jsonAllpartner["thief"];
+                SetPartnerParts();
+                RefreshPartnerExp(type);
 
                 break;
             case CharacterType.popstar:
-                jTokenPartner = Jsonpartner["popstar"];
-                //ClearParts();
-                InitializePartenrData(index);
-                RefreshDataPartnerSelectBoard(type);
+                jTokenPartner = jsonAllpartner["popstar"];
+                SetPartnerParts();
+                RefreshPartnerExp(type);
                 break;
             case CharacterType.chef:
-                jTokenPartner = Jsonpartner["chef"];
-                //ClearParts();
-                InitializePartenrData(index);
-                RefreshDataPartnerSelectBoard(type);
+                jTokenPartner = jsonAllpartner["chef"];
+                SetPartnerParts();
+                RefreshPartnerExp(type);
                 break;
             default:
                 Debug.Log("파트너 직업 선택 오류");
                 break;
         }
-    }
 
-    //파츠 이미지 지우기_수정중
-    void ClearParts()
-    {
-        //for (int i = 0; i < customized.parts.Length; i++)
-        //{
-        //    //customized.SetParts(i, "");
-        //}
+        string partner = JsonConvert.SerializeObject(jTokenPartner, Formatting.Indented);
+        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/Partner_{GameManager.Inst.partnerCount}.json", partner);
     }
 
 
-
-    //동료의 파츠 이미지와 캐릭터를 초기화
-    private void InitializePartenrData(int index)
+    //동료의 파츠 이미지와 이름 초기화
+    private void SetPartnerParts()
     {
+        //테스트용
+        //GameManager.Inst.partnerCount = 1;
 
-        //일단 테스트로 1번 해놓음 , 파츠 이미지 
-        for (int i = 0; i < customized.parts.Length; i++)
+        for (int i = 0; i < 6; i++)
         {
-            GameManager.Inst.temp[i, index] = customized.parts[i].sprite;
+            customized.RandomParts(i);
         }
 
         characterData._name = jTokenPartner["_name"].Value<string>();
-        characterData.maxhp = jTokenPartner["hp"][0].Value<int>(); //maxHP
-        characterData.hp = jTokenPartner["hp"][1].Value<int>(); //hp
-        characterData.maxmp = jTokenPartner["mp"][0].Value<int>();
-        characterData.mp = jTokenPartner["mp"][1].Value<int>();
-        characterData.maxattack = jTokenPartner["attack"][0].Value<int>();
-        characterData.attack = jTokenPartner["attack"][1].Value<int>();
-        characterData.maxmagic = jTokenPartner["magic"][0].Value<int>();
-        characterData.maxmagic = jTokenPartner["magic"][1].Value<int>();
-        characterData.maxdefence = jTokenPartner["defence"][0].Value<int>();
-        characterData.defence = jTokenPartner["defence"][1].Value<int>();
-        characterData.maxspeed = jTokenPartner["speed"][0].Value<int>();
-        characterData.speed = jTokenPartner["speed"][1].Value<int>();
+
         characterData.skillname = jTokenPartner["skill"][0].Value<string>();
         characterData.skilldesc = jTokenPartner["skill"][1].Value<string>();
 
-        //나중에 추가
-        //characterData.armor = jTokenplayer["armor"].Value<string>();
-        //characterData.weapon = jTokenplayer["weapon"].Value<string>();
-        characterData.desc = jTokenPartner["desc"].Value<string>();
     }
 
-    void SavePartnerData()
+    void RefreshPartnerExp(CharacterType type)
     {
-        for (int i = 0; i < customized.parts.Length; i++)
-        {
-            //jTokenPartner["parts"][i].AddAfterSelf(GameManager.Inst.partsName[i]);
-        }
+         string name = $"Skill_{(int)type}";
 
-        //var properties = (JObject)jsonObj["properties"];
-        //properties.Add(new JProperty("pcName-B", new JObject { ["model"] = "xyz" }));
-        //Console.WriteLine(jsonObj);
-
-        string partner = JsonConvert.SerializeObject(jTokenPartner);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/Partner_{GameManager.Inst.partnerCount}.json", partner);
-
-        Debug.Log($"파트너 데이터_{GameManager.Inst.partnerCount}번 Json 저장");
-    }
-
-
-    void RefreshDataPartnerSelectBoard(CharacterType type)
-    {
-        if (GameManager.Inst.partnerCount == 0)
+        if (GameManager.Inst.partnerCount == 0 || GameManager.Inst.partnerCount == 1)
         {
             onPartnerSelectBoard?.Invoke();
-
             partnerName1.text = characterData._name;
             skillName1.text = characterData.skillname;
             PartnerExplanation1.text = characterData.skilldesc;
+            skillImage1.sprite = Resources.Load<Sprite>($"Character/Skill/{name.Replace(".png", "")}");
         }
-        else if (GameManager.Inst.partnerCount == 1)
+        else if (GameManager.Inst.partnerCount == 2)
         {
+            RefreshPartnerExp();
             onPartnerSelectBoard?.Invoke();
             partnerName2.text = characterData._name;
             skillName2.text = characterData.skillname;
             PartnerExplanation2.text = characterData.skilldesc;
+            skillImage2.sprite = Resources.Load<Sprite>($"Character/Skill/{name.Replace(".png", "")}");
         }
-        else if (GameManager.Inst.partnerCount == 2)
+        else if (GameManager.Inst.partnerCount == 3)
         {
+            RefreshPartnerExp();
             onPartnerSelectBoard?.Invoke();
             partnerName3.text = characterData._name;
             skillName3.text = characterData.skillname;
             PartnerExplanation3.text = characterData.skilldesc;
+            skillImage3.sprite = Resources.Load<Sprite>($"Character/Skill/{name.Replace(".png", "")}");
         }
         else
         {
@@ -268,6 +235,37 @@ public class PartnerSelectView : MonoBehaviour
 
     }
 
+    void RefreshPartnerExp()
+    {
+        DataManager.Instance.LoadPartnerData();
 
+        if(GameManager.Inst.partnerCount == 1)
+        {
+            if (isStart)
+            {
+                partnerName1.text = DataManager.Instance.jPartner1["_name"].Value<string>();
+                skillName1.text = DataManager.Instance.jPartner1["skill"][0].Value<string>();
+                PartnerExplanation1.text = DataManager.Instance.jPartner1["skill"][1].Value<string>();
+            }
 
+        }
+        else if (GameManager.Inst.partnerCount == 2)
+        {
+            partnerName1.text = DataManager.Instance.jPartner1["_name"].Value<string>();
+            skillName1.text = DataManager.Instance.jPartner1["skill"][0].Value<string>();
+            PartnerExplanation1.text = DataManager.Instance.jPartner1["skill"][1].Value<string>();
+
+        }else if (GameManager.Inst.partnerCount == 3)
+        {
+            partnerName1.text = DataManager.Instance.jPartner1["_name"].Value<string>();
+            skillName1.text = DataManager.Instance.jPartner1["skill"][0].Value<string>();
+            PartnerExplanation1.text = DataManager.Instance.jPartner1["skill"][1].Value<string>();
+
+            partnerName2.text = DataManager.Instance.jPartner2["_name"].Value<string>();
+            skillName2.text = DataManager.Instance.jPartner2["skill"][0].Value<string>();
+            PartnerExplanation2.text = DataManager.Instance.jPartner2["skill"][1].Value<string>();
+
+        }
+
+    }
 }

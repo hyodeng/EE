@@ -14,8 +14,9 @@ public class CharacterStat : MonoBehaviour
     //플레이어 Json 저장용 --------------------------------------
     SavePlayerData characterData = new SavePlayerData();
     JObject jobject;
-    JToken jTokenplayer;
+    public JToken jTokenplayer;
     //---------------------------------------------------------
+    
     Button button_warrior;
     Button button_mage;
     Button button_cleric;
@@ -51,6 +52,8 @@ public class CharacterStat : MonoBehaviour
 
     //무기 장착 
     Customized customized;
+    public string weapon;
+
 
     private void Awake()
     {
@@ -84,12 +87,6 @@ public class CharacterStat : MonoBehaviour
 
     private void Start()
     {
-        //button_warrior.onClick.AddListener(() => { characterData.characterClass = CharacterType.warrior; });
-        //button_mage.onClick.AddListener(() => { characterData.characterClass = CharacterType.mage; });
-        //button_cleric.onClick.AddListener(() => { characterData.characterClass = CharacterType.cleric; });
-        //button_thief.onClick.AddListener(() => { characterData.characterClass = CharacterType.thief; });
-        //button_popstar.onClick.AddListener(() => { characterData.characterClass = CharacterType.popstar; });
-        //button_chef.onClick.AddListener(() => { characterData.characterClass = CharacterType.chef; });
 
         button_warrior.onClick.AddListener(() => DataSetup(CharacterType.warrior));
         button_mage.onClick.AddListener(() => DataSetup(CharacterType.mage));
@@ -104,13 +101,12 @@ public class CharacterStat : MonoBehaviour
 
         backAura = GameObject.Find("BackAura").GetComponent<ParticleSystem>();
 
-        //플레이어 데이터 델리게이트 연결
-        DataManager.Instance.SavePlayerToJson = SetPlayerToJson;
     }
 
 
     public void DataSetup(CharacterType type)
     {
+        customized.GetComponent<CharacterData>().characterClass = type;
         statBarText.SetActive(true);
 
         //Character.Json에서 데이터 꺼내옴
@@ -129,8 +125,8 @@ public class CharacterStat : MonoBehaviour
                 //SetPlayerToJson();
 
                 //직업별 오른쪽손 무기 장착
-                customized.SetParts(5, "Sword_5.png");
-                customized.SetParts(6, "");
+                weapon = "Sword_5.png";
+                customized.SetParts(5, weapon);
                 //캐릭터 배경 파티클
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
@@ -141,11 +137,12 @@ public class CharacterStat : MonoBehaviour
                 SetSliderBar();
                 SetCharacterExplanation();
                 SetSkillBoard(type);
-               // SetPlayerToJson();
+                // SetPlayerToJson();
 
                 //직업별 오른쪽손 무기 장착
-                customized.SetParts(5, "Ward_1.png");
-                customized.SetParts(6, "");
+                weapon = "Ward_1.png";
+                customized.SetParts(5, weapon);
+
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
             case CharacterType.cleric:
@@ -158,8 +155,9 @@ public class CharacterStat : MonoBehaviour
                 //SetPlayerToJson();
 
                 //직업별 오른쪽손 무기 장착
-                customized.SetParts(5, "Cleric_1.png");
-                customized.SetParts(6, "");
+                weapon = "Cleric_1.png";
+                customized.SetParts(5, weapon);
+                //customized.SetParts(6, "");
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
             case CharacterType.thief:
@@ -169,11 +167,12 @@ public class CharacterStat : MonoBehaviour
                 SetSliderBar();
                 SetCharacterExplanation();
                 SetSkillBoard(type);
-               // SetPlayerToJson();
+                // SetPlayerToJson();
 
                 //직업별 오른쪽손, 왼쪽 무기 장착
-                customized.SetParts(5, "Sword_1.png");
-                customized.SetParts(6, "Shield_1.png");
+                weapon = "Sword_1.png";
+                customized.SetParts(5, weapon);
+                //customized.SetParts(6, "Shield_1.png");
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
             case CharacterType.popstar:
@@ -186,8 +185,9 @@ public class CharacterStat : MonoBehaviour
                 //SetPlayerToJson();
 
                 //직업별 오른쪽손 무기 장착
-                customized.SetParts(5, "Pop_Star_Item.png");
-                customized.SetParts(6, "");
+                weapon = "Pop_Star_Item.png";
+                customized.SetParts(5, weapon);
+                //customized.SetParts(6, "");
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
             case CharacterType.chef:
@@ -200,8 +200,9 @@ public class CharacterStat : MonoBehaviour
                 //SetPlayerToJson();
 
                 //직업별 오른쪽손 무기 장착
-                customized.SetParts(5, "Chef_Item.png");
-                customized.SetParts(6, "");
+                weapon = "Chef_Item.png";
+                customized.SetParts(5, weapon);
+                //customized.SetParts(6, "");
                 if (!backAura.isPlaying) { backAura.Play(); }
                 break;
         }
@@ -211,18 +212,12 @@ public class CharacterStat : MonoBehaviour
     public void SetPlayerData()
     {
         characterData._name = jTokenplayer["_name"].Value<string>();
-        characterData.maxhp = jTokenplayer["hp"][0].Value<int>(); //maxHP
-        characterData.hp = jTokenplayer["hp"][1].Value<int>(); //hp
-        characterData.maxmp = jTokenplayer["mp"][0].Value<int>();
-        characterData.mp = jTokenplayer["mp"][1].Value<int>();
-        characterData.maxattack = jTokenplayer["attack"][0].Value<int>();
-        characterData.attack = jTokenplayer["attack"][1].Value<int>();
-        characterData.maxmagic = jTokenplayer["magic"][0].Value<int>();
-        characterData.maxmagic = jTokenplayer["magic"][1].Value<int>();
-        characterData.maxdefence = jTokenplayer["defence"][0].Value<int>();
-        characterData.defence = jTokenplayer["defence"][1].Value<int>();
-        characterData.maxspeed = jTokenplayer["speed"][0].Value<int>();
-        characterData.speed = jTokenplayer["speed"][1].Value<int>();
+        characterData.hp = jTokenplayer["hp"][0].Value<int>(); //hp
+        characterData.mp = jTokenplayer["mp"][0].Value<int>();
+        characterData.attack = jTokenplayer["attack"][0].Value<int>();
+        characterData.magic = jTokenplayer["magic"][0].Value<int>();
+        characterData.defence = jTokenplayer["defence"][0].Value<int>();
+        characterData.speed = jTokenplayer["speed"][0].Value<int>();
         characterData.skillname = jTokenplayer["skill"][0].Value<string>();
         characterData.skilldesc = jTokenplayer["skill"][1].Value<string>();
 
@@ -236,12 +231,12 @@ public class CharacterStat : MonoBehaviour
     private void SetSliderBar()
     {
         //스탯바_6가지 셋팅
-        hpSlider.value = (float)characterData.hp / characterData.maxhp;
-        mpSlider.value = (float)characterData.mp / characterData.maxmp;
-        attackSlider.value = (float)characterData.attack / characterData.maxattack;
-        magicSlider.value = (float)characterData.magic / characterData.maxmagic;
-        defenceSlider.value = (float)characterData.defence / characterData.maxdefence;
-        speedSlider.value = (float)characterData.speed / characterData.maxspeed;
+        hpSlider.value = (float)characterData.hp / 20;
+        mpSlider.value = (float)characterData.mp / 20;
+        attackSlider.value = (float)characterData.attack / 20;
+        magicSlider.value = (float)characterData.magic / 20;
+        defenceSlider.value = (float)characterData.defence / 20;
+        speedSlider.value = (float)characterData.speed / 20;
         //스탯바 숫자
         hptext.text = characterData.hp.ToString();
         mptext.text = characterData.mp.ToString();
@@ -279,18 +274,10 @@ public class CharacterStat : MonoBehaviour
 
     IEnumerator DelaySkillDesc()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.5f);
         skillBoard.alpha = 0;
 
     }
 
-    void SetPlayerToJson()
-    {
-        
-        //DataManager의 플레이어 파츠 내용을 합쳐서 저장하려고 했는데 실패... 나중에 수정
-        string player = JsonConvert.SerializeObject(jTokenplayer);
-        File.WriteAllText(Application.dataPath + "/Resources/Json/" + "/Player.json", player);
 
-        Debug.Log("플레이어 데이터 Json 저장");
-    }
 }
