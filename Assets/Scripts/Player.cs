@@ -21,9 +21,9 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
-
+        actions.Player.Enable();
         actions.Player.MoveOnlyAD.canceled += OnStopAD;
-        
+        actions.Player.Move.performed += OnMove;
     }
 
    
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
         actions.Player.Use.performed -= OnUse;
         //actions.Player.Move.canceled -= OnStop;
-        //actions.Player.Move.performed -= OnMove;
+        actions.Player.Move.performed -= OnMove;
         actions.Player.Disable();
     }
     private void OnMoveAD(InputAction.CallbackContext obj)
@@ -60,19 +60,19 @@ public class Player : MonoBehaviour
     }
 
 
-    //void OnMove(InputAction.CallbackContext context)
-    //{
-    //    Vector2 input = context.ReadValue<Vector2>();
+    void OnMove(InputAction.CallbackContext context)
+    {
+        Vector2 input = context.ReadValue<Vector2>();
 
-    //    inputDir.x = input.x;
-    //    inputDir.y = 0.0f;
-    //    inputDir.z = input.y;
-    //    inputDir.Normalize();
+        inputDir.x = input.x;
+        inputDir.y = 0.0f;
+        inputDir.z = input.y;
+        inputDir.Normalize();
 
-    //    anim.SetBool("isMove", true);
-    //    anim.SetFloat("inputX", inputDir.x);
-    //    anim.SetFloat("inputY", inputDir.y);
-    //}
+        anim.SetBool("isMove", true);
+        anim.SetFloat("inputX", inputDir.x);
+        anim.SetFloat("inputY", inputDir.y);
+    }
     //void OnStop(InputAction.CallbackContext context)
     //{
     //    Vector2 input = context.ReadValue<Vector2>();
