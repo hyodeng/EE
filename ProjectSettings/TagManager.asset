@@ -56,6 +56,12 @@ TagManager:
   - name: Foot
     uniqueID: 301219535
     locked: 0
+  - name: ClothFootR
+    uniqueID: 3954703823
+    locked: 0
+  - name: ClothFootL
+    uniqueID: 3233956325
+    locked: 0
   - name: ArmL
     uniqueID: 3600391605
     locked: 0
@@ -68,23 +74,17 @@ TagManager:
   - name: WeaponL
     uniqueID: 477967909
     locked: 0
-  - name: Head
-    uniqueID: 2766223789
+  - name: ClothBody
+    uniqueID: 2566080927
     locked: 0
   - name: ClothArmL
     uniqueID: 3707130769
     locked: 0
-  - name: ClothBody
-    uniqueID: 2566080927
+  - name: Head
+    uniqueID: 2766223789
     locked: 0
   - name: ClothArmR
     uniqueID: 2779867397
-    locked: 0
-  - name: ClothFootR
-    uniqueID: 3954703823
-    locked: 0
-  - name: ClothFootL
-    uniqueID: 3233956325
     locked: 0
   - name: Face
     uniqueID: 4244299969
