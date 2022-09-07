@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9082733f9a8db544943bc028db64e92, type: 3}
-  m_Name: 0_Shield1 9
+  m_Name: Shield6
   m_EditorClassIdentifier: 
   id: 0
-  itemName: "\uC544\uC774\uD15C"
+  itemName: Shield_6
   prefab: {fileID: 0}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 2daa1c4b6bf327b4c8fd2629b585806a, type: 3}
   maxStackCount: 1
   defense: 5
   hp: 10

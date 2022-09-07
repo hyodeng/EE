@@ -18,8 +18,11 @@ public class DataManager : MonoBehaviour
 
     string SAVE_DATA_DIRECTORY;
 
-    public string[] weapons = new string[3];
-    public string[] sheilds = new string[3];
+    public Sprite[] weapons = new Sprite[3];
+    public Sprite[] shields = new Sprite[3];
+    public uint weaponCount = 1;
+    public uint shieldCount = 0;
+    public uint EquipCount; 
 
 
     //캐릭터 커스터마이즈(착장) 정보
@@ -65,20 +68,24 @@ public class DataManager : MonoBehaviour
     {
         character0 = GameObject.Find("Character0");
 
+        if(character0 != null)
         customized[0] = character0.GetComponent<Customized>();
 
 
         characterStat = FindObjectOfType<CharacterStat>();
 
         SAVE_DATA_DIRECTORY = Application.dataPath + "/Resources/Json/";
-        Initailize();
+        Test();
 
     }
 
-    void Initailize()
+    void Test()
     {
-
+        weapons[1] = Resources.Load<Sprite>($"Character/Weapons/Sword_2");
+        Debug.Log(weapons[1].ToString());
     }
+
+
     public Sprite[] sprites = new Sprite[10];
 
 
@@ -200,15 +207,32 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    //5:오른쪽 무기, 6 : 왼손 무기
-    void ChangeWeapon()
+
+    //5:오른쪽 무기_웨폰, 6 : 왼손 무기_방어구
+    string weaponName;
+    string shieldName;
+
+    //랜덤 장비이미지 초기에 나옴
+    public void PopEquipmentImage()
     {
 
     }
 
-    void ChangeShield()
+    public void GainWeapon()
     {
+        //weapon : 리소스/웨폰 폴더 sword 6개 이미지 중 
+        int weaponIndex = Random.Range(0, 7);
+        weaponName = $"Sword_{weaponIndex}";
 
+        weapons[1]= Resources.Load<Sprite>($"Character/Weapons/Sword_2");
+
+    }
+
+    public void GainShield()
+    {
+        //shield : 리소스/실드 폴더 9개 이미지
+        int shieldIndex = Random.Range(0, 10);
+        shieldName = $"Shield_{shieldIndex}";
 
     }
 

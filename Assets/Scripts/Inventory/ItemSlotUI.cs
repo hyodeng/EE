@@ -15,11 +15,12 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
     protected ItemSlot itemSlot;
     InventoryUI invenUI;
     protected Image itemImage;
-    Inventory inven;
     protected TextMeshProUGUI countText;
+    Inventory inven;
+    PopUpMenu popUpMenu;
 
-    public System.Action OnOffPopup;
-
+    Image equipment;
+    string eName;
 
     public uint ID { get => id; }
     public ItemSlot ItemSlot { get => itemSlot; }
@@ -27,14 +28,24 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
     {
         itemImage = transform.GetChild(0).GetComponent<Image>();    // 아이템 표시용 이미지 컴포넌트 찾아놓기
         countText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        //popupMenu = FindObjectOfType<PopUpMenu>();
-        //popupMenu.gameObject.SetActive(false);
-        OnOffPopup?.Invoke();
+        
+        popUpMenu = FindObjectOfType<PopUpMenu>();
+        
+        equipment = GameObject.Find("Equipment").transform.Find("EquipImage").GetComponent<Image>();
+
     }
+
 
     private void Start()
     {
-        PopEquipmentImage();
+        inven = new Inventory();
+
+        string partner1 = File.ReadAllText(Application.dataPath + "/Resources/Json/" + $"/PlayerParts.json");
+        jobject = JObject.Parse(partner1);
+
+        //기존 장비 보여주기
+        eName= jobject["5"].ToString();
+        equipment.sprite = Resources.Load<Sprite>($"Character/Weapons/{eName.Replace(".png", "")}");
     }
 
 
@@ -46,6 +57,15 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
         itemSlot = targetSlot;
         itemSlot.onSlotItemChange = Refresh; 
     }
+
+    private void Update()
+    {
+        if (popUpMenu.isChange)
+        {
+            ChangeEqipment();
+        }
+    }
+
     public void Refresh()
     {
         if (itemSlot.SlotItemData != null)
@@ -64,8 +84,9 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    GameObject equipmentObj;
 
-    
+
     public void OnPointerClick(PointerEventData eventData)
     {
         // 마우스 왼쪽 버튼 클릭일 때
@@ -74,46 +95,45 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
             // 그냥 클릭한 상황
             if (!ItemSlot.IsEmpty())
             {
-                //팝업창 띄우기
-                OnOffPopup?.Invoke();
+                //1. 팝업창 : 기존장비 완전 삭제 새장비 사용할 지 Q
+                popUpMenu.OnOffSwitch();
 
-                //플레이어 무기가 바뀌는 함수
-                TestChange();
+                //2. save 버튼 누르면 장비 바뀜
+                equipmentObj = eventData.pointerCurrentRaycast.gameObject;
             }
         }
     }
 
-    string shieldName;
-    string weaponName;
-
-    //랜덤 장비이미지
-    public void PopEquipmentImage()
-    {
-        //shield : 리소스/실드 폴더 9개 이미지
-        int shieldIndex = Random.Range(0, 10);
-        shieldName = $"Shield_{shieldIndex}";
-
-        //weapon : 리소스/웨폰 폴더 sword 6개 이미지 중 
-        int weaponIndex = Random.Range(0, 7);
-        weaponName = $"Sword_{weaponIndex}";
-    }
-
     JObject jobject = new JObject();
-    JArray array = new JArray();
-    JToken jToken;
+    JObject equip = new JObject();
 
-    public void TestChange()
+    public void ChangeEqipment()
     {
-        string partner1 = File.ReadAllText(Application.dataPath + "/Resources/Json/" + $"/PlayerParts.json");
-        jobject = JObject.Parse(partner1);
+        Sprite temp = equipment.sprite;
+
+        if (equipmentObj != null)
+        {
+
+            Debug.Log(this.name);
+            //새 이미지 추가
+            equipment.sprite = equipmentObj.GetComponent<Image>().sprite;
+            uint tempNum = uint.Parse(equipmentObj.name.Substring(8));
+
+            //나중에 오류 확인 필요 : 슬롯UI 이미지만 사라지게
+            equipmentObj.GetComponentInParent<Image>().sprite = null;
+            popUpMenu.isChange = false;
+
+        }
 
 
-        jobject.Add("weapon", array);
+        jobject.Remove("5");
+        jobject.Add("5", $"{equipment.sprite.name}.png");
+
         string partner = JsonConvert.SerializeObject(jobject, Formatting.Indented);
         File.WriteAllText(Application.dataPath + "/Resources/Json/" + $"/PlayerParts.json", partner);
         /*{GameManager.Inst.partnerCount}*/
 
-        Debug.Log($"파트너_1번 장비 추가 ");
+        Debug.Log($"eqipment_{equipment.sprite.name}장비 추가 ");
     }
 
 }

@@ -197,7 +197,6 @@ public class LoadParts : MonoBehaviour
             temp[i] = new(R[i], G[i], B[i], A[i]);
             customs[2].parts[i].color = temp[i];
             Debug.Log(temp[i].ToString());
-
         }
 
         facecolor = partnerParts[2]["color0"].ToString();
@@ -225,7 +224,5 @@ public class LoadParts : MonoBehaviour
             customs[3].parts[i].color = temp[i];
             Debug.Log(customs[3].parts[i].color.ToString());
         }
-
-
     }
 }

@@ -106,10 +106,18 @@ public class Puzzle : MonoBehaviour
         }
         Debug.Log("우승");
 
+        //명진_동료 획득(게임매니저 동료인원수 증가)
+        GameManager.Inst.partnerCount++;
+
         Destroy(this.gameObject);
     
 
         gameClear.SetActive(true);
         //아마 여기서 보상을 주면 되지 않을까, 끝나면 명진씨랑 합쳐
+
     }
+
+
+
+
 }

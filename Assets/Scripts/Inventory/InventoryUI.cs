@@ -28,8 +28,8 @@ public class InventoryUI : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
         slotParent = transform.Find("ItemSlots");
         inputActions = new PlayerInputActions(); 
-        Button closeButton = transform.Find("CloseButton").GetComponent<Button>();
-        closeButton.onClick.AddListener(Close);
+        //Button closeButton = transform.Find("CloseButton").GetComponent<Button>();
+        //closeButton.onClick.AddListener(Close);
     }
     public void InitializeInventory(Inventory newInven)
     {
