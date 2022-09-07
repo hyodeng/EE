@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 270186410}
   - component: {fileID: 270186413}
   m_Layer: 5
-  m_Name: battle
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,9 +343,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1035849385}
-          m_TargetAssemblyTypeName: mainScManager, Assembly-CSharp
-          m_MethodName: pointEnter3
+        - m_Target: {fileID: 1035849386}
+          m_TargetAssemblyTypeName: All_About_Buttons, Assembly-CSharp
+          m_MethodName: Stage_Desert_Village
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -468,6 +468,7 @@ RectTransform:
   - {fileID: 270186409}
   - {fileID: 1448922635}
   - {fileID: 1047586571}
+  - {fileID: 1035849384}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -902,7 +903,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &638943200
 GameObject:
@@ -986,7 +987,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &640778929
 GameObject:
@@ -1078,8 +1079,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1035849384}
   - component: {fileID: 1035849385}
+  - component: {fileID: 1035849386}
   m_Layer: 0
-  m_Name: MainSceneManager
+  m_Name: MainSceneManager_FOR_2.5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1092,13 +1094,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1035849382}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 978.51074, y: 281.23154, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 18.510742, y: -258.76846, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 309780463}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1035849385
 MonoBehaviour:
@@ -1114,7 +1116,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigame: {fileID: 1448922634}
   cooking: {fileID: 1047586570}
-  battle: {fileID: 0}
+--- !u!114 &1035849386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035849382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea2b783c5481d3a479c332c0b9a55b88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SetMenu: {fileID: 0}
 --- !u!1 &1047586570
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster_Spawner : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     public GameObject[] Monsters;
+    public GameObject[] Players;
     
     
     void Start()

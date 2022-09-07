@@ -646,7 +646,7 @@ Animator:
   m_GameObject: {fileID: 4560319907066865480}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 800532bca26e8ec42abb1b7a1eef45a2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 20df03ab0e8b42640b294fb4b4a2992d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -668,18 +668,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a9abd02d7bd954da3806b3c6e3ff4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamagePrefab: {fileID: 0}
+  weaponType: Normal
   oriPos: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   anim: {fileID: 0}
   battle: {fileID: 0}
   state: 0
+  skillName: 
+  skillDesc: 
+  AOE: 0
+  skillDmg: 0
+  mhp: 0
   hp: 0
+  mmp: 0
   mp: 0
   attack: 0
   magic: 0
   defence: 0
   speed: 4
   BehaviorEnd: 0
+  Trigger: 0
+  isPlayer: 0
+  characterclass: 0
 --- !u!61 &4013064062065616654
 BoxCollider2D:
   m_ObjectHideFlags: 0

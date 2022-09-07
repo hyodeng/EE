@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Portal
+  - Stage_1.5_Bg_Prefab
+  - MainMenu
+  - Stage_Scene
+  - wall
   layers:
   - Default
   - TransparentFX

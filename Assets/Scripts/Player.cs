@@ -26,9 +26,11 @@ public class Player : MonoBehaviour
         actions.Player2.Move.canceled += OnStop;
         actions.Player2.Use.performed += OnUse;
         actions.Player2.Use.canceled += OffUse;
+        actions.Player.MoveOnlyAD.canceled += OnStopAD;
         
     }
 
+   
     private void OnDisable()
     {
         actions.Player2.Use.canceled -= OffUse;
@@ -36,40 +38,66 @@ public class Player : MonoBehaviour
         actions.Player2.Move.canceled -= OnStop;
         actions.Player2.Move.performed -= OnMove;
         actions.Player2.Disable();
+        actions.Player.Use.performed -= OnUse;
+        //actions.Player.Move.canceled -= OnStop;
+        //actions.Player.Move.performed -= OnMove;
+        actions.Player.Disable();
     }
-    void OnMove(InputAction.CallbackContext context)
+    private void OnMoveAD(InputAction.CallbackContext obj)
     {
-        Vector2 input = context.ReadValue<Vector2>();
+        Vector2 input = obj.ReadValue<Vector2>();
 
         inputDir.x = input.x;
         inputDir.y = 0.0f;
-        inputDir.z = input.y;
-        inputDir.Normalize();
+        inputDir.z = 0.0F;
+        
 
         anim.SetBool("isMove", true);
         anim.SetFloat("inputX", inputDir.x);
         anim.SetFloat("inputY", inputDir.y);
     }
-    void OnStop(InputAction.CallbackContext context)
+    private void OnStopAD(InputAction.CallbackContext obj)
     {
-        Vector2 input = context.ReadValue<Vector2>();
+        Vector2 input = obj.ReadValue<Vector2>();
 
         inputDir.x = input.x;
         inputDir.y = 0.0f;
-        inputDir.z = input.y;
-        inputDir.Normalize();
+        inputDir.z = 0.0f;
+       
         anim.SetBool("isMove", false);
     }
 
+
+    //void OnMove(InputAction.CallbackContext context)
+    //{
+    //    Vector2 input = context.ReadValue<Vector2>();
+
+    //    inputDir.x = input.x;
+    //    inputDir.y = 0.0f;
+    //    inputDir.z = input.y;
+    //    inputDir.Normalize();
+
+    //    anim.SetBool("isMove", true);
+    //    anim.SetFloat("inputX", inputDir.x);
+    //    anim.SetFloat("inputY", inputDir.y);
+    //}
+    //void OnStop(InputAction.CallbackContext context)
+    //{
+    //    Vector2 input = context.ReadValue<Vector2>();
+
+    //    inputDir.x = input.x;
+    //    inputDir.y = 0.0f;
+    //    inputDir.z = input.y;
+    //    inputDir.Normalize();
+    //    anim.SetBool("isMove", false);
+    //}
+
     void OnUse(InputAction.CallbackContext context)
     {
-        anim.SetBool("isUse", true);
+        anim.SetTrigger("isUse");
     }
 
-    void OffUse(InputAction.CallbackContext context)
-    {
-        anim.SetBool("isUse", false);
-    }
+    
     private void FixedUpdate()
     {
         rigid.MovePosition(rigid.position + MoveSpeed * Time.fixedDeltaTime * inputDir);

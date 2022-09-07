@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Aura_Next_Stage2 : MonoBehaviour
+public class Aura_Next_Stage3 : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Use"))
+        if (other.CompareTag("Player"))
         {
-            SceneManager.LoadScene("Stage_2");
+            SceneManager.LoadScene("Stage_3");
         }
     }
 }

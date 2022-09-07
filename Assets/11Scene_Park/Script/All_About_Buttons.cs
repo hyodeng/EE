@@ -8,6 +8,17 @@ public class All_About_Buttons : MonoBehaviour
 {
 
     public GameObject SetMenu;
+    public GameObject Mainscene;
+
+    public void Stage_Desert_Village()
+    {
+        SceneManager.LoadScene("Stage_1.5");
+    }
+
+    public void Stage_Castle_Village()
+    {
+        SceneManager.LoadScene("Stage_2.5");
+    }
     public void Stage_One()
     {
         SceneManager.LoadScene("Stage_1");           
@@ -39,6 +50,14 @@ public class All_About_Buttons : MonoBehaviour
         SetMenu.SetActive(false);
     }
 
+    public void MainSceneON()
+    {
+        Mainscene.SetActive(true);
+    }
+    public void MainSceneOff()
+    {
+        Mainscene.SetActive(false);
+    }
     public void GameExit()
     {
         Application.Quit();

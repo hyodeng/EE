@@ -7,7 +7,7 @@ public class mainScManager : MonoBehaviour
 {
     public GameObject minigame;
     public GameObject cooking;
-    public GameObject battle;
+    //public GameObject Village;
 
     public void pointEnter1()   //ui 버튼에 eventTrigger 추가해서 mouseEnter(마우스 커서 올렸을 때)
     {
@@ -29,15 +29,15 @@ public class mainScManager : MonoBehaviour
         cooking.gameObject.SetActive(false);
     }
 
-    public void pointEnter3()
-    {
-        battle.gameObject.SetActive(true);
-    }
+    //public void pointEnter3()
+    //{
+    //    Village.gameObject.SetActive(true);
+    //}
 
-    public void pointExit3()
-    {
-        battle.gameObject.SetActive(false);
-    }
+    //public void pointExit3()
+    //{
+    //    Village.gameObject.SetActive(false);
+    //}
 
     public void SceneChange()
     {
