@@ -48,6 +48,7 @@ public class ItemDataManager : MonoBehaviour
     {
         itemData = GetComponent<ItemDataManager>();
 
+        inventoryUI = FindObjectOfType<InventoryUI>();
         player = FindObjectOfType<Player>();
     }
     public ItemData[] itemDatas;

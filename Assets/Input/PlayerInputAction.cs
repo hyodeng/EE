@@ -72,6 +72,34 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Inven"",
+            ""id"": ""711b37bb-2a05-46de-9b77-619fe6bf76b0"",
+            ""actions"": [
+                {
+                    ""name"": ""OnOff"",
+                    ""type"": ""Button"",
+                    ""id"": ""236f8d32-bbbc-4119-bb31-33a2ff3eb5e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""900968bb-8675-4483-bef3-b2e76c45b2cc"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""New control scheme"",
+                    ""action"": ""OnOff"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -91,6 +119,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        // Inven
+        m_Inven = asset.FindActionMap("Inven", throwIfNotFound: true);
+        m_Inven_OnOff = m_Inven.FindAction("OnOff", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -179,6 +210,39 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Inven
+    private readonly InputActionMap m_Inven;
+    private IInvenActions m_InvenActionsCallbackInterface;
+    private readonly InputAction m_Inven_OnOff;
+    public struct InvenActions
+    {
+        private @PlayerInputAction m_Wrapper;
+        public InvenActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @OnOff => m_Wrapper.m_Inven_OnOff;
+        public InputActionMap Get() { return m_Wrapper.m_Inven; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InvenActions set) { return set.Get(); }
+        public void SetCallbacks(IInvenActions instance)
+        {
+            if (m_Wrapper.m_InvenActionsCallbackInterface != null)
+            {
+                @OnOff.started -= m_Wrapper.m_InvenActionsCallbackInterface.OnOnOff;
+                @OnOff.performed -= m_Wrapper.m_InvenActionsCallbackInterface.OnOnOff;
+                @OnOff.canceled -= m_Wrapper.m_InvenActionsCallbackInterface.OnOnOff;
+            }
+            m_Wrapper.m_InvenActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @OnOff.started += instance.OnOnOff;
+                @OnOff.performed += instance.OnOnOff;
+                @OnOff.canceled += instance.OnOnOff;
+            }
+        }
+    }
+    public InvenActions @Inven => new InvenActions(this);
     private int m_NewcontrolschemeSchemeIndex = -1;
     public InputControlScheme NewcontrolschemeScheme
     {
@@ -191,5 +255,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+    }
+    public interface IInvenActions
+    {
+        void OnOnOff(InputAction.CallbackContext context);
     }
 }

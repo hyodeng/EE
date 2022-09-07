@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9082733f9a8db544943bc028db64e92, type: 3}
+  m_Name: 2_Armor3
+  m_EditorClassIdentifier: 
+  id: 0
+  itemName: "\uC544\uC774\uD15C"
+  prefab: {fileID: 6075046095621329240, guid: 11e9516ec2219df4ab8530c768ea42c6, type: 3}
+  sprite: {fileID: 1589403714872849932, guid: 2a172d814d214a84298015915d225a88, type: 3}
+  maxStackCount: 1
+  defense: 5
+  hp: 10

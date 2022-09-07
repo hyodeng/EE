@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class InventoryUI : MonoBehaviour
@@ -17,13 +18,18 @@ public class InventoryUI : MonoBehaviour
 
     ItemSlotUI[] slotUIs;
 
-    Transform slotParent;
+    Transform slotParent; 
+
+    public System.Action OnInventoryOpen;
+    public System.Action OnInventoryClose;
     private void Awake()
     {
         // 미리 찾아놓기
         canvasGroup = GetComponent<CanvasGroup>();
         slotParent = transform.Find("ItemSlots");
-        inputActions = new PlayerInputActions();
+        inputActions = new PlayerInputActions(); 
+        Button closeButton = transform.Find("CloseButton").GetComponent<Button>();
+        closeButton.onClick.AddListener(Close);
     }
     public void InitializeInventory(Inventory newInven)
     {
@@ -57,9 +63,6 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-       
-      
-
         RefreshAllSlots();  // 전체 슬롯UI 갱신
     }
 
@@ -73,5 +76,29 @@ public class InventoryUI : MonoBehaviour
             slotUI.Refresh();
         }
     }
-
+    public void InventoryOnOffSwitch()
+    {
+        if (canvasGroup.blocksRaycasts)  // 캔버스 그룹의 blocksRaycasts를 기준으로 처리
+        {
+            Close();
+        }
+        else
+        {
+            Open();
+        }
+    }
+    void Open()
+    {
+        canvasGroup.alpha = 1;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+        OnInventoryOpen?.Invoke();
+    }
+    void Close()
+    {
+        canvasGroup.alpha = 0;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+        OnInventoryClose?.Invoke();
+    }
 }
