@@ -309,6 +309,8 @@ public class CharacterData : MonoBehaviour
     }
     public IEnumerator MageSkill()
     {
+        Transform obj = Instantiate(Resources.Load<Transform>("Prefabs/Particle/MageSkill"), Vector3.zero, Quaternion.Euler(-40f, 0, 0));
+        Destroy(obj.gameObject, 5f);    
         battle.targetCam = false;
         battle.Focusing = false;
         anim.Play($"5_Skill_Magic");
@@ -316,8 +318,6 @@ public class CharacterData : MonoBehaviour
         {
             if (Trigger)
             {
-                Transform obj = Instantiate(Resources.Load<Transform>("Prefabs/Particle/MageSkill"), Vector3.zero, Quaternion.identity);
-                Destroy(obj.gameObject, 5f);
                 for (int i = battle.charactersList.Count - 1; i >= 0; i--)
                 {
                     if (battle.charactersList[i].transform.parent.name.IndexOf("Monster") > -1)
@@ -342,7 +342,7 @@ public class CharacterData : MonoBehaviour
         anim.Play($"5_Skill_Magic");
         while (!BehaviorEnd)
         {
-            Transform obj = Instantiate(Resources.Load<Transform>("Prefabs/Particle/ClericSkill"), transform.position, Quaternion.identity);
+            Transform obj = Instantiate(Resources.Load<Transform>("Prefabs/Particle/ClericSkill"), transform.position, Quaternion.Euler(-40f, 0, 0));
             Destroy(obj.gameObject, 5f);
             if (Trigger)
             {

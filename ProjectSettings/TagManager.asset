@@ -9,6 +9,7 @@ TagManager:
   - MainMenu
   - Stage_Scene
   - wall
+  - Mob
   layers:
   - Default
   - TransparentFX
@@ -51,4 +52,49 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 2937260787
+    locked: 0
+  - name: Foot
+    uniqueID: 301219535
+    locked: 0
+  - name: ArmL
+    uniqueID: 3600391605
+    locked: 0
+  - name: Body
+    uniqueID: 413196879
+    locked: 0
+  - name: ArmR
+    uniqueID: 999668379
+    locked: 0
+  - name: WeaponL
+    uniqueID: 477967909
+    locked: 0
+  - name: Head
+    uniqueID: 2766223789
+    locked: 0
+  - name: ClothArmL
+    uniqueID: 3707130769
+    locked: 0
+  - name: ClothBody
+    uniqueID: 2566080927
+    locked: 0
+  - name: ClothArmR
+    uniqueID: 2779867397
+    locked: 0
+  - name: ClothFootR
+    uniqueID: 3954703823
+    locked: 0
+  - name: ClothFootL
+    uniqueID: 3233956325
+    locked: 0
+  - name: Face
+    uniqueID: 4244299969
+    locked: 0
+  - name: Hair
+    uniqueID: 3026074463
+    locked: 0
+  - name: Beard
+    uniqueID: 2707257841
+    locked: 0
+  - name: WeaponR
+    uniqueID: 2172162383
     locked: 0

@@ -209,7 +209,7 @@ public class PopupController : MonoBehaviour
             else if (nextButton.name == "NextButton_2")
             {
 
-                SceneManager.LoadScene("Stage_Scene");
+                SceneManager.LoadScene("Stage_Scene 1");
             }
             else
             {
