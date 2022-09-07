@@ -18,8 +18,11 @@ public class DataManager : MonoBehaviour
 
     string SAVE_DATA_DIRECTORY;
 
-    public string[] weapons = new string[3];
-    public string[] sheilds = new string[3];
+    public Sprite[] weapons = new Sprite[3];
+    public Sprite[] shields = new Sprite[3];
+    public uint weaponCount = 1;
+    public uint shieldCount = 0;
+    public uint EquipCount; 
 
 
     //캐릭터 커스터마이즈(착장) 정보
@@ -65,23 +68,26 @@ public class DataManager : MonoBehaviour
     {
         character0 = GameObject.Find("Character0");
 
+        if(character0 != null)
         customized[0] = character0.GetComponent<Customized>();
 
 
         characterStat = FindObjectOfType<CharacterStat>();
 
         SAVE_DATA_DIRECTORY = Application.dataPath + "/Resources/Json/";
-        Initailize();
+        Test();
 
     }
 
-    void Initailize()
+    void Test()
     {
-
+        weapons[1] = Resources.Load<Sprite>($"Character/Weapons/Sword_2");
+        Debug.Log(weapons[1].ToString());
     }
+
+
     public Sprite[] sprites = new Sprite[10];
 
-    JArray array = new JArray();
 
     //플레이어 파츠를 PlayerParts.json 에 저장
     public void SavePlayerParts()
@@ -89,23 +95,26 @@ public class DataManager : MonoBehaviour
 
         characterStat = FindObjectOfType<CharacterStat>();
 
-        //파츠 이미지
-        for (int i = 0; i < customized[0].parts.Length; i++)
-        {
-           parts.Add($"{i}", GameManager.Inst.partsName[i]);
-        }
+        // 0: 얼굴, 1: 헤어, 2: 수염, 3: 아머, 4: 바지, 5:오른쪽 무기, 6 : 왼손 무기
 
-        //색상
+
+        //파츠 0~2번, 색상
         for (int i = 0; i < 3; i++)
         {
+            parts.Add($"{i}", GameManager.Inst.partsName[i]);
             parts.Add($"color{i}", GameManager.Inst.partsColor[i, 0].ToString());
             Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
         }
 
-        weapons[0] = characterStat.weapon;
-        array.Add(weapons[0]);
+        parts.Add($"{3}", GameManager.Inst.partsName[3]);
+        parts.Add($"{4}", GameManager.Inst.partsName[6]);
+        parts.Add($"{5}", GameManager.Inst.partsName[8]);
+        parts.Add($"{6}", GameManager.Inst.partsName[9]);
 
-        parts.Add(array);
+        //플레이어 무기 : 0번
+        //weapons[0] = characterStat.weapon;
+        //array.Add(weapons[0]);
+        parts.Add("weapon0", characterStat.weapon);
 
         //저장
         string jsonPlayerParts = JsonConvert.SerializeObject(parts, Formatting.Indented);
@@ -144,18 +153,18 @@ public class DataManager : MonoBehaviour
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
             Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
 
-        for (int i = 0; i < customized[1].parts.Length; i++)
-        {
-            //이미지
-            partnerParts.Add($"{i}", GameManager.Inst.partsName[i]);
-        }
-
-        //색상
+        //파츠 0~2번, 색상
         for (int i = 0; i < 3; i++)
         {
+            partnerParts.Add($"{i}", GameManager.Inst.partsName[i]);
             partnerParts.Add($"color{i}", GameManager.Inst.partsColor[i, 0].ToString());
             Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
         }
+
+        partnerParts.Add($"{3}", GameManager.Inst.partsName[3]);
+        partnerParts.Add($"{4}", GameManager.Inst.partsName[6]);
+        partnerParts.Add($"{5}", GameManager.Inst.partsName[8]);
+        partnerParts.Add($"{6}", GameManager.Inst.partsName[9]);
 
         string partnersParts = JsonConvert.SerializeObject(partnerParts, Formatting.Indented);
         File.WriteAllText(SAVE_DATA_DIRECTORY + $"/PartnerParts_{GameManager.Inst.partnerCount}.json", partnersParts);
@@ -198,15 +207,32 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    //5:오른쪽 무기, 6 : 왼손 무기
-    void ChangeWeapon()
+
+    //5:오른쪽 무기_웨폰, 6 : 왼손 무기_방어구
+    string weaponName;
+    string shieldName;
+
+    //랜덤 장비이미지 초기에 나옴
+    public void PopEquipmentImage()
     {
 
     }
 
-    void ChangeShield()
+    public void GainWeapon()
     {
+        //weapon : 리소스/웨폰 폴더 sword 6개 이미지 중 
+        int weaponIndex = Random.Range(0, 7);
+        weaponName = $"Sword_{weaponIndex}";
 
+        weapons[1]= Resources.Load<Sprite>($"Character/Weapons/Sword_2");
+
+    }
+
+    public void GainShield()
+    {
+        //shield : 리소스/실드 폴더 9개 이미지
+        int shieldIndex = Random.Range(0, 10);
+        shieldName = $"Shield_{shieldIndex}";
 
     }
 

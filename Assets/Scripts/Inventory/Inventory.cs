@@ -126,7 +126,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            //Debug.Log($"실패 : 잘못된 인덱스입니다.");
+            Debug.Log($"실패 : 잘못된 인덱스입니다.");
         }
 
         return result;

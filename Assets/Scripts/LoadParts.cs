@@ -134,6 +134,7 @@ public class LoadParts : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     //void LoadPartnerParts()
     //{
     //    for (int j = 0; j < 3; j++)
@@ -147,6 +148,21 @@ public class LoadParts : MonoBehaviour
     //            }
     //        }
     //    }
+=======
+    void LoadPartnerParts()
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                name[i] = partnerParts[j][$"{i}"].ToString();
+                if (name[i] != "")
+                {
+                    customs[j+1].SetParts(i, name[i]);
+                }
+            }
+        }
+>>>>>>> 220907_Test
 
     //    //face, hair, beard »ö»ó
     //    facecolor = partnerParts[0]["color0"].ToString();
@@ -193,6 +209,7 @@ public class LoadParts : MonoBehaviour
     //    float.TryParse(beardcolor.Substring(19, 5), out B[2]);
     //    float.TryParse(beardcolor.Substring(26, 5), out A[2]);
 
+<<<<<<< HEAD
     //    for (int i = 0; i < 3; i++)
     //    {
     //        temp[i] = new(R[i], G[i], B[i], A[i]);
@@ -200,6 +217,14 @@ public class LoadParts : MonoBehaviour
     //        Debug.Log(temp[i].ToString());
 
     //    }
+=======
+        for (int i = 0; i < 3; i++)
+        {
+            temp[i] = new(R[i], G[i], B[i], A[i]);
+            customs[2].parts[i].color = temp[i];
+            Debug.Log(temp[i].ToString());
+        }
+>>>>>>> 220907_Test
 
     //    facecolor = partnerParts[2]["color0"].ToString();
     //    haircolor = partnerParts[2]["color1"].ToString();
@@ -220,6 +245,7 @@ public class LoadParts : MonoBehaviour
     //    float.TryParse(beardcolor.Substring(19, 5), out B[2]);
     //    float.TryParse(beardcolor.Substring(26, 5), out A[2]);
 
+<<<<<<< HEAD
     //    for (int i = 0; i < 3; i++)
     //    {
     //        temp[i] = new(R[i], G[i], B[i], A[i]);
@@ -229,4 +255,13 @@ public class LoadParts : MonoBehaviour
 
 
     //}
+=======
+        for (int i = 0; i < 3; i++)
+        {
+            temp[i] = new(R[i], G[i], B[i], A[i]);
+            customs[3].parts[i].color = temp[i];
+            Debug.Log(customs[3].parts[i].color.ToString());
+        }
+    }
+>>>>>>> 220907_Test
 }

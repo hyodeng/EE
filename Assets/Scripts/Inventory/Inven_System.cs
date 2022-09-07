@@ -17,8 +17,16 @@ public class Inven_System : MonoBehaviour
         Inventory inven = new Inventory();
         InventoryUI invenUI = FindObjectOfType<InventoryUI>();
         invenUI.InitializeInventory(inven);
-        inven.AddItem(ItemCode.Weapon,0);
+
+        //¿Œµ¶Ω∫ 
+        inven.AddItem(ItemCode.Weapon, 0);
+        inven.AddItem(ItemCode.Weapon, 1);
+        
+        inven.AddItem(ItemCode.Weapon, 2);
+        inven.AddItem(ItemCode.Armor, 3);
         inven.PrintInventory();
+        //inven.RemoveItem(3);
+        //inven.PrintInventory();
     }
     private void OnEnable()
     {

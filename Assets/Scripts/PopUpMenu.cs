@@ -9,6 +9,7 @@ public class PopUpMenu : MonoBehaviour
     Button saveButton;
     Button cancelButton;
     ItemSlotUI itemSlotUI;
+    public bool isChange = false;
 
     private void Awake()
     {
@@ -22,7 +23,6 @@ public class PopUpMenu : MonoBehaviour
         gameObject.SetActive(false);
         saveButton.onClick.AddListener(OnSaveButton);
         cancelButton.onClick.AddListener(OnCancelButton);
-        itemSlotUI.OnOffPopup += OnOffSwitch;
     }
 
 
@@ -50,7 +50,7 @@ public class PopUpMenu : MonoBehaviour
 
     void OnSaveButton() 
     {
-        //저장 함수는 ItemSlotUI로 
+        isChange = true;
         gameObject.SetActive(false);
     }
 

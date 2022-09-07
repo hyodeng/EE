@@ -51,7 +51,6 @@ public class Players : MonoBehaviour
         {
             animator.SetBool("Run", false);
         }
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -61,6 +60,10 @@ public class Players : MonoBehaviour
             Destroy(this.gameObject);
             float Tamp = Timer.GetComponent<Score>().Timecurrent;
             gameover.GetComponent<Text>().text = $"Game Over \n 최종 점수:{Tamp}";
+
+            //명진 _방어구 획득
+            DataManager.Instance.GainShield();
+
             gameover.SetActive(true);
             Background.SetActive(true);
             MainButton.SetActive(true);
@@ -71,4 +74,7 @@ public class Players : MonoBehaviour
         }
     }
 
+
+
 }
+
