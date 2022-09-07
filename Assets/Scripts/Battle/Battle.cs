@@ -6,6 +6,9 @@ using TMPro;
 
 public class Battle : MonoBehaviour
 {
+    public GameObject stage1;
+    public GameObject stage2;
+    public GameObject stage3;
     public GameObject Goblin, Piend, Golem, Darkload;
     public GameObject pepperBox;
     public TextMeshProUGUI hpp, mpp, resp;
@@ -134,6 +137,25 @@ public class Battle : MonoBehaviour
         {
             GameObject.Find("UserParty").transform.Find($"Character{i}").gameObject.SetActive(GameManager.Inst.userPartyCheck[i]);
         }
+        switch(GameManager.Inst.Stage)
+        {
+            case 1:
+                stage1.SetActive(true);
+                stage2.SetActive(false);
+                stage3.SetActive(false);
+                break;
+            case 2:
+                stage1.SetActive(false);
+                stage2.SetActive(true);
+                stage3.SetActive(false);
+                break;
+            case 3:
+                stage1.SetActive(false);
+                stage2.SetActive(false);
+                stage3.SetActive(true);
+                break;
+        }
+        
     }
     private void Start()
     {
@@ -231,6 +253,7 @@ public class Battle : MonoBehaviour
         if (vic)
         {
             Debug.Log("ÀüÅõ ½Â¸®");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Stage_Scene 1");
         }
         else
         {

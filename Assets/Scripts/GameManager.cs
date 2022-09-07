@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     'asd': [null, false, true]
     }";
 
+    public bool[] SceneUnlocked = new bool[3];
+    public int Stage = 1;
     public CharacterType[] dataClass;
     public int[] dataHP, dataMP, dataAttack, dataMagic, dataDefence, dataSpeed;
     public string[] dataSkillName, dataSkillDesc;
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
     public bool[] userPartyCheck = new bool[4];
     private void Awake()
     {
+        Screen.SetResolution(1920, 1080, true);
         dataClass = new CharacterType[4];
 
         dataHP = new int[4];
@@ -68,6 +71,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        SceneUnlocked[0] = true;
         Initialize();
     }
     private void Initialize()

@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Test_Start_Scene.unity
+    guid: d76c5474a93e93344ac0a0341366f62d
+  - enabled: 1
     path: Assets/Scenes/MiniGame/MiniGameMain.unity
     guid: c5ad0a7d960b5b9449146a609003ed04
   - enabled: 1
@@ -59,9 +62,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test_Monster_Scene.unity
     guid: 1c723261555a6074a846df22a27f8804
-  - enabled: 1
-    path: Assets/Scenes/Test_Start_Scene.unity
-    guid: d76c5474a93e93344ac0a0341366f62d
   - enabled: 1
     path: Assets/11Scene_Park/Scene/Stage_1.5.unity
     guid: 99c9720ab356a0642a771bea13969a05
