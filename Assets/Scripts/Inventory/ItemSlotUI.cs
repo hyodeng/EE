@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using TMPro;
 
 
@@ -41,14 +40,13 @@ public class ItemSlotUI : MonoBehaviour, IPointerClickHandler
             itemImage.sprite = itemSlot.SlotItemData.sprite;  // 아이콘 이미지 설정하고
             itemImage.color = Color.white;  // 불투명하게 만들기
             countText.text = itemSlot.ItemCount.ToString();
-
-
         }
         else
         {
             // 이 슬롯에 아이템이 없을 때
             itemImage.sprite = null;        // 아이콘 이미지 제거하고
             itemImage.color = Color.clear;  // 투명하게 만들기
+            countText.text = "";
         }
     }
     public void OnPointerClick(PointerEventData eventData)
