@@ -834,18 +834,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a9abd02d7bd954da3806b3c6e3ff4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamagePrefab: {fileID: 0}
+  weaponType: Normal
   oriPos: {x: 0, y: 0, z: 0}
-  moveSpeed: 5
+  moveSpeed: 10
   anim: {fileID: 0}
   battle: {fileID: 0}
   state: 0
+  skillName: 
+  skillDesc: 
+  AOE: 0
+  skillDmg: 0
+  mhp: 0
   hp: 0
+  mmp: 1
   mp: 0
   attack: 0
   magic: 0
   defence: 0
   speed: 4
   BehaviorEnd: 0
+  Trigger: 0
+  isPlayer: 0
+  characterclass: 0
 --- !u!61 &85269889570508910
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -885,8 +896,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parts: []
-  imageIndex: 
-  tempImageName: []
 --- !u!1 &85269889676163532
 GameObject:
   m_ObjectHideFlags: 0

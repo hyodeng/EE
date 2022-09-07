@@ -30,18 +30,21 @@ public class Customized : MonoBehaviour
                 GameManager.Inst.partsColor[i, index] = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 parts[0].color = GameManager.Inst.partsColor[i, index];
                 GameManager.Inst.temp[i, index] = parts[i].sprite;
+                GameManager.Inst.partsName[0] = _name;
                 break;
             case 1:
                 parts[1].sprite = MakeSprite(Directory.GetFiles(Application.streamingAssetsPath + "/Character/Hair", _name)[0]);
                 GameManager.Inst.partsColor[i, index] = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 parts[1].color = GameManager.Inst.partsColor[i, index];
                 GameManager.Inst.temp[i, index] = parts[i].sprite;
+                GameManager.Inst.partsName[1] = _name;
                 break;
             case 2:
                 parts[2].sprite = MakeSprite(Directory.GetFiles(Application.streamingAssetsPath + "/Character/Beard", _name)[0]);
                 GameManager.Inst.partsColor[i, index] = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
                 parts[2].color = GameManager.Inst.partsColor[i, index];
                 GameManager.Inst.temp[i, index] = parts[i].sprite;
+                GameManager.Inst.partsName[2] = _name;
                 break;
             case 3:
                 for (int j = 0; j < Resources.LoadAll<Sprite>($"Character/Armor/{_name.Replace(".png", "")}").Length; j++)
@@ -49,6 +52,7 @@ public class Customized : MonoBehaviour
                     parts[j + 3].sprite = Resources.LoadAll<Sprite>($"Character/Armor/{_name.Replace(".png", "")}")[j];
                     GameManager.Inst.temp[j + 3, index] = parts[j + 3].sprite;
                     GameManager.Inst.temp[j+3,  index] = parts[j+3].sprite;
+                    GameManager.Inst.partsName[j + 3] = _name;
                 }
                 break;
             case 4:
@@ -57,19 +61,22 @@ public class Customized : MonoBehaviour
                     parts[j + 6].sprite = Resources.LoadAll<Sprite>($"Character/Pant/{_name.Replace(".png", "")}")[j];
                     GameManager.Inst.temp[j + 6, index] = parts[j + 6].sprite;
                     GameManager.Inst.temp[j + 6, index] = parts[j + 6].sprite;
+                    GameManager.Inst.partsName[j+6] = _name;
+
                 }
                 break;
             case 5:
                 parts[8].sprite = Resources.Load<Sprite>($"Character/Weapons/{_name.Replace(".png", "")}");
                 GameManager.Inst.temp[i, index] = parts[i].sprite;
+                GameManager.Inst.partsName[8] = _name;
                 break;
             case 6:
                 parts[9].sprite = Resources.Load<Sprite>($"Character/Weapons/{_name.Replace(".png", "")}");
                 GameManager.Inst.temp[i, index] = parts[i].sprite;
+                GameManager.Inst.partsName[9] = _name;
                 break;
         }
         GameManager.Inst.temp[i, index] = parts[i].sprite;
-        GameManager.Inst.partsName[i] = _name;
     }
 
     public Sprite MakeSprite(string filePath)

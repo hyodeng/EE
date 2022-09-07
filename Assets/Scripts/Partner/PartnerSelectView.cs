@@ -27,19 +27,24 @@ public class PartnerSelectView : MonoBehaviour
     TextMeshProUGUI partnerName1;
     TextMeshProUGUI skillName1;
     TextMeshProUGUI PartnerExplanation1;
+    Image skillImage1;
 
     TextMeshProUGUI partnerName2;
     TextMeshProUGUI skillName2;
     TextMeshProUGUI PartnerExplanation2;
+    Image skillImage2;
 
     TextMeshProUGUI partnerName3;
     TextMeshProUGUI skillName3;
     TextMeshProUGUI PartnerExplanation3;
+    Image skillImage3;
 
     //Json 저장용 
     SavePlayerData characterData = new SavePlayerData();
     public JObject jsonAllpartner;
     public JToken jTokenPartner;
+
+    bool isStart = false;
 
     public System.Action onPartnerSelectBoard;
     public System.Action offPartnerSelectBoard;
@@ -71,6 +76,10 @@ public class PartnerSelectView : MonoBehaviour
         skillName3 = selectboard.transform.Find("Partner3").GetChild(2).GetComponent<TextMeshProUGUI>();
         PartnerExplanation3 = selectboard.transform.Find("Partner3").GetChild(3).GetComponent<TextMeshProUGUI>();
 
+
+        skillImage1 = selectboard.transform.Find("Partner1").Find("SkillImage").GetComponent<Image>();
+        skillImage2 = selectboard.transform.Find("Partner2").Find("SkillImage").GetComponent<Image>();
+        skillImage3 = selectboard.transform.Find("Partner3").Find("SkillImage").GetComponent<Image>();
         popupController = GameObject.Find("PopupNextSceneController").GetComponent<PopupController>();
 
     }
@@ -117,8 +126,11 @@ public class PartnerSelectView : MonoBehaviour
 
     private void DataSetUp(CharacterType type)
     {
-        partnerboard.onPartnerSelectBoardOpen?.Invoke();
+        GameManager.Inst.partnerCount = 1;
 
+        customized.GetComponent<CharacterData>().characterClass = type;
+        partnerboard.onPartnerSelectBoardOpen?.Invoke();
+        isStart = true;
 
         switch (type)
         {
@@ -172,7 +184,7 @@ public class PartnerSelectView : MonoBehaviour
     private void SetPartnerParts()
     {
         //테스트용
-        GameManager.Inst.partnerCount = 3;
+        //GameManager.Inst.partnerCount = 1;
 
         for (int i = 0; i < 6; i++)
         {
@@ -188,12 +200,15 @@ public class PartnerSelectView : MonoBehaviour
 
     void RefreshPartnerExp(CharacterType type)
     {
-        if (GameManager.Inst.partnerCount == 1)
+         string name = $"Skill_{(int)type}";
+
+        if (GameManager.Inst.partnerCount == 0 || GameManager.Inst.partnerCount == 1)
         {
             onPartnerSelectBoard?.Invoke();
             partnerName1.text = characterData._name;
             skillName1.text = characterData.skillname;
             PartnerExplanation1.text = characterData.skilldesc;
+            skillImage1.sprite = Resources.Load<Sprite>($"Character/Skill/{name.Replace(".png", "")}");
         }
         else if (GameManager.Inst.partnerCount == 2)
         {
@@ -202,6 +217,7 @@ public class PartnerSelectView : MonoBehaviour
             partnerName2.text = characterData._name;
             skillName2.text = characterData.skillname;
             PartnerExplanation2.text = characterData.skilldesc;
+            skillImage2.sprite = Resources.Load<Sprite>($"Character/Skill/{name.Replace(".png", "")}");
         }
         else if (GameManager.Inst.partnerCount == 3)
         {
@@ -210,6 +226,7 @@ public class PartnerSelectView : MonoBehaviour
             partnerName3.text = characterData._name;
             skillName3.text = characterData.skillname;
             PartnerExplanation3.text = characterData.skilldesc;
+            skillImage3.sprite = Resources.Load<Sprite>($"Character/Skill/{name.Replace(".png", "")}");
         }
         else
         {
@@ -222,7 +239,17 @@ public class PartnerSelectView : MonoBehaviour
     {
         DataManager.Instance.LoadPartnerData();
 
-        if(GameManager.Inst.partnerCount == 2)
+        if(GameManager.Inst.partnerCount == 1)
+        {
+            if (isStart)
+            {
+                partnerName1.text = DataManager.Instance.jPartner1["_name"].Value<string>();
+                skillName1.text = DataManager.Instance.jPartner1["skill"][0].Value<string>();
+                PartnerExplanation1.text = DataManager.Instance.jPartner1["skill"][1].Value<string>();
+            }
+
+        }
+        else if (GameManager.Inst.partnerCount == 2)
         {
             partnerName1.text = DataManager.Instance.jPartner1["_name"].Value<string>();
             skillName1.text = DataManager.Instance.jPartner1["skill"][0].Value<string>();

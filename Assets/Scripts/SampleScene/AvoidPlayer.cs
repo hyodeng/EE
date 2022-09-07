@@ -15,8 +15,9 @@ public class AvoidPlayer : MonoBehaviour
     public GameObject Mobspoan = null;
     public GameObject Timer = null;
     public GameObject MainButton = null;
-    
-    
+    public GameObject Background = null;
+
+
 
 
     // Start is called before the first frame update
@@ -63,7 +64,8 @@ public class AvoidPlayer : MonoBehaviour
             gameover.SetActive(true);
             MainButton.SetActive(true);
             Mobspoan.SetActive(false);
-            
+            Background.SetActive(true);
+
             Timer.SetActive(false);
         }
     }

@@ -61,15 +61,7 @@ public class PartnerSelectBoard : MonoBehaviour
         if (this.gameObject.activeSelf == false)
             this.gameObject.SetActive(true);
 
-        if (GameManager.Inst.partnerCount == 0)
-        {
-            partner1.SetActive(true);
-            partner2.SetActive(false);
-            partner3.SetActive(false);
-            OffCheck();
-
-        }
-        else if (GameManager.Inst.partnerCount == 1)
+        if (GameManager.Inst.partnerCount == 0 || GameManager.Inst.partnerCount == 1)
         {
             partner1.SetActive(true);
             partner2.SetActive(false);
@@ -83,7 +75,6 @@ public class PartnerSelectBoard : MonoBehaviour
             partner2.SetActive(true);
             partner3.SetActive(false);
             OffCheck();
-
 
         }
         else if (GameManager.Inst.partnerCount == 3)
@@ -126,7 +117,7 @@ public class PartnerSelectBoard : MonoBehaviour
         }
         else if(GameManager.Inst.partnerCount == 3)
         {
-            partner2.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.white;
+            partner3.transform.Find("Check").gameObject.GetComponent<Image>().color = Color.white;
 
         }
     }

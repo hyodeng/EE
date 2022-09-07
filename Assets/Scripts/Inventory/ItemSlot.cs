@@ -65,7 +65,7 @@ public class ItemSlot : MonoBehaviour
         if (newCount < 1)   // 최종적으로 갯수가 0이되면 완전 비우기
         {
             // 다 뺀다.
-            //ClearSlotItem();
+            ClearSlotItem();
         }
         else
         {
@@ -90,5 +90,10 @@ public class ItemSlot : MonoBehaviour
     public bool IsEmpty()
     {
         return slotItemData == null;
+    }
+    public void ClearSlotItem()
+    {
+        SlotItemData = null;
+        ItemCount = 0;
     }
 }

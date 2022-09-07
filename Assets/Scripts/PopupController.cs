@@ -140,7 +140,6 @@ public class PopupController : MonoBehaviour
         if (questionPop.name == "QuestionPop_0")
         {
             //플레이어 파츠 저장
-            DataManager.Instance.SavePlayerParts();
             OnOffSwitch();
             isNextScene = true;
         }
@@ -150,6 +149,7 @@ public class PopupController : MonoBehaviour
             isReadySave = true;
             if (isReadySave)
             {
+                DataManager.Instance.SavePlayerParts();
                 DataManager.Instance.SetPlayerToJson();
             }
             OnOffSwitch();
@@ -158,11 +158,12 @@ public class PopupController : MonoBehaviour
         }
         else if (questionPop.name == "QuestionPop_2")
         {
-            //파트너 데이터 저장
+            //파트너 데이터와 파츠 저장
             isReadySave = true;
             if (isReadySave)
             {
                 DataManager.Instance.SetPartnerToJson();
+                DataManager.Instance.SavePartnerParts();
             }
             
             OnPartnerCount?.Invoke();

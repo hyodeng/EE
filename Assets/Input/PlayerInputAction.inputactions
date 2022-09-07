@@ -11,7 +11,8 @@
                     "id": "1405e35b-2e36-4b5c-a761-d303a7bc6fb8",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -47,6 +48,34 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Inven",
+            "id": "711b37bb-2a05-46de-9b77-619fe6bf76b0",
+            "actions": [
+                {
+                    "name": "OnOff",
+                    "type": "Button",
+                    "id": "236f8d32-bbbc-4119-bb31-33a2ff3eb5e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "900968bb-8675-4483-bef3-b2e76c45b2cc",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "New control scheme",
+                    "action": "OnOff",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
