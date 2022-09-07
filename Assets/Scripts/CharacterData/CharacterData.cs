@@ -292,6 +292,8 @@ public class CharacterData : MonoBehaviour
                 {
                     if (battle.charactersList[i].transform.parent.name.IndexOf("Monster") > -1)
                     {
+                        Transform obj = Instantiate(Resources.Load<Transform>("Prefabs/Particle/WarriorSkill"), battle.charactersList[i].transform.position, Quaternion.identity);
+                        Destroy(obj.gameObject, 4f);
                         battle.target = battle.charactersList[i];
                         TakeDamage(CalcDmg(skillDmg, skillDmg < 0));
                     }
@@ -314,6 +316,8 @@ public class CharacterData : MonoBehaviour
         {
             if (Trigger)
             {
+                Transform obj = Instantiate(Resources.Load<Transform>("Prefabs/Particle/MageSkill"), Vector3.zero, Quaternion.identity);
+                Destroy(obj.gameObject, 5f);
                 for (int i = battle.charactersList.Count - 1; i >= 0; i--)
                 {
                     if (battle.charactersList[i].transform.parent.name.IndexOf("Monster") > -1)
@@ -338,11 +342,12 @@ public class CharacterData : MonoBehaviour
         anim.Play($"5_Skill_Magic");
         while (!BehaviorEnd)
         {
+            Transform obj = Instantiate(Resources.Load<Transform>("Prefabs/Particle/ClericSkill"), transform.position, Quaternion.identity);
+            Destroy(obj.gameObject, 5f);
             if (Trigger)
             {
                 for (int i = battle.charactersList.Count - 1; i >= 0; i--)
                 {
-                    Debug.Log(i);
                     if (battle.charactersList[i].transform.parent.name.IndexOf("User") > -1)
                     {
                         battle.target = battle.charactersList[i];
@@ -390,6 +395,8 @@ public class CharacterData : MonoBehaviour
                     Trigger = false;
                     break;
                 }
+                Transform obj = Instantiate(Resources.Load<Transform>("Prefabs/Particle/WarriorSkill"), battle.target.transform.position, Quaternion.identity);
+                Destroy(obj.gameObject, 5f);
                 TakeDamage(CalcDmg(skillDmg, skillDmg < 0));
                 i++;
                 yield return new WaitForSeconds(0.1f);
@@ -419,6 +426,8 @@ public class CharacterData : MonoBehaviour
         {
             if (Trigger)
             {
+                Transform obj = Instantiate(Resources.Load<Transform>("Prefabs/Particle/MageSkill"), Vector3.zero, Quaternion.identity);
+                Destroy(obj.gameObject, 5f);
                 for (int i = battle.charactersList.Count - 1; i >= 0; i--)
                 {
                     battle.target = battle.charactersList[i];
@@ -440,11 +449,7 @@ public class CharacterData : MonoBehaviour
             List<CharacterData> list = new();
             for (int j = 0; j < battle.charactersList.Count; j++)
             {
-                if (transform.parent.name.IndexOf("User") > -1 && battle.charactersList[j].name.IndexOf("Monster") > -1)
-                {
-                    list.Add(battle.charactersList[j]);
-                }
-                else if (transform.parent.name.IndexOf("Monsters") > -1 && battle.charactersList[j].name.IndexOf("Character") > -1)
+                if (battle.charactersList[j].name.IndexOf("Monster") > -1)
                 {
                     list.Add(battle.charactersList[j]);
                 }
@@ -458,6 +463,8 @@ public class CharacterData : MonoBehaviour
         {
             if (Trigger)
             {
+                Transform obj = Instantiate(Resources.Load<Transform>("Prefabs/Particle/ChefSkill"), battle.target.transform.position, Quaternion.identity);
+                Destroy(obj.gameObject, 5f);
                 TakeDamage(CalcDmg(skillDmg, skillDmg < 0));
                 Trigger = false;
             }
