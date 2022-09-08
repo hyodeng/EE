@@ -1,13 +1,13 @@
 {
-  "0": "Eye3.png",
-  "color0": "RGBA(0.411, 0.083, 0.650, 1.000)",
-  "1": "Hair_9.png",
-  "color1": "RGBA(0.780, 0.059, 0.379, 1.000)",
+  "0": "Eye2.png",
+  "color0": "RGBA(0.294, 0.233, 0.651, 1.000)",
+  "1": "Hair_3.png",
+  "color1": "RGBA(0.100, 0.073, 0.829, 1.000)",
   "2": "",
   "color2": "RGBA(0.000, 0.000, 0.000, 0.000)",
-  "3": "Armor_5.png",
-  "4": "Foot_1.png",
-  "5": "Sword_1.png",
+  "3": "Armor_9.png",
+  "4": "Foot_4.png",
+  "5": "Axe_1.png",
   "6": "",
-  "weapon0": "Sword_1.png"
+  "weapon0": "Chef_Item.png"
 }

@@ -555,9 +555,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partsImage: []
   player: {fileID: 398781935}
-  partner1: {fileID: 726152034}
-  partner2: {fileID: 401726765}
-  partner3: {fileID: 578224154}
 --- !u!4 &260982020
 Transform:
   m_ObjectHideFlags: 0
@@ -662,6 +659,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7872487616379280503, guid: a5e15a514d3bd2643aa90ebcd6a8426b, type: 3}
   m_PrefabInstance: {fileID: 6367024}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &398781942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398781935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da994f0ff82e1e488a90db9cf570137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parts: []
 --- !u!1 &401726765
 GameObject:
   m_ObjectHideFlags: 0

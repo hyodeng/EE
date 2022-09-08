@@ -20,7 +20,7 @@ public class PopupController : MonoBehaviour
 
     TextMeshProUGUI questionText;
     WaitForSeconds delayTime0 = new WaitForSeconds(0.5f);
-    WaitForSeconds delayTime1 = new WaitForSeconds(3.0f);
+    WaitForSeconds delayTime1 = new WaitForSeconds(2.0f);
 
     GameObject yesbutton;
     GameObject nobutton;

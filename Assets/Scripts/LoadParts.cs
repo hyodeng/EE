@@ -93,7 +93,7 @@ public class LoadParts : MonoBehaviour
 
     void LoadPlayerParts()
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 7; i++)
         {
             name[i] = parts[$"{i}"].ToString();
             if (name[i] != "")

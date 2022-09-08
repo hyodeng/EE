@@ -72,8 +72,6 @@ public class DataManager : MonoBehaviour
         customized[0] = character0.GetComponent<Customized>();
 
 
-        characterStat = FindObjectOfType<CharacterStat>();
-
         SAVE_DATA_DIRECTORY = Application.dataPath + "/Resources/Json/";
         Test();
 
@@ -81,8 +79,8 @@ public class DataManager : MonoBehaviour
 
     void Test()
     {
-        weapons[1] = Resources.Load<Sprite>($"Character/Weapons/Sword_2");
-        Debug.Log(weapons[1].ToString());
+        //weapons[1] = Resources.Load<Sprite>($"Character/Weapons/Sword_2");
+        //Debug.Log(weapons[1].ToString());
     }
 
 
@@ -93,17 +91,15 @@ public class DataManager : MonoBehaviour
     public void SavePlayerParts()
     {
 
-        characterStat = FindObjectOfType<CharacterStat>();
-
         // 0: 얼굴, 1: 헤어, 2: 수염, 3: 아머, 4: 바지, 5:오른쪽 무기, 6 : 왼손 무기
-
+        characterStat = FindObjectOfType<CharacterStat>();
 
         //파츠 0~2번, 색상
         for (int i = 0; i < 3; i++)
         {
             parts.Add($"{i}", GameManager.Inst.partsName[i]);
             parts.Add($"color{i}", GameManager.Inst.partsColor[i, 0].ToString());
-            Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
+            //Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
         }
 
         parts.Add($"{3}", GameManager.Inst.partsName[3]);
@@ -158,7 +154,7 @@ public class DataManager : MonoBehaviour
         {
             partnerParts.Add($"{i}", GameManager.Inst.partsName[i]);
             partnerParts.Add($"color{i}", GameManager.Inst.partsColor[i, 0].ToString());
-            Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
+            //Debug.Log($"{i}, {GameManager.Inst.partsColor[i, 0]}");
         }
 
         partnerParts.Add($"{3}", GameManager.Inst.partsName[3]);

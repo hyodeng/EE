@@ -31,6 +31,12 @@ public class InventoryUI : MonoBehaviour
         //Button closeButton = transform.Find("CloseButton").GetComponent<Button>();
         //closeButton.onClick.AddListener(Close);
     }
+
+    private void Start()
+    {
+        Close();
+    }
+
     public void InitializeInventory(Inventory newInven)
     {
         inven = newInven;   //즉시 할당
