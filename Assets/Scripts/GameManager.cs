@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     'asd': [null, false, true]
     }";
 
-    public string[] SetMonsters = new string[4];
     public bool[] SceneUnlocked = new bool[3];
     public int Stage = 1;
     public CharacterType[] dataClass;

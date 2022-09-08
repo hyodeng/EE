@@ -127,26 +127,10 @@ public class Battle : MonoBehaviour
         pepperBox.SetActive(false);
         for(int i = 0; i<4; i++)
         {
-            GameObject mob = null;
-            string j = GameManager.Inst.SetMonsters[i];
-            switch (j)
-            {
-                case "Goblin":
-                    mob = Instantiate(Goblin, Monsters.transform);
-                    break;
-                case "Piend":
-                    mob = Instantiate(Piend, Monsters.transform);
-                    break;
-                case "Golem":
-                    mob = Instantiate(Golem, Monsters.transform);
-                    break;
-                case "Darkload":
-                    mob = Instantiate(Darkload, Monsters.transform);
-                    break;
-            }
-            mob.name = $"Monster{i}";
-            mob.transform.localPosition = new Vector3(14.62f, i*2, 0);
-            mob.GetComponent<CharacterData>().battle = this;
+            GameObject goblin = Instantiate(Goblin, Monsters.transform);
+            goblin.name = $"Monster{i}";
+            goblin.transform.localPosition = new Vector3(14.62f, i*2, 0);
+            goblin.GetComponent<CharacterData>().battle = this;
         }
 
         for (int i = 0; i < 4; i++)
@@ -269,18 +253,7 @@ public class Battle : MonoBehaviour
         if (vic)
         {
             Debug.Log("ÀüÅõ ½Â¸®");
-            if(GameManager.Inst.Stage == 1)
-            {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Stage_1.5");
-                GameManager.Inst.SceneUnlocked[1] = true;
-            }
-            else if(GameManager.Inst.Stage == 2)
-            {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Stage_2.5");
-                GameManager.Inst.SceneUnlocked[2] = true;
-            }
-            else
-                UnityEngine.SceneManagement.SceneManager.LoadScene("GameEnd");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Stage_Scene 1");
         }
         else
         {

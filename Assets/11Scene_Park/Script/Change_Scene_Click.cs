@@ -26,7 +26,6 @@ public class Change_Scene_Click : MonoBehaviour
     public void Temp()
     {
         GameManager.Inst.Stage = 1;
-        GameManager.Inst.SetMonsters = new string[4] { "Goblin", "Goblin", "Piend", "Golem" }; //Golbin, Piend, Golem, Darkload
         SceneManager.LoadScene("Battle_Scene");
     }
     public void ToStage_1()
