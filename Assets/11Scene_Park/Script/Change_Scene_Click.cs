@@ -30,7 +30,8 @@ public class Change_Scene_Click : MonoBehaviour
     }
     public void ToStage_1()
     {
-        SceneManager.LoadScene("Stage_1");
+        GameManager.Inst.Stage = 1;
+        SceneManager.LoadScene("Battle_Scene");
     }
     public void ToStage_2()
     {
