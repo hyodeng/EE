@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/11Scene_Park/Scene/Start_Scene.unity
+    path: Assets/Scenes/Test_Start_Scene.unity
     guid: d76c5474a93e93344ac0a0341366f62d
   - enabled: 1
     path: Assets/Scenes/MiniGame/MiniGameMain.unity
@@ -21,19 +21,19 @@ EditorBuildSettings:
     path: Assets/Scenes/MiniGame/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/11Scene_Park/Scene/Battle_Scene.unity
+    path: Assets/Scenes/Battle_Scene.unity
     guid: 46c79cc886e941349947e9a2a4ed743e
   - enabled: 1
-    path: Assets/11Scene_Park/Scene/Boss_Scene.unity
+    path: Assets/Scenes/Boss_Scene.unity
     guid: eebc07eb82458884f9a83e7229265c57
   - enabled: 1
-    path: Assets/11Scene_Park/Scene/CharacterCustomize.unity
+    path: Assets/Scenes/CharacterCustomize.unity
     guid: 06ba231f1cb4e2848a083e7f2b4d0eef
   - enabled: 1
-    path: Assets/11Scene_Park/Scene/CharacterSelect.unity
+    path: Assets/Scenes/CharacterSelect.unity
     guid: ffb8eeb0ea1a5ad43a66e1acbf2d86a4
   - enabled: 1
-    path: Assets/11Scene_Park/Scene/CharacterSelectPartner.unity
+    path: Assets/Scenes/CharacterSelectPartner.unity
     guid: e76ddfa1baddb604981ea59231b11243
   - enabled: 1
     path: Assets/Scenes/Desert_Scene.unity
